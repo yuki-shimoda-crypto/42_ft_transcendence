@@ -1,0 +1,17 @@
+[type]: #<issue-number> <subject>
+
+# Commit type: (Choose one of the following)
+# #   feat: A new feature or functionality addition
+# #   fix: A bug fix
+# #   docs: Documentation changes
+# #   style: Code style adjustments (indentation, whitespace, etc.) without logic changes
+# #   refactor: Code refactoring without adding new features or fixing bugs
+# #   test: Addition or modification of test code
+# #   chore: Build process or tooling changes
+
+[body]
+
+[notes]
+
+close #<issue-number>
+
