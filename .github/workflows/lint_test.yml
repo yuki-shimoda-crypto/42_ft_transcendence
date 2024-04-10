@@ -1,0 +1,45 @@
+name: Lint And Test
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install apt
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends jq make nodejs npm wget
+
+      - name: Install pip
+        run: >
+          pip install --no-cache-dir -r requirements.dev.txt
+
+      - name: Install npm
+        run: |
+          npm install --save-dev
+
+      - name: Install hadolint
+        run: >
+           wget -qO-
+           "https://api.github.com/repos/hadolint/hadolint/releases/latest"
+           | jq -r '.assets[] | select(.name | contains("Linux-x86_64"))
+           | .browser_download_url'
+           | xargs wget -qO /usr/local/bin/hadolint
+           && chmod +x /usr/local/bin/hadolint
+
+      - name: Lint
+        run: |
+          make lint
+
+      - name: Test
+        run: |
+          make test

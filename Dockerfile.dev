@@ -35,7 +35,8 @@ RUN apt-get update && \
     zsh && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir black flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
+RUN pip install --no-cache-dir -r requirements.dev.txt
+# RUN pip install --no-cache-dir black flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
 
 COPY package.json package-lock.json ./
 RUN npm install --save-dev
@@ -69,5 +70,5 @@ ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 #------------------------------------------
 
 # Djangoサーバーを起動
-#CMD ["python", "mysite/manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "PongChat/manage.py", "runserver", "0.0.0.0:8000"]
 CMD [ "sleep", "infinity" ]
