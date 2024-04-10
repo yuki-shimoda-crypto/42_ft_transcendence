@@ -36,7 +36,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir -r requirements.dev.txt
-# RUN pip install --no-cache-dir black flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
+# RUN pip install --no-cache-dir black django django-stubs flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
 
 COPY package.json package-lock.json ./
 RUN npm install --save-dev
