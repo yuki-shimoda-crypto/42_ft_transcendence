@@ -21,4 +21,4 @@ USER ${MY_USER}
 COPY --chown=user:user . .
 
 # Djangoサーバーを起動
-CMD ["python", "mysite/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "PongChat/manage.py", "runserver", "0.0.0.0:8000"]
