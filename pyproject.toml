@@ -1,0 +1,5 @@
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "-v -n 4 --cov=. --cov-report term --cov-report xml"

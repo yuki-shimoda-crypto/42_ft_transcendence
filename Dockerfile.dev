@@ -1,0 +1,73 @@
+FROM python:3.12-slim
+
+# コンテナ内の作業ディレクトリを設定
+WORKDIR /app
+
+# Pythonがpycファイルやディスクキャッシュを生成しないようにする
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV MY_USER=user
+
+# 依存関係をインストール
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+#------------------------------------------
+# dev only
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git \
+    gnupg2 \
+    jq \
+    make \
+    man \
+    nodejs \
+    npm \
+    openssh-client \
+    python3-venv \
+    sudo \
+    tmux \
+    vim-gtk3 \
+    wget \
+    zsh && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir black flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
+
+COPY package.json package-lock.json ./
+RUN npm install --save-dev
+
+# install [hadolint](https://github.com/hadolint/hadolint)
+RUN wget -qO- "https://api.github.com/repos/hadolint/hadolint/releases/latest" | \
+    jq -r '.assets[] | select(.name | contains("Linux-x86_64")) | .browser_download_url' | \
+    xargs wget -qO /usr/local/bin/hadolint && \
+    chmod +x /usr/local/bin/hadolint
+
+# entrypoint.sh
+COPY tools/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# ユーザーを作成して切り替える
+RUN useradd -ms /bin/zsh ${MY_USER} && \
+    echo "${MY_USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${MY_USER} && \
+    chmod 0440 /etc/sudoers.d/${MY_USER}
+
+USER ${MY_USER}
+
+# oh-my-zsh
+RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+RUN sed -i 's/^plugins=(git)/plugins=(docker docker-compose git python tmux)/' ~/.zshrc
+
+# GPG_TTY設定を.zshrcに追加
+RUN echo 'export GPG_TTY=$(tty)' >> ~/.zshrc
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
+#------------------------------------------
+
+# Djangoサーバーを起動
+#CMD ["python", "mysite/manage.py", "runserver", "0.0.0.0:8000"]
+CMD [ "sleep", "infinity" ]
