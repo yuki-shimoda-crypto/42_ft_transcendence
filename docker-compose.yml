@@ -1,0 +1,55 @@
+---
+services:
+  # db:
+  #   image: postgres:16
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     POSTGRES_DB: yourdbname
+  #     POSTGRES_USER: youruser
+  #     POSTGRES_PASSWORD: yourpassword
+
+  web_prod:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    restart: always
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     DEBUG: "true"
+  #     SECRET_KEY: yoursecretkey
+  #     DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdbname
+
+  web_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+      - .:/app
+      - ~/.gitconfig:/home/user/.gitconfig
+      - ~/.ssh/:/home/user/.ssh
+      - ~/.vimrc:/home/user/.vimrc
+      - ~/.gnupg/:/home/user/.gnupg/
+      - node_volume:/app/node_modules
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
+    ports:
+      - "8001:8000"
+    restart: always
+#    depends_on:
+#      - db
+#    environment:
+#      DEBUG: "true"
+#      SECRET_KEY: yoursecretkey
+#      DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdbname
+#    command: python manage.py runserver 0.0.0.0:8000
+
+# volumes:
+#   postgres_data:
+
+volumes:
+  node_volume:
