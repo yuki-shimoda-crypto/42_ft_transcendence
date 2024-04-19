@@ -35,6 +35,7 @@ RUN apt-get update && \
     zsh && \
     rm -rf /var/lib/apt/lists/*
 
+COPY requirements.dev.txt ./
 RUN pip install --no-cache-dir -r requirements.dev.txt
 # RUN pip install --no-cache-dir black django django-stubs flake8 flake8-bugbear flake8-pytest-style isort mypy pytest pytest-cov pytest-django pytest-xdist yamllint 
 
