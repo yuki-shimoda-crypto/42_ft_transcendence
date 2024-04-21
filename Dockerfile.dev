@@ -12,6 +12,10 @@ ENV MY_USER=user
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# entrypoint.sh
+COPY tools/docker/web_dev/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 #------------------------------------------
 # dev only
 
@@ -48,9 +52,6 @@ RUN wget -qO- "https://api.github.com/repos/hadolint/hadolint/releases/latest" |
     xargs wget -qO /usr/local/bin/hadolint && \
     chmod +x /usr/local/bin/hadolint
 
-# entrypoint.sh
-COPY tools/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # ユーザーを作成して切り替える
 RUN useradd -ms /bin/zsh ${MY_USER} && \
@@ -66,9 +67,9 @@ RUN sed -i 's/^plugins=(git)/plugins=(docker docker-compose git python tmux)/' ~
 # GPG_TTY設定を.zshrcに追加
 RUN echo 'export GPG_TTY=$(tty)' >> ~/.zshrc
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
 #------------------------------------------
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Djangoサーバーを起動
 #CMD ["python", "PongChat/manage.py", "runserver", "0.0.0.0:8000"]

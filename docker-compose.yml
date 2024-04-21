@@ -1,27 +1,35 @@
 ---
 services:
-  # db:
-  #   image: postgres:16
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_DB: yourdbname
-  #     POSTGRES_USER: youruser
-  #     POSTGRES_PASSWORD: yourpassword
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: always
+    shm_size: 256mb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
 
   web_prod:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/app
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+    restart: always
     ports:
       - "8000:8000"
-    restart: always
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     DEBUG: "true"
-  #     SECRET_KEY: yoursecretkey
-  #     DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdbname
+    depends_on:
+      - db
 
   web_dev:
     build:
@@ -36,20 +44,17 @@ services:
       - ~/.gnupg/:/home/user/.gnupg/
       - node_volume:/app/node_modules
     environment:
-      - SSH_AUTH_SOCK=/ssh-agent
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      SSH_AUTH_SOCK: /ssh-agent
+    restart: always
     ports:
       - "8001:8000"
-    restart: always
-#    depends_on:
-#      - db
-#    environment:
-#      DEBUG: "true"
-#      SECRET_KEY: yoursecretkey
-#      DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdbname
-#    command: python manage.py runserver 0.0.0.0:8000
-
-# volumes:
-#   postgres_data:
+    depends_on:
+      - db
 
 volumes:
+  postgres_data:
   node_volume:
