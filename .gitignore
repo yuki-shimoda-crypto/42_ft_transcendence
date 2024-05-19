@@ -1,3 +1,6 @@
+.pg_service.conf
+.pgpass
+
 # Created by https://www.toptal.com/developers/gitignore/api/macosdjango,linux,node,python,vim,visualstudiocode,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=macosdjango,linux,node,python,vim,visualstudiocode,windows
 
