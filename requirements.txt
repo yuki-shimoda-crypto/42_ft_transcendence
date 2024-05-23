@@ -2,6 +2,7 @@ asgiref==3.8.1
 Django==5.0.4
 psycopg==3.1.18
 psycopg2-binary==2.9.9
+python-dotenv==1.0.1
 setuptools==69.2.0
 sqlparse==0.4.4
 typing_extensions==4.11.0
