@@ -11,7 +11,7 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#"> Pong Game </a>
+  <a class="navbar-brand" href="{% url 'accounts:top' %}"> Pong Game </a>
   <div class="dropdown">
     <button
       class="btn dropdown-toggle"
@@ -19,17 +19,29 @@
       id="dropdownMenuButton"
       data-bs-toggle="dropdown"
       aria-expanded="false"
+      data-bs-auto-close="outside"
     >
+      {% if not user.is_authenticated %}
+        <i class="bi bi-person-circle"></i>
+        Guest
+      {% else %}
       <img
         src="{% static 'images/profile_sample.png' %}"
         alt="Profile Picture"
         class="profile-pic"
       />
+      {% endif %}
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <li><a class="dropdown-item" href="#">List</a></li>
-      <li><a class="dropdown-item" href="#">Messages</a></li>
-      <li><a class="dropdown-item" href="#">Sign out</a></li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+        {% if not user.is_authenticated %} 
+            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
+        {% else %}
+            <p class="dropdown-item-text">{{ user.username }}</p>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Logout</a></li>
+        {% endif %}
+        <li><a class="dropdown-item" href="#">Messages</a></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
     </ul>
   </div>
 </nav>

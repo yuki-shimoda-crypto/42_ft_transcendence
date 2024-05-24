@@ -5,5 +5,6 @@ from . import views
 app_name = "accounts"
 
 urlpatterns = [
-    path("", views.TempView.as_view(), name="top"),
+    path("", views.TopView.as_view(), name="top"),
+    path("login", views.Login.as_view(), name="login"),
 ]
