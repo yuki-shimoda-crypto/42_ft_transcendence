@@ -22,3 +22,10 @@ body {
 	border-radius: 10px;
 	background-color: #e8e6e6;
 }
+
+.profile-pic {
+  width: 40px; /* プロフィール写真のサイズ */
+  height: 40px; /* プロフィール写真のサイズ */
+  border-radius: 50%; /* 円形にする */
+  object-fit: cover; /* 画像をコンテナに収める */
+}
