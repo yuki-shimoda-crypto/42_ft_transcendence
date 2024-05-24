@@ -33,3 +33,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
 }
+
+p a:hover {
+  text-decoration: none;
+}

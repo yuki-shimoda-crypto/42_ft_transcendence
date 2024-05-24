@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views import generic
 
 from .forms import LoginForm
@@ -11,3 +11,7 @@ class TopView(generic.TemplateView):
 class Login(LoginView):
     form_class = LoginForm
     template_name = "accounts/login.html"
+
+
+class Logout(LogoutView):
+    template_name = 'accounts/logout_done.html'

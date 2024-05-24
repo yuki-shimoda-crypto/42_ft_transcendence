@@ -38,7 +38,10 @@
         {% else %}
             <p class="dropdown-item-text">{{ user.username }}</p>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">ログアウト</a></li>
+            <form action="{% url 'accounts:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">ログアウト</button>
+            </form>
         {% endif %}
     </ul>
   </div>
