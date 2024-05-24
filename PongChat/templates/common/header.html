@@ -1,19 +1,35 @@
 {% load static %}
 <nav class="navbar navbar-light bg-light p-3 fixed-top shadow-sm">
-    <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <button
+    class="navbar-toggler d-md-none collapsed"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasSidebar"
+    aria-controls="offcanvasSidebar"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#"> Pong Game </a>
+  <div class="dropdown">
+    <button
+      class="btn dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <img
+        src="{% static 'images/profile_sample.jpg' %}"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
     </button>
-    <a class="navbar-brand" href="#">
-        Pong Game
-    </a>
-    <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{% static 'images/profile_sample.jpg' %}" alt="Profile Picture" class="profile-pic">
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">List</a></li>
-            <li><a class="dropdown-item" href="#">Messages</a></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-    </div>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <li><a class="dropdown-item" href="#">List</a></li>
+      <li><a class="dropdown-item" href="#">Messages</a></li>
+      <li><a class="dropdown-item" href="#">Sign out</a></li>
+    </ul>
+  </div>
 </nav>

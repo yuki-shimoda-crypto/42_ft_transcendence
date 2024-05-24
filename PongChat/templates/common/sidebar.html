@@ -1,18 +1,31 @@
-<nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky">
-        <ul class="nav flex-column">
-            {% include 'common/sidebar_link.html' %}
-        </ul>
-      </div>
+<nav
+  id="sidebar"
+  class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse"
+>
+  <div class="position-sticky">
+    <ul class="nav flex-column">
+      {% include 'common/sidebar_link.html' %}
+    </ul>
+  </div>
 </nav>
-<div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Sidebar</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <ul class="nav flex-column">
-            {% include 'common/sidebar_link.html' %}
-        </ul>
-    </div>
+<div
+  class="offcanvas offcanvas-start offcanvas-custom"
+  tabindex="-1"
+  id="offcanvasSidebar"
+  aria-labelledby="offcanvasSidebarLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Sidebar</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="nav flex-column">
+      {% include 'common/sidebar_link.html' %}
+    </ul>
+  </div>
 </div>

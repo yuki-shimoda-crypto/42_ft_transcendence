@@ -1,5 +1,5 @@
 body {
-	padding-top: 4rem;
+  padding-top: 4rem;
 }
 
 .sidebar {
@@ -12,20 +12,24 @@ body {
   z-index: 99;
 }
 
-.sidebar .nav-link, .offcanvas-body .nav-link {
-	color: #333;
-	transition: background-color 0.1s ease, border-radius 0.1s ease;
+.sidebar .nav-link,
+.offcanvas-body .nav-link {
+  color: #333;
+  transition:
+    background-color 0.1s ease,
+    border-radius 0.1s ease;
 }
 
-.sidebar .nav-link:hover, .offcanvas-body .nav-link:hover {
-	color: #333;
-	border-radius: 10px;
-	background-color: #e8e6e6;
+.sidebar .nav-link:hover,
+.offcanvas-body .nav-link:hover {
+  color: #333;
+  border-radius: 10px;
+  background-color: #e8e6e6;
 }
 
 .profile-pic {
-  width: 40px; /* プロフィール写真のサイズ */
-  height: 40px; /* プロフィール写真のサイズ */
-  border-radius: 50%; /* 円形にする */
-  object-fit: cover; /* 画像をコンテナに収める */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
