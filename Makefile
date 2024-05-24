@@ -48,6 +48,40 @@ ps:
 ps-a:
 	docker compose ps -a
 
+# django
+.PHONY: django-runserver
+django-runserver:
+	python3 PongChat/manage.py runserver 0.0.0.0:8000
+
+.PHONY: django-migrate
+django-migrate:
+	python3 PongChat/manage.py migrate
+
+.PHONY: django-createsuperuser
+django-createsuperuser:
+	python3 PongChat/manage.py createsuperuser
+
+.PHONY: django-shell
+django-shell:
+	python3 PongChat/manage.py shell
+
+# Dockerコンテナ内でのDjango管理コマンド
+.PHONY: django-web_dev-runserver
+django-web_dev-runserver:
+	docker compose exec -it web_dev python3 PongChat/manage.py runserver 0.0.0.0:8000
+
+.PHONY: django-web_dev-migrate
+django-web_dev-migrate:
+	docker compose exec -it web_dev python3 PongChat/manage.py migrate
+
+.PHONY: django-web_dev-createsuperuser
+django-web_dev-createsuperuser:
+	docker compose exec -it web_dev python3 PongChat/manage.py createsuperuser
+
+.PHONY: django-web_dev-shell
+django-web_dev-shell:
+	docker compose exec -it web_dev python3 PongChat/manage.py shell
+
 # format
 .PHONY: format
 format: format-CSS format-HTML format-JavaScript format-MD format-Python
