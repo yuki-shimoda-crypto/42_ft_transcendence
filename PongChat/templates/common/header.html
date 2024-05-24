@@ -23,7 +23,7 @@
     >
       {% if not user.is_authenticated %}
         <i class="bi bi-person-circle"></i>
-        Guest
+        ゲスト
       {% else %}
       <img
         src="{% static 'images/profile_sample.png' %}"
@@ -34,14 +34,12 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         {% if not user.is_authenticated %} 
-            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">ログイン</a></li>
         {% else %}
             <p class="dropdown-item-text">{{ user.username }}</p>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Logout</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:login' %}">ログアウト</a></li>
         {% endif %}
-        <li><a class="dropdown-item" href="#">Messages</a></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
     </ul>
   </div>
 </nav>
