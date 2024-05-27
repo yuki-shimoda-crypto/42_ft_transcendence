@@ -1,10 +1,23 @@
-* {
-  padding: 0;
-  margin: 0;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrollbars from appearing */
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 canvas {
-  background: #eee;
-  display: block;
-  margin: 0 auto;
+    background: #eee;
+    width: 100vw;
+    height: 56.25vw; /* 100/16*9 */
+    max-height: 100vh;
+    max-width: 177.78vh; /* 100/9*16 */
+    display: block;
+    margin: auto;
 }
