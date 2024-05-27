@@ -5,11 +5,8 @@ html, body {
     overflow: hidden; /* Prevent scrollbars from appearing */
 }
 
-.container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.full-height{
+    height: 100vh;
 }
 
 canvas {
