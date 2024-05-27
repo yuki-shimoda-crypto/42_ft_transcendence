@@ -14,4 +14,4 @@ class Login(LoginView):
 
 
 class Logout(LogoutView):
-    template_name = 'accounts/logout_done.html'
+    template_name = "accounts/logout_done.html"
