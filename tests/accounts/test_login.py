@@ -10,6 +10,15 @@ from tests.assert_utils import (
 
 @pytest.mark.django_db
 def test_login_success(client, test_create_user):
+    """
+    Test the login functionality of the application.
+
+    This test verifies that a user can successfully log in with valid credentials.
+    - It checks that the login page can be accessed.
+    - It posts valid login credentials
+        and checks for a successful redirect to the top page.
+    - It verifies that the user is authenticated and can access the top page.
+    """
     user, password = test_create_user
 
     login_url = reverse("accounts:login")
@@ -27,6 +36,14 @@ def test_login_success(client, test_create_user):
 
 @pytest.mark.django_db
 def test_login_failure(client, test_create_user):
+    """
+    Test the login functionality with invalid credentials.
+
+    This test verifies that a user cannot log in with invalid credentials.
+    - It checks that the login page can be accessed.
+    - It posts invalid login credentials and ensures the login attempt fails.
+    - It verifies that the user remains unauthenticated.
+    """
     user, password = test_create_user
 
     login_url = reverse("accounts:login")
