@@ -396,3 +396,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/macosdjango,linux,node,python,vim,visualstudiocode,windows
+
+.Ds_Store
