@@ -1,0 +1,57 @@
+{% extends 'common/base.html' %}
+
+<!-- コンテンツ -->
+{% block content %}
+<div class="container">
+  <h1>My page</h1>
+  <hr />
+
+  <!-- アカウント情報 -->
+  <div class="row">
+    <div class="col"><h4>■ 登録情報</h4></div>
+    <!-- 後で更新ボタン追加 -->
+  </div>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>ユーザー名</td>
+        <td>{{ user.username }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- パスワード -->
+  <div class="row mt-4">
+    <div class="col"><h4>■ パスワード</h4></div>
+    <!-- 後で更新ボタン追加 -->
+  </div>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td style="width: 50%">パスワード</td>
+        <td style="width: 50%">非表示</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 権限 -->
+  <div class="row mt-4">
+    <div class="col"><h4>■ 権限</h4></div>
+  </div>
+  <table class="table table-bordered">
+    <tbody>
+      {% if user.is_staff %}
+      <tr>
+        <td style="width: 50%">スタッフ権限</td>
+        <td style="width: 50%">{{ user.is_staff }}</td>
+      </tr>
+      {% endif %} {% if user.is_superuser %}
+      <tr>
+        <td>スーパーユーザー権限</td>
+        <td>{{ user.is_superuser }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
