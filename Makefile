@@ -118,5 +118,5 @@ lint-YAML:
 # test
 .PHONY: test
 test:
-	pytest
+	PYTHONPATH=/app/PongChat pytest
 
