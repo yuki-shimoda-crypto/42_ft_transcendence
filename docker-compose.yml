@@ -9,10 +9,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_PORT: ${DATABASE_PORT}
-      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME:-db}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+      POSTGRES_PORT: ${DATABASE_PORT:-5432}
+      POSTGRES_USER: ${DATABASE_USER:-user}
+    tty: true
 
   web_prod:
     build:
@@ -45,6 +46,7 @@ services:
       - "8001:8000"
     depends_on:
       - db
+    tty: true
 
 volumes:
   postgres_data:

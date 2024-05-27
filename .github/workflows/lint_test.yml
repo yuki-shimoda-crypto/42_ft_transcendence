@@ -7,39 +7,47 @@ on:
 jobs:
   run-lint:
     runs-on: ubuntu-latest
-    container: python:3.12-slim
+
+    services:
+      db:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: pongchat
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd "pg_isready -U user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install apt
+      - name: Set up Docker Compose
         run: |
-          apt-get update
-          apt-get install -y --no-install-recommends jq make nodejs npm wget
+          docker-compose up -d
 
-      - name: Install pip
-        run: >
-          pip install --no-cache-dir -r requirements.dev.txt
-
-      - name: Install npm
+      - name: Wait for PostgreSQL
         run: |
-          npm install --save-dev
+          docker-compose exec -T db bash -c "until pg_isready -U user; \
+            do sleep 1; done"
 
-      - name: Install hadolint
-        run: >
-           wget -qO-
-           "https://api.github.com/repos/hadolint/hadolint/releases/latest"
-           | jq -r '.assets[] | select(.name | contains("Linux-x86_64"))
-           | .browser_download_url'
-           | xargs wget -qO /usr/local/bin/hadolint
-           && chmod +x /usr/local/bin/hadolint
-
-      - name: Lint
+      - name: Make env
         run: |
-          make lint
+          cp -a .env.sample .env
 
-      - name: Test
+      - name: Run Lint and Tests
         run: |
-          make test
+          docker-compose exec -T web_dev make lint
+          docker-compose exec -T web_dev python PongChat/manage.py migrate
+          docker-compose exec -T web_dev make test
+
+      - name: Tear Down
+        if: always()
+        run: docker-compose down

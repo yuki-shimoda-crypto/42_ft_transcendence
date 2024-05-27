@@ -118,5 +118,5 @@ lint-YAML:
 # test
 .PHONY: test
 test:
-	PYTHONPATH=/app/PongChat pytest
+	PYTHONPATH=$(shell pwd)/PongChat pytest --cache-clear
 
