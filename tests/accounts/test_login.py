@@ -1,17 +1,6 @@
 import pytest
 from django.urls import reverse
-
-
-def assert_response_status(response, expected_status):
-    assert response.status_code == expected_status
-
-
-def assert_redirect_url(response, expected_url):
-    assert response.url == expected_url
-
-
-def assert_user_authenticated(response, expected_authentication):
-    assert response.context["user"].is_authenticated == expected_authentication
+from tests.assert_utils import assert_response_status, assert_redirect_url, assert_user_authenticated
 
 
 @pytest.mark.django_db
