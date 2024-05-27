@@ -1,5 +1,6 @@
 import pytest
 from django.urls import reverse
+
 from tests.assert_utils import assert_response_status, assert_user_authenticated
 
 

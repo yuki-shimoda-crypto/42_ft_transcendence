@@ -1,6 +1,11 @@
 import pytest
 from django.urls import reverse
-from tests.assert_utils import assert_response_status, assert_redirect_url, assert_user_authenticated
+
+from tests.assert_utils import (
+    assert_redirect_url,
+    assert_response_status,
+    assert_user_authenticated,
+)
 
 
 @pytest.mark.django_db
