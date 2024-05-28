@@ -190,6 +190,20 @@ function draw() {
     leftPaddleY += paddleDy;
   }
 
+  const diff = y - (rightPaddleY + (paddleHeight / 2));
+  if (Math.abs(diff) > paddleDy && Math.random() < 0.8) {
+    let direction = 1;
+    if (Math.random() < 0.1) {
+      direction = -1;
+    }
+
+    if (y < rightPaddleY + (paddleHeight / 2) && rightPaddleY > 0) {
+      rightPaddleY -= paddleDy * direction;
+    } else if (y > rightPaddleY + (paddleHeight / 2) && rightPaddleY < canvas.height - paddleHeight) {
+      rightPaddleY += paddleDy * direction;
+    }
+  }
+
   requestAnimationFrame(draw);
 }
 
