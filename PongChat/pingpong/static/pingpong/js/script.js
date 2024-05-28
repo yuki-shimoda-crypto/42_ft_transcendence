@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
 let paddleWidth, paddleHeight, paddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
+let upPressed = false, downPressed = false;
 
 function initialize() {
   updateCanvasSize();
@@ -68,7 +69,23 @@ function updatePaddleSize() {
 }
 
 function updatePaddleSpeed() {
-  paddleDy = dy * 1.5; // 例えばキャンバスの高さの1%
+  paddleDy = canvas.height * 0.015; // 例えばキャンバスの高さの1%
+}
+
+function keyDownHandler(e) {
+  if (e.key === "Up" || e.key === "ArrowUp") {
+    upPressed = true;
+  } else if (e.key === "Down" || e.key === "ArrowDown") {
+    downPressed = true;
+  }
+}
+
+function keyUpHandler(e) {
+  if (e.key === "Up" || e.key === "ArrowUp") {
+    upPressed = false;
+  } else if (e.key === "Down" || e.key === "ArrowDown") {
+    downPressed = false;
+  }
 }
 
 function drawBall() {
@@ -115,6 +132,13 @@ function draw() {
 
   x += dx;
   y += dy;
+
+  if (upPressed && paddleY > 0) {
+    paddleY -= paddleDy;
+  } else if (downPressed && paddleY < canvas.height - paddleHeight) {
+    paddleY += paddleDy;
+  }
+
   requestAnimationFrame(draw);
 }
 
@@ -138,5 +162,10 @@ initialize();
 
 // リサイズイベントに応じてキャンバスをリサイズ
 window.addEventListener("resize", onResize, false);
+
+// キーボードイベント
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
 
 requestAnimationFrame(draw);
