@@ -9,6 +9,10 @@ let downPressed = false;
 let playerScore = 0;
 let cpuScore = 0;
 
+// Countdown
+let countdown = 3;
+let countdownActive = true;
+
 function initialize() {
   updateCanvasSize();
 
@@ -114,6 +118,20 @@ function keyUpHandler(e) {
   }
 }
 
+function drawCountdown() {
+  const fontSize = canvas.width * 0.2;
+  ctx.font = `${fontSize}px Arial`;
+  ctx.fillStyle = "rgba(0, 149, 221, 0.5)";
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  if (countdown === 0) {
+    ctx.fillText("Start!", canvas.width / 2, canvas.height / 2);
+  } else {
+    ctx.fillText(countdown, canvas.width / 2, canvas.height / 2);
+  }
+}
+
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -155,7 +173,13 @@ function drawRoundedRect(x, y, width, height, radius) {
 
 function drawLeftPaddle() {
   const radius = paddleWidth;
-  drawRoundedRect(paddleWidth, leftPaddleY, paddleWidth, paddleHeight, radius / 2);
+  drawRoundedRect(
+    paddleWidth,
+    leftPaddleY,
+    paddleWidth,
+    paddleHeight,
+    radius / 2,
+  );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
 }
@@ -167,7 +191,7 @@ function drawRightPaddle() {
     rightPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2
+    radius / 2,
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
@@ -186,6 +210,17 @@ function drawScores() {
 
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function startCountdown() {
+  const interval = setInterval(() => {
+    if (countdown === 0) {
+      countdownActive = false;
+      clearInterval(interval);
+    } else {
+      countdown--;
+    }
+  }, 1000);
 }
 
 function moveBall() {
@@ -245,17 +280,21 @@ function moveRightPaddle() {
 function draw() {
   clearCanvas();
 
-  // draw objects
-  drawBall();
-  drawCenterLine();
-  drawLeftPaddle();
-  drawRightPaddle();
-  drawScores();
+  if (countdownActive) {
+    drawCountdown();
+  } else {
+    // draw objects
+    drawBall();
+    drawCenterLine();
+    drawLeftPaddle();
+    drawRightPaddle();
+    drawScores();
 
-  // move objects
-  moveBall();
-  moveLeftPaddle();
-  moveRightPaddle();
+    // move objects
+    moveBall();
+    moveLeftPaddle();
+    moveRightPaddle();
+  }
 
   requestAnimationFrame(draw);
 }
@@ -277,6 +316,7 @@ function onResize() {
 }
 
 initialize();
+startCountdown();
 
 // resize event
 window.addEventListener("resize", onResize, false);
