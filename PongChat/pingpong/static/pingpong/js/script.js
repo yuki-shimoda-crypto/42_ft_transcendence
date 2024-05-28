@@ -90,7 +90,7 @@ function updateRightPaddlePosition() {
 }
 
 function updatePaddleSize() {
-  paddleWidth = canvas.width * 0.01;
+  paddleWidth = canvas.width * 0.015;
   paddleHeight = canvas.height * 0.2;
 }
 
@@ -124,36 +124,53 @@ function drawBall() {
 
 function drawCenterLine() {
   const lineWidth = canvas.width * 0.01;
-  ctx.lineWidth = lineWidth;
+  const radius = lineWidth * 0.7;
+
   ctx.beginPath();
-  ctx.setLineDash([lineWidth * 2, lineWidth]);
-  ctx.moveTo(canvas.width / 2, 0);
-  ctx.lineTo(canvas.width / 2, canvas.height);
-  ctx.strokeStyle = "#0095DD";
-  ctx.stroke();
-  ctx.setLineDash([]); // reset
+  ctx.setLineDash([]);
+  ctx.fillStyle = "#0095DD";
+
+  for (let y = radius; y < canvas.height; y += radius * 4) {
+    ctx.moveTo(canvas.width / 2, y);
+    ctx.arc(canvas.width / 2, y, radius, 0, Math.PI * 2);
+  }
+
+  ctx.fill();
+  ctx.closePath();
+}
+
+function drawRoundedRect(x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
 }
 
 function drawLeftPaddle() {
-  ctx.beginPath();
-  ctx.rect(paddleWidth, leftPaddleY, paddleWidth, paddleHeight);
+  const radius = paddleWidth;
+  drawRoundedRect(paddleWidth, leftPaddleY, paddleWidth, paddleHeight, radius / 2);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
-  ctx.closePath();
 }
 
 function drawRightPaddle() {
-  ctx.beginPath();
-  ctx.rect(
+  const radius = paddleWidth;
+  drawRoundedRect(
     canvas.width - paddleWidth * 2,
     rightPaddleY,
     paddleWidth,
     paddleHeight,
+    radius / 2
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
-  ctx.closePath();
 }
 
 function drawScores() {
