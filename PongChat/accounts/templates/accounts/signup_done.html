@@ -1,0 +1,24 @@
+{% extends "common/base.html" %}
+
+{% block title%} Signup Done {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="col-md-6 offset-md-3">
+    <div class="card mt-3 mb-3 bg-light">
+      <!-- カードヘッダー -->
+      <div class="card-header bg-success text-light">
+        <h4>Sign up Done</h4>
+      </div>
+      <!-- カードボディー -->
+      <div class="card-body">
+        <p>サインアップが完了しました</p>
+        <hr>
+		<p>
+			<a href="{% url 'accounts:login' %}">ログイン</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

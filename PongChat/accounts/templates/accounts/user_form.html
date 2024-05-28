@@ -1,0 +1,32 @@
+{% extends "common/base.html" %}
+
+{% block title%} {{ process_name }} {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="col-md-6 offset-md-3">
+    <div class="card mt-3 mb-3 bg-light">
+      <!-- カードヘッダー -->
+      <div class="card-header bg-success text-light">
+        <h4>{{ process_name }}</h4>
+      </div>
+      <!-- カードボディー -->
+      <div class="card-body">
+        <form action="" method="POST">
+          {{ form.non_field_errors }}
+          {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+              {{ field }}
+              {{ field.errors }}
+            </div>
+          {% endfor %}
+          {% csrf_token %}
+          <button type="button" class="btn btn-outline-secondary btn-lg btn-block mt-4" onclick="history.back()">キャンセル</button>
+          <button type="submit" class="btn btn-success btn-lg btn-block mt-2" >{{ process_name }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
