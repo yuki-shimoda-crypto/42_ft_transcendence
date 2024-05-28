@@ -35,14 +35,14 @@ function initializeBallSpeed() {
 }
 
 function updateCanvasSize() {
-  // キャンバスのサイズをウィンドウサイズに合わせる
+  // adjust canvas size
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   const aspectRatio = 16 / 9; // 16:9
 
   if (windowWidth / windowHeight > aspectRatio) {
-    // ウィンドウの幅が高さよりも大きい場合
-    // キャンバスの幅をウィンドウの高さに16:9のアスペクト比を適用して設定
+    // if window is wider than 16:9
+    // adjust canvas width to window height * 16:9
     canvas.width = windowHeight * aspectRatio;
     canvas.height = windowHeight;
   } else {
@@ -64,13 +64,12 @@ function updateBallPosition() {
 }
 
 function updateBallSize() {
-  // ボールの半径をキャンバスサイズの一定の割合として設定
-  ballRadius = Math.min(canvas.width, canvas.height) * 0.05; // 例えばキャンバスの幅または高さの5%
+  ballRadius = Math.min(canvas.width, canvas.height) * 0.05;
 }
 
 function updateBallSpeed() {
-  dx = canvas.width * 0.01; // 例えばキャンバスの幅の1%
-  dy = canvas.height * 0.01; // 例えばキャンバスの高さの1%
+  dx = canvas.width * 0.01;
+  dy = canvas.height * 0.01;
 }
 
 function updateLeftPaddlePosition() {
@@ -88,12 +87,12 @@ function updateRightPaddlePosition() {
 }
 
 function updatePaddleSize() {
-  paddleWidth = canvas.width * 0.01; // 例えばキャンバスの幅の1%
-  paddleHeight = canvas.height * 0.2; // 例えばキャンバスの高さの10%
+  paddleWidth = canvas.width * 0.01;
+  paddleHeight = canvas.height * 0.2;
 }
 
 function updatePaddleSpeed() {
-  paddleDy = canvas.height * 0.015; // 例えばキャンバスの高さの1%
+  paddleDy = canvas.height * 0.015;
 }
 
 function keyDownHandler(e) {
@@ -121,7 +120,7 @@ function drawBall() {
 }
 
 function drawCenterLine() {
-  const lineWidth = canvas.width * 0.01; // 例えばキャンバスの幅の1%
+  const lineWidth = canvas.width * 0.01;
   ctx.lineWidth = lineWidth;
   ctx.beginPath();
   ctx.setLineDash([lineWidth * 2, lineWidth]);
@@ -155,7 +154,7 @@ function drawRightPaddle() {
 }
 
 function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function moveBall() {
@@ -213,11 +212,13 @@ function moveRightPaddle() {
 function draw() {
   clearCanvas();
 
+  // draw objects
   drawBall();
   drawCenterLine();
   drawLeftPaddle();
   drawRightPaddle();
 
+  // move objects
   moveBall();
   moveLeftPaddle();
   moveRightPaddle();
@@ -241,13 +242,12 @@ function onResize() {
   updatePaddleSpeed();
 }
 
-// 初期化
 initialize();
 
-// リサイズイベントに応じてキャンバスをリサイズ
+// resize event
 window.addEventListener("resize", onResize, false);
 
-// キーボードイベント
+// keybord event
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
