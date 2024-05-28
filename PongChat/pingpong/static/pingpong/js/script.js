@@ -3,19 +3,35 @@ const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
 let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
-let upPressed = false, downPressed = false;
+let upPressed = false,
+  downPressed = false;
 
 function initialize() {
   updateCanvasSize();
 
   updateBallSize();
-  updateBallPosition();
-  updateBallSpeed();
+  initializeBallPosition();
+  initializeBallSpeed();
 
   updatePaddleSize();
   updateLeftPaddlePosition();
   updateRightPaddlePosition();
   updatePaddleSpeed();
+}
+
+function initializeBallPosition() {
+  x = canvas.width / 2;
+  y = canvas.height / 2;
+}
+
+function getRandomDirection() {
+  return Math.random() < 0.5 ? 1 : -1;
+}
+
+function initializeBallSpeed() {
+  const angle = Math.random() * 2 * Math.PI;
+  dx = canvas.width * 0.01 * getRandomDirection();
+  dy = canvas.height * 0.01 * Math.sin(angle);
 }
 
 function updateCanvasSize() {
@@ -127,7 +143,12 @@ function drawLeftPaddle() {
 
 function drawRightPaddle() {
   ctx.beginPath();
-  ctx.rect((canvas.width - (paddleWidth * 2)), rightPaddleY, paddleWidth, paddleHeight);
+  ctx.rect(
+    canvas.width - paddleWidth * 2,
+    rightPaddleY,
+    paddleWidth,
+    paddleHeight,
+  );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
@@ -140,9 +161,22 @@ function draw() {
   drawLeftPaddle();
   drawRightPaddle();
 
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
+  if (x + dx < paddleWidth * 2) {
+    if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
+      dx = -dx;
+    } else {
+      // Game Over
+      initialize();
+    }
+  } else if (x + dx > canvas.width - paddleWidth * 2) {
+    if (y > rightPaddleY && y < rightPaddleY + paddleHeight) {
+      dx = -dx;
+    } else {
+      // Game Over
+      initialize();
+    }
   }
+
   if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
     dy = -dy;
   }
@@ -184,6 +218,5 @@ window.addEventListener("resize", onResize, false);
 // キーボードイベント
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-
 
 requestAnimationFrame(draw);
