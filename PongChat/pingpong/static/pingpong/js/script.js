@@ -227,6 +227,8 @@ function moveBall() {
   if (x + dx < paddleWidth * 2) {
     if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
       dx = -dx;
+      const hitPosition = (y - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
     } else {
       // Game Over
       cpuScore++;
@@ -235,6 +237,8 @@ function moveBall() {
   } else if (x + dx > canvas.width - paddleWidth * 2) {
     if (y > rightPaddleY && y < rightPaddleY + paddleHeight) {
       dx = -dx;
+      const hitPosition = (y - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
     } else {
       // Game Over
       playerScore++;
