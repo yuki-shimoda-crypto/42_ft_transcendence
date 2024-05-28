@@ -60,8 +60,22 @@ function drawBall() {
   ctx.closePath();
 }
 
+function drawCenterLine() {
+  const lineWidth = canvas.width * 0.01; // 例えばキャンバスの幅の1%
+  ctx.lineWidth = lineWidth;
+  ctx.beginPath();
+  ctx.setLineDash([lineWidth * 2, lineWidth]);
+  ctx.moveTo(canvas.width / 2, 0);
+  ctx.lineTo(canvas.width / 2, canvas.height);
+  ctx.strokeStyle = "#0095DD";
+  ctx.stroke();
+  ctx.setLineDash([]); // reset
+  ctx.closePath();
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+  drawCenterLine();
   drawBall();
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
