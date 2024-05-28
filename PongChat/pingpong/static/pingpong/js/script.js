@@ -12,6 +12,7 @@ let cpuScore = 0;
 // Countdown
 let countdown = 3;
 let countdownActive = true;
+let gamePaused = false;
 
 function initialize() {
   updateCanvasSize();
@@ -132,6 +133,7 @@ function drawCountdown() {
   }
 }
 
+
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -223,6 +225,14 @@ function startCountdown() {
   }, 1000);
 }
 
+function resetGame() {
+  gamePaused = true;
+  setTimeout(() => {
+    initialize();
+    gamePaused = false;
+  }, 500);
+}
+
 function moveBall() {
   if (x + dx < paddleWidth * 2) {
     if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
@@ -232,7 +242,7 @@ function moveBall() {
     } else {
       // Game Over
       cpuScore++;
-      initialize();
+      resetGame();
     }
   } else if (x + dx > canvas.width - paddleWidth * 2) {
     if (y > rightPaddleY && y < rightPaddleY + paddleHeight) {
@@ -242,7 +252,7 @@ function moveBall() {
     } else {
       // Game Over
       playerScore++;
-      initialize();
+      resetGame();
     }
   }
 
@@ -295,9 +305,11 @@ function draw() {
     drawScores();
 
     // move objects
-    moveBall();
-    moveLeftPaddle();
-    moveRightPaddle();
+    if (!gamePaused) {
+      moveBall();
+      moveLeftPaddle();
+      moveRightPaddle();
+    }
   }
 
   requestAnimationFrame(draw);
