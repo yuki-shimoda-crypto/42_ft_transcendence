@@ -3,8 +3,11 @@ const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
 let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
-let upPressed = false,
-  downPressed = false;
+let upPressed = false;
+let downPressed = false;
+// Score
+let playerScore = 0;
+let cpuScore = 0;
 
 function initialize() {
   updateCanvasSize();
@@ -153,6 +156,17 @@ function drawRightPaddle() {
   ctx.closePath();
 }
 
+function drawScores() {
+  const fontSize = canvas.width * 0.2;
+  ctx.font = `${fontSize}px Arial`;
+  ctx.fillStyle = "rgba(0, 149, 221, 0.5)";
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(playerScore, canvas.width / 4, canvas.height / 2);
+  ctx.fillText(cpuScore, (canvas.width / 4) * 3, canvas.height / 2);
+}
+
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
@@ -163,6 +177,7 @@ function moveBall() {
       dx = -dx;
     } else {
       // Game Over
+      cpuScore++;
       initialize();
     }
   } else if (x + dx > canvas.width - paddleWidth * 2) {
@@ -170,6 +185,7 @@ function moveBall() {
       dx = -dx;
     } else {
       // Game Over
+      playerScore++;
       initialize();
     }
   }
@@ -217,6 +233,7 @@ function draw() {
   drawCenterLine();
   drawLeftPaddle();
   drawRightPaddle();
+  drawScores();
 
   // move objects
   moveBall();
