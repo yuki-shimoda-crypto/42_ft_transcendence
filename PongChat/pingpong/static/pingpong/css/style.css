@@ -1,20 +1,18 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Prevent scrollbars from appearing */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrollbars from appearing */
 }
 
-.full-height{
-    height: 100vh;
+.fullscreen {
+  height: 100vh;
+  width: 100vw;
 }
 
 canvas {
-    background: #eee;
-    width: 100vw;
-    height: 56.25vw; /* 100/16*9 */
-    max-height: 100vh;
-    max-width: 177.78vh; /* 100/9*16 */
-    display: block;
-    margin: auto;
+  background: #eee;
+  display: block;
+  margin: auto;
 }

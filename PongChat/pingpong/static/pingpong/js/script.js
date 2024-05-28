@@ -1,3 +1,47 @@
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  // get the current size of the window
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  // set aspect ratio
+  const aspectRatio = 16 / 9; // 16:9
+
+  if (windowWidth / windowHeight > aspectRatio) {
+    // ウィンドウの幅が高さよりも大きい場合
+    // キャンバスの幅をウィンドウの高さに16:9のアスペクト比を適用して設定
+    canvas.width = windowHeight * aspectRatio;
+    canvas.height = windowHeight;
+  } else {
+    canvas.width = windowWidth;
+    canvas.height = windowWidth / aspectRatio;
+  }
+  updateBallSize();
+}
+
+let ballRadius;
+
+function updateBallSize() {
+  // ボールの半径をキャンバスサイズの一定の割合として設定
+  ballRadius = Math.min(canvas.width, canvas.height) * 0.05; // 例えばキャンバスの幅または高さの5%
+  drawBall();
+}
+
+function drawBall() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, canvas.height / 2, ballRadius, 0, Math.PI * 2);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+
+// リサイズイベントに応じてキャンバスをリサイズ
+window.addEventListener("resize", resizeCanvas, false);
+resizeCanvas(); // 初期サイズ設定
+
 // const canvas = document.getElementById("myCanvas");
 // const ctx = canvas.getContext("2d");
 // const ballRadius = 10;
