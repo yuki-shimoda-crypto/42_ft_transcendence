@@ -154,13 +154,11 @@ function drawRightPaddle() {
   ctx.closePath();
 }
 
-function draw() {
+function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-  drawBall();
-  drawCenterLine();
-  drawLeftPaddle();
-  drawRightPaddle();
+}
 
+function moveBall() {
   if (x + dx < paddleWidth * 2) {
     if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
       dx = -dx;
@@ -183,26 +181,46 @@ function draw() {
 
   x += dx;
   y += dy;
+}
 
+function moveLeftPaddle() {
   if (upPressed && leftPaddleY > 0) {
     leftPaddleY -= paddleDy;
   } else if (downPressed && leftPaddleY < canvas.height - paddleHeight) {
     leftPaddleY += paddleDy;
   }
+}
 
-  const diff = y - (rightPaddleY + (paddleHeight / 2));
+function moveRightPaddle() {
+  const diff = y - (rightPaddleY + paddleHeight / 2);
   if (Math.abs(diff) > paddleDy && Math.random() < 0.8) {
     let direction = 1;
     if (Math.random() < 0.1) {
       direction = -1;
     }
 
-    if (y < rightPaddleY + (paddleHeight / 2) && rightPaddleY > 0) {
+    if (y < rightPaddleY + paddleHeight / 2 && rightPaddleY > 0) {
       rightPaddleY -= paddleDy * direction;
-    } else if (y > rightPaddleY + (paddleHeight / 2) && rightPaddleY < canvas.height - paddleHeight) {
+    } else if (
+      y > rightPaddleY + paddleHeight / 2 &&
+      rightPaddleY < canvas.height - paddleHeight
+    ) {
       rightPaddleY += paddleDy * direction;
     }
   }
+}
+
+function draw() {
+  clearCanvas();
+
+  drawBall();
+  drawCenterLine();
+  drawLeftPaddle();
+  drawRightPaddle();
+
+  moveBall();
+  moveLeftPaddle();
+  moveRightPaddle();
 
   requestAnimationFrame(draw);
 }
