@@ -1,7 +1,7 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
-let paddleWidth, paddleHeight, paddleY, paddleDy;
+let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
 let upPressed = false, downPressed = false;
 
@@ -13,7 +13,8 @@ function initialize() {
   updateBallSpeed();
 
   updatePaddleSize();
-  updatePaddlePosition();
+  updateLeftPaddlePosition();
+  updateRightPaddlePosition();
   updatePaddleSpeed();
 }
 
@@ -56,11 +57,18 @@ function updateBallSpeed() {
   dy = canvas.height * 0.01; // 例えばキャンバスの高さの1%
 }
 
-function updatePaddlePosition() {
-  const paddlePositionRatioY = isNaN(paddleY / previousCanvasHeight)
+function updateLeftPaddlePosition() {
+  const paddlePositionRatioY = isNaN(leftPaddleY / previousCanvasHeight)
     ? 0.5
-    : paddleY / previousCanvasHeight;
-  paddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
+    : leftPaddleY / previousCanvasHeight;
+  leftPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
+}
+
+function updateRightPaddlePosition() {
+  const paddlePositionRatioY = isNaN(rightPaddleY / previousCanvasHeight)
+    ? 0.5
+    : rightPaddleY / previousCanvasHeight;
+  rightPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
 }
 
 function updatePaddleSize() {
@@ -109,9 +117,17 @@ function drawCenterLine() {
   ctx.closePath();
 }
 
-function drawPaddle() {
+function drawLeftPaddle() {
   ctx.beginPath();
-  ctx.rect(paddleWidth, paddleY, paddleWidth, paddleHeight);
+  ctx.rect(paddleWidth, leftPaddleY, paddleWidth, paddleHeight);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+
+function drawRightPaddle() {
+  ctx.beginPath();
+  ctx.rect((canvas.width - (paddleWidth * 2)), rightPaddleY, paddleWidth, paddleHeight);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
@@ -121,7 +137,8 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
   drawBall();
   drawCenterLine();
-  drawPaddle();
+  drawLeftPaddle();
+  drawRightPaddle();
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
@@ -133,10 +150,10 @@ function draw() {
   x += dx;
   y += dy;
 
-  if (upPressed && paddleY > 0) {
-    paddleY -= paddleDy;
-  } else if (downPressed && paddleY < canvas.height - paddleHeight) {
-    paddleY += paddleDy;
+  if (upPressed && leftPaddleY > 0) {
+    leftPaddleY -= paddleDy;
+  } else if (downPressed && leftPaddleY < canvas.height - paddleHeight) {
+    leftPaddleY += paddleDy;
   }
 
   requestAnimationFrame(draw);
@@ -148,12 +165,13 @@ function onResize() {
 
   updateCanvasSize();
 
-  updateBallPosition();
   updateBallSize();
+  updateBallPosition();
   updateBallSpeed();
 
-  updatePaddlePosition();
   updatePaddleSize();
+  updateLeftPaddlePosition();
+  updateRightPaddlePosition();
   updatePaddleSpeed();
 }
 
