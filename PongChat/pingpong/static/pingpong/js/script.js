@@ -1,14 +1,19 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-let ballRadius;
-let x, y, dx, dy, paddleHeight, paddleWidth, paddleX;
+let ballRadius, x, y, dx, dy;
+let paddleWidth, paddleHeight, paddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
 
 function initialize() {
   updateCanvasSize();
-  initializeBall();
+
   updateBallSize();
+  updateBallPosition();
   updateBallSpeed();
+
+  updatePaddleSize();
+  updatePaddlePosition();
+  updatePaddleSpeed();
 }
 
 function updateCanvasSize() {
@@ -28,14 +33,13 @@ function updateCanvasSize() {
   }
 }
 
-function initializeBall() {
-  x = canvas.width / 2;
-  y = canvas.height / 2;
-}
-
 function updateBallPosition() {
-  const ballPositionRatioX = isNaN(x / previousCanvasWidth) ? 0.5 : x / previousCanvasWidth;
-  const ballPositionRatioY = isNaN(y / previousCanvasHeight) ? 0.5 : y / previousCanvasHeight;
+  const ballPositionRatioX = isNaN(x / previousCanvasWidth)
+    ? 0.5
+    : x / previousCanvasWidth;
+  const ballPositionRatioY = isNaN(y / previousCanvasHeight)
+    ? 0.5
+    : y / previousCanvasHeight;
 
   x = canvas.width * ballPositionRatioX;
   y = canvas.height * ballPositionRatioY;
@@ -51,6 +55,30 @@ function updateBallSpeed() {
   dy = canvas.height * 0.01; // 例えばキャンバスの高さの1%
 }
 
+function updatePaddlePosition() {
+  const paddlePositionRatioY = isNaN(paddleY / previousCanvasHeight)
+    ? 0.5
+    : paddleY / previousCanvasHeight;
+  paddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
+}
+
+function updatePaddleSize() {
+  paddleWidth = canvas.width * 0.01; // 例えばキャンバスの幅の1%
+  paddleHeight = canvas.height * 0.2; // 例えばキャンバスの高さの10%
+}
+
+function updatePaddleSpeed() {
+  paddleDy = dy * 1.5; // 例えばキャンバスの高さの1%
+}
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+
 function drawCenterLine() {
   const lineWidth = canvas.width * 0.01; // 例えばキャンバスの幅の1%
   ctx.lineWidth = lineWidth;
@@ -64,9 +92,9 @@ function drawCenterLine() {
   ctx.closePath();
 }
 
-function drawBall() {
+function drawPaddle() {
   ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+  ctx.rect(paddleWidth, paddleY, paddleWidth, paddleHeight);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
@@ -74,8 +102,9 @@ function drawBall() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-  drawCenterLine();
   drawBall();
+  drawCenterLine();
+  drawPaddle();
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
@@ -94,9 +123,14 @@ function onResize() {
   previousCanvasHeight = canvas.height;
 
   updateCanvasSize();
+
   updateBallPosition();
   updateBallSize();
   updateBallSpeed();
+
+  updatePaddlePosition();
+  updatePaddleSize();
+  updatePaddleSpeed();
 }
 
 // 初期化
