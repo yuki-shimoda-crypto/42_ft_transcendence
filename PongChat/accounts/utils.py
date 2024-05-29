@@ -6,6 +6,12 @@ from PIL import Image, ImageDraw
 
 
 def get_random_color_pair():
+    """
+    Get a random pair of background and text colors.
+
+    Returns:
+        tuple: A tuple containing a pair of RGB color tuples for the background and text.
+    """
     color_pairs = [
         # (背景色, テキスト色)
         ((173, 216, 230), (139, 0, 139)),  # 薄水色と紫
@@ -23,6 +29,16 @@ def get_random_color_pair():
 
 
 def generate_default_profile_image(username, size=200):
+    """
+    Generate a profile image with text on a random background color.
+
+    Args:
+        username (str): User's name who signed in.
+        size (int, optional): The size of the image. Defaults to 200.
+
+    Returns:
+        str: The file path of the saved image relative to the media directory.
+    """
     text = username[:2].upper()
     bg_color, text_color = get_random_color_pair()
 
