@@ -8,21 +8,21 @@
 
   <!-- アカウント情報 -->
   <div class="row">
-    <div class="col"><h4>■ 登録情報</h4></div>
+    <div class="col"><h3>登録情報</h3></div>
     <!-- 後で更新ボタン追加 -->
   </div>
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td>ユーザー名</td>
-        <td>{{ user.username }}</td>
+        <td style="width: 50%;">ユーザー名</td>
+        <td style="width: 50%;">{{ user.username }}</td>
       </tr>
     </tbody>
   </table>
 
   <!-- パスワード -->
   <div class="row mt-4">
-    <div class="col"><h4>■ パスワード</h4></div>
+    <div class="col"><h3>パスワード</h3></div>
     <!-- 後で更新ボタン追加 -->
   </div>
   <table class="table table-bordered">
@@ -34,20 +34,21 @@
     </tbody>
   </table>
 
+  <!-- プロフィール画像 -->
   <div class="row mb-4">
     <div class="col">
-      <h4>■ プロフィール画像</h4>
+      <h3>プロフィール画像</h3>
       {% if user.profile_image %}
       <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
       {% else %}
-      <p>No profile image uploaded.</p>
+      <strong>プロフィール画像がありません</strong>
       {% endif %}
     </div>
   </div>
 
   <!-- 権限 -->
   <div class="row mt-4">
-    <div class="col"><h4>■ 権限</h4></div>
+    <div class="col"><h3>権限</h3></div>
   </div>
   <table class="table table-bordered">
     <tbody>

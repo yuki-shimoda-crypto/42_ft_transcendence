@@ -3,14 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const previewImage = document.querySelector("#image-preview");
 
   fileInput.addEventListener("change", () => {
-    const file = fileInput.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
+    const updatedFile = fileInput.files[0];
+    if (updatedFile) {
+      const reader = new FileReader(); // FileReaderはファイルを非同期で読み取るためのAPI
+      reader.onload = (event) => {
+        previewImage.src = event.target.result;
         previewImage.style.display = "block";
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(updatedFile);
     } else {
       previewImage.style.display = "none";
     }

@@ -1,9 +1,6 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .models import CustomUser
-
-User = get_user_model()
 
 
 class LoginForm(AuthenticationForm):
@@ -24,6 +21,5 @@ class CustomUserCreationForm(UserCreationForm):
         for field_name in self.fields:
             field = self.fields[field_name]
             field.widget.attrs["class"] = "form-control"
-            field.widget.attrs["required"] = ""
             if field_name == "profile_image":
                 field.label = "プロフィール画像"
