@@ -32,7 +32,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-secondary btn-lg mt-4" onclick="history.back()">キャンセル</button>
+              <a href="{% url 'accounts:top' %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
               <button type="submit" class="btn btn-success btn-lg mt-4">{{ process_name }}</button>
             </div>
           </form>
