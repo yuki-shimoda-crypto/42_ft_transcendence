@@ -25,7 +25,7 @@
       <i class="bi bi-person-circle"></i>
       ゲスト {% else %}
       <img
-        src="{% static 'images/profile_sample.png' %}"
+        src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/profile_sample.png' %}{% endif %}"
         alt="Profile Picture"
         class="profile-pic"
       />

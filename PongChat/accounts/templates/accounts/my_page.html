@@ -34,6 +34,17 @@
     </tbody>
   </table>
 
+  <div class="row mb-4">
+    <div class="col">
+      <h4>■ プロフィール画像</h4>
+      {% if user.profile_image %}
+      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+      {% else %}
+      <p>No profile image uploaded.</p>
+      {% endif %}
+    </div>
+  </div>
+
   <!-- 権限 -->
   <div class="row mt-4">
     <div class="col"><h4>■ 権限</h4></div>
@@ -45,10 +56,21 @@
         <td style="width: 50%">スタッフ権限</td>
         <td style="width: 50%">{{ user.is_staff }}</td>
       </tr>
-      {% endif %} {% if user.is_superuser %}
+	  {% else %}
+      <tr>
+        <td style="width: 50%">スタッフ権限</td>
+        <td style="width: 50%">なし</td>
+      </tr>
+      {% endif %}
+	  {% if user.is_superuser %}
       <tr>
         <td>スーパーユーザー権限</td>
         <td>{{ user.is_superuser }}</td>
+      </tr>
+	  {% else %}
+      <tr>
+        <td>スーパーユーザー権限</td>
+        <td>なし</td>
       </tr>
       {% endif %}
     </tbody>
