@@ -39,7 +39,7 @@
     <div class="col">
       <h3>プロフィール画像</h3>
       {% if user.profile_image %}
-      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 150px; height: 150px; object-fit: cover;">
       {% else %}
       <strong>プロフィール画像がありません</strong>
       {% endif %}

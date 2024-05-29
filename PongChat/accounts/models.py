@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from .utils import generate_profile_image
+
+from .utils import generate_default_profile_image
 
 
 class CustomUser(AbstractUser):
@@ -13,5 +14,5 @@ class CustomUser(AbstractUser):
 
     def save(self, *args, **kwargs):
         if not self.profile_image:
-            self.profile_image = generate_profile_image(self.username)
+            self.profile_image = generate_default_profile_image(self.username)
         super().save(*args, **kwargs)
