@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     Attributes:
         profile_image (ImageField): The user's profile image.
     """
+
     profile_image = models.ImageField(
         upload_to="profile_images/", null=True, blank=True
     )

@@ -10,7 +10,8 @@ def get_random_color_pair():
     Get a random pair of background and text colors.
 
     Returns:
-        tuple: A tuple containing a pair of RGB color tuples for the background and text.
+        tuple: A tuple containing a pair of RGB color
+        tuples for the background and text.
     """
     color_pairs = [
         # (背景色, テキスト色)

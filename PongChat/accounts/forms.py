@@ -16,6 +16,7 @@ class LoginForm(AuthenticationForm):
     Attributes:
         fields (dict): The form fields for username and password.
     """
+
     def __init__(self, *args, **kwargs):
         """Initializes the form.
 
@@ -46,6 +47,7 @@ class CustomUserCreationForm(UserCreationForm):
         Meta (class): Meta class to specify the model and fields used in the form.
         fields (dict): The form fields for username, password, and profile image.
     """
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = ("username", "password1", "password2", "profile_image")
