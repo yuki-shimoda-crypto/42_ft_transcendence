@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import View, generic
 
 from .forms import CustomUserCreationForm, LoginForm
@@ -34,20 +34,6 @@ class MyPage(OnlyYouMixin, generic.DetailView):
     template_name = "accounts/my_page.html"
 
 
-# class Signup(generic.CreateView):
-#     template_name = 'accounts/user_form.html'
-#     form_class = SignupForm
-
-#     def form_valid(self, form):
-#         form.save()
-#         return redirect('accounts:signup_done')
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["process_name"] = "Sign up"
-#         return context
-
-
 class SignUpView(View):
     form_class = CustomUserCreationForm
     template_name = "accounts/user_form.html"
@@ -62,8 +48,9 @@ class SignUpView(View):
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy("accounts:signup_done"))
-        context = {"form": form, "process_name": "Sign Up"}
-        return render(request, reverse("accounts:signup_done"), context)
+        else:
+            context = {"form": form, "process_name": "Sign Up"}
+            return render(request, "accounts/user_form.html", context)
 
 
 class SignupDone(generic.TemplateView):
