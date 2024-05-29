@@ -1,10 +1,10 @@
 import pytest
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 
 
 @pytest.fixture
 def test_create_user(db):
     username = "testuser"
     password = "testpassword"
-    user = User.objects.create_user(username=username, password=password)
+    user = CustomUser.objects.create_user(username=username, password=password)
     return user, password

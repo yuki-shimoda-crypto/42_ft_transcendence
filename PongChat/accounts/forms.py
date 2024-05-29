@@ -23,7 +23,7 @@ class CustomUserCreationForm(UserCreationForm):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
         for field_name in self.fields:
             field = self.fields[field_name]
-            field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['required'] = ''
-            if field_name == 'profile_image':
-                field.label = 'プロフィール画像'
+            field.widget.attrs["class"] = "form-control"
+            field.widget.attrs["required"] = ""
+            if field_name == "profile_image":
+                field.label = "プロフィール画像"
