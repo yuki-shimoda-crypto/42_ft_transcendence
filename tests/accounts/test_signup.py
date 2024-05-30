@@ -12,6 +12,13 @@ def test_signup_get(client, signup_url):
 
 
 @pytest.mark.django_db
+def test_customuser_str():
+    user = CustomUser.objects.create_user(username="testuser", password="testpassword")
+
+    assert str(user) == "testuser"
+
+
+@pytest.mark.django_db
 def test_signup_post_valid(client, signup_url, signup_done_url):
     response = client.post(
         signup_url,
