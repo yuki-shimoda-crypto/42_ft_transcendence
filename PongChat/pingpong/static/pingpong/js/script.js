@@ -1,3 +1,14 @@
+// デュース機能を追加する
+//　点数のプログレスバーを追加する
+// プレイヤー名を入力して、それを表示する
+// 勝利者を表示する
+
+// 最初の画面を作成する
+// プレイヤー名を入力するフォームを作成する
+// プレイヤー名を入力して、それを表示する
+// スタートボタンを作成する
+// スタートボタンを押すと、ゲームが始まる
+
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
@@ -13,6 +24,7 @@ let cpuScore = 0;
 let countdown = 3;
 let countdownActive = true;
 let gamePaused = false;
+const winningScore = 11;
 
 function initialize() {
   updateCanvasSize();
@@ -133,7 +145,6 @@ function drawCountdown() {
   }
 }
 
-
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -225,6 +236,29 @@ function startCountdown() {
   }, 1000);
 }
 
+function showRestartButton(message) {
+  const gameOverMessage = document.getElementById("gameOverMessage");
+  const gameOverText = document.getElementById("gameOverText");
+  const restartButton = document.getElementById("restartButton");
+
+  gameOverText.textContent = message;
+  gameOverMessage.classList.remove("d-none");
+
+  restartButton.onclick = () => {
+    playerScore = 0;
+    cpuScore = 0;
+    gameOverMessage.classList.add("d-none");
+    initialize();
+    startCountdown();
+    gamePaused = false;
+  };
+}
+
+function gameOver(message) {
+  gamePaused = true;
+  showRestartButton(message);
+}
+
 function resetGame() {
   gamePaused = true;
   setTimeout(() => {
@@ -237,22 +271,32 @@ function moveBall() {
   if (x + dx < paddleWidth * 2) {
     if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
       dx = -dx;
-      const hitPosition = (y - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      const hitPosition =
+        (y - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
     } else {
       // Game Over
       cpuScore++;
-      resetGame();
+      if (cpuScore >= winningScore) {
+        gameOver("CPU wins!");
+      } else {
+        resetGame();
+      }
     }
   } else if (x + dx > canvas.width - paddleWidth * 2) {
     if (y > rightPaddleY && y < rightPaddleY + paddleHeight) {
       dx = -dx;
-      const hitPosition = (y - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      const hitPosition =
+        (y - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
     } else {
       // Game Over
       playerScore++;
-      resetGame();
+      if (playerScore >= winningScore) {
+        gameOver("Player wins!");
+      } else {
+        resetGame();
+      }
     }
   }
 

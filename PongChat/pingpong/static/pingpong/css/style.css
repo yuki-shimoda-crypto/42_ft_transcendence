@@ -16,3 +16,7 @@ canvas {
   display: block;
   margin: auto;
 }
+
+#gameOverMessage {
+  z-index: 10;
+}
