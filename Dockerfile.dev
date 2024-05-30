@@ -53,12 +53,12 @@ RUN wget -qO- "https://api.github.com/repos/hadolint/hadolint/releases/latest" |
     chmod +x /usr/local/bin/hadolint
 
 
-# ユーザーを作成して切り替える
-RUN useradd -ms /bin/zsh ${MY_USER} && \
-    echo "${MY_USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${MY_USER} && \
-    chmod 0440 /etc/sudoers.d/${MY_USER}
-
-USER ${MY_USER}
+# # ユーザーを作成して切り替える
+# RUN useradd -ms /bin/zsh ${MY_USER} && \
+#     echo "${MY_USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${MY_USER} && \
+#     chmod 0440 /etc/sudoers.d/${MY_USER}
+# 
+# USER ${MY_USER}
 
 # oh-my-zsh
 RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 

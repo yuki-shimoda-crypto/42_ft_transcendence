@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>テストページ</title>
+    <link href="styles/style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Mozilla is cool</h1>
+    <img src="images/tokyo-station.jpgg" alt="Tokyo Station image" />
+
+    <p>At Mozilla, we're a global community of</p>
+
+    <ul>
+      <li>technologists</li>
+      <li>thinkers</li>
+      <li>builders</li>
+    </ul>
+
+    <p>
+      working together to keep the Internet alive and accessible, so people
+      worldwide can be informed contributors and creators of the Web. We believe
+      this act of human collaboration across an open platform is essential to
+      individual growth and our collective future.
+    </p>
+
+    <p>
+      Read the
+      <a href="https://www.mozilla.org/en-US/about/manifesto/"
+        >Mozilla Manifesto</a
+      >
+      to learn even more about the values and principles that guide the pursuit
+      of our mission.
+    </p>
+    <button>ユーザーを変更</button>
+    <script src="scripts/main.js">
+
+      const canvas = document.getElementById("pingpongCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let ball = {
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          radius: 10,
+          velocityX: 5,
+          velocityY: 5,
+          speed: 7,
+          color: "BLUE"
+      };
+
+      function drawBall() {
+          ctx.fillStyle = ball.color;
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2, false);
+          ctx.closePath();
+          ctx.fill();
+      }
+
+      function update() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          drawBall();
+          ball.x += ball.velocityX;
+          ball.y += ball.velocityY;
+
+          // ボールが上下の壁に当たった時の処理
+          if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+              ball.velocityY = -ball.velocityY;
+          }
+          // ボールが左右の壁に当たった時の処理
+          if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+              ball.velocityX = -ball.velocityX;
+          }
+      }
+
+      setInterval(update, 1000/60); // 60fpsでゲームを更新
+    </script>
+  </body>
+</html>
