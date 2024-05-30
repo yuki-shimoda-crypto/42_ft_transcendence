@@ -44,8 +44,8 @@ jobs:
 
       - name: Create media directory
         run: |
-          mkdir -p /app/PongChat/media/profile_images
-          chmod -R 777 /app/PongChat/media
+          mkdir -p ./PongChat/media/profile_images
+          chmod -R 777 ./PongChat/media
 
       - name: Run Lint and Tests
         run: |
