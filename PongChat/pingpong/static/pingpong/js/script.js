@@ -1,3 +1,5 @@
+import {keyDownHandler, keyUpHandler, upPressed, downPressed} from "./key_handle.js";
+
 // デュース機能を追加する
 //　点数のプログレスバーを追加する
 // プレイヤー名を入力して、それを表示する
@@ -9,13 +11,16 @@
 // スタートボタンを作成する
 // スタートボタンを押すと、ゲームが始まる
 
+
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
 let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
-let upPressed = false;
-let downPressed = false;
+
+// let upPressed = false;
+// let downPressed = false;
+
 // Score
 let playerScore = 0;
 let cpuScore = 0;
@@ -115,21 +120,21 @@ function updatePaddleSpeed() {
   paddleDy = canvas.height * 0.015;
 }
 
-function keyDownHandler(e) {
-  if (e.key === "Up" || e.key === "ArrowUp") {
-    upPressed = true;
-  } else if (e.key === "Down" || e.key === "ArrowDown") {
-    downPressed = true;
-  }
-}
+// function keyDownHandler(e) {
+//   if (e.key === "Up" || e.key === "ArrowUp") {
+//     upPressed = true;
+//   } else if (e.key === "Down" || e.key === "ArrowDown") {
+//     downPressed = true;
+//   }
+// }
 
-function keyUpHandler(e) {
-  if (e.key === "Up" || e.key === "ArrowUp") {
-    upPressed = false;
-  } else if (e.key === "Down" || e.key === "ArrowDown") {
-    downPressed = false;
-  }
-}
+// function keyUpHandler(e) {
+//   if (e.key === "Up" || e.key === "ArrowUp") {
+//     upPressed = false;
+//   } else if (e.key === "Down" || e.key === "ArrowDown") {
+//     downPressed = false;
+//   }
+// }
 
 function drawCountdown() {
   const fontSize = canvas.width * 0.2;
