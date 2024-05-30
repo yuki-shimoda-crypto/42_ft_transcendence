@@ -54,7 +54,8 @@ def generate_default_profile_image(username, size=200):
 
     # 画像の保存先ディレクトリ
     image_path = os.path.join(settings.MEDIA_ROOT, "profile_images")
-    os.makedirs(image_path, exist_ok=True)
+    if not os.path.exists(image_path):
+        os.makedirs(image_path, exist_ok=True)
 
     # ファイル名の生成
     image_filename = f"{username.lower()}.png"
