@@ -237,7 +237,7 @@ function startCountdown() {
 }
 
 function showRestartButton(message) {
-  const gameOverMessage = document.getElementById("gameOverMessage");
+  const gameOverMessage = document.getElementById("game-over-message");
   const gameOverText = document.getElementById("gameOverText");
   const restartButton = document.getElementById("restartButton");
 

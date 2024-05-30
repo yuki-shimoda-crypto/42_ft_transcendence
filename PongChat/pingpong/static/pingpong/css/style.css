@@ -17,7 +17,7 @@ canvas {
   margin: auto;
 }
 
-#gameOverMessage {
+#game-over-message {
   z-index: 10;
   white-space: nowrap;
 }
