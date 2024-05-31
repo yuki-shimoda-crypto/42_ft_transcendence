@@ -8,8 +8,10 @@
 
   <!-- アカウント情報 -->
   <div class="row">
-    <div class="col"><h3>登録情報</h3></div>
-    <!-- 後で更新ボタン追加 -->
+    <div class="col d-flex align-items-center">
+      <h3 class="mr-2">登録情報</h3>
+      <a href="{% url 'accounts:user_update' user.pk %}"><i class="bi bi-pencil-square"></i></a>
+    </div>
   </div>
   <table class="table table-bordered">
     <tbody>

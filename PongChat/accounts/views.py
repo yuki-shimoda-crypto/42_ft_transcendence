@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, resolve_url
 from django.urls import reverse_lazy
 from django.views import View, generic
 
-from .forms import CustomUserCreationForm, LoginForm
+from .forms import CustomUserCreationForm, LoginForm, UserUpdateForm, CustomPasswordChangeForm, ProfileImageUpdateForm
 from .models import CustomUser
 
 
@@ -140,3 +140,17 @@ class SignupDone(generic.TemplateView):
     """
 
     template_name = "accounts/signup_done.html"
+
+
+class UserUpdate(OnlyYouMixin, generic.UpdateView):
+    model = CustomUser
+    form_class = UserUpdateForm
+    template_name = 'accounts/user_form.html'
+
+    def get_success_url(self):
+        return resolve_url('accounts:my_page', pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["process_name"] = "Update Username"
+        return context
