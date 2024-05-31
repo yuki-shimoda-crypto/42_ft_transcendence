@@ -1,9 +1,11 @@
 {% extends 'common/base.html' %}
 
-<!-- コンテンツ -->
 {% block content %}
 <div class="container">
-  <h1>My page</h1>
+  <div class="d-flex align-items-center mt-1">
+    <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 50px; height: 50px; object-fit: cover;">
+    <h2 class="ml-3">{{ user.username }}</h2>
+  </div>
   <hr />
 
   <!-- アカウント情報 -->
@@ -53,18 +55,6 @@
     </tbody>
   </table>
 
-  <!-- プロフィール画像 -->
-  <div class="row mb-4">
-    <div class="col">
-      <h3>プロフィール画像</h3>
-      {% if user.profile_image %}
-      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 150px; height: 150px; object-fit: cover;">
-      {% else %}
-      <strong>プロフィール画像がありません</strong>
-      {% endif %}
-    </div>
-  </div>
-
   <!-- 権限 -->
   <div class="row mt-4">
     <div class="col"><h3>権限</h3></div>
@@ -95,5 +85,6 @@
       {% endif %}
     </tbody>
   </table>
+  <hr />
 </div>
 {% endblock %}

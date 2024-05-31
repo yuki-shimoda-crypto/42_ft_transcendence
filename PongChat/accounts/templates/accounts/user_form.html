@@ -32,7 +32,11 @@
             </div>
 
             <div class="d-flex justify-content-between">
-              <a href="{% url 'accounts:top' %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
+              {% if process_name == 'Sign Up'%}
+                <a href="{% url 'accounts:top' %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
+              {% else %}
+                <a href="{% url 'accounts:my_page' user.pk %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
+              {% endif %}
               <button type="submit" class="btn btn-success btn-lg mt-4">{{ process_name }}</button>
             </div>
           </form>
