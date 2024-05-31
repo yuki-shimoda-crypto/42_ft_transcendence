@@ -4,6 +4,7 @@ import {
   upPressed,
   downPressed,
 } from "./key_handle.js";
+
 import {
   drawLeftPaddle,
   drawRightPaddle,
@@ -13,11 +14,18 @@ import {
   updatePaddleSize,
   updatePaddleSpeed,
   updateRightPaddlePosition,
-  paddleWidth,
-  paddleHeight,
-  leftPaddleY,
-  rightPaddleY,
 } from "./paddle.js";
+
+import {
+  drawBall,
+  moveBall,
+  updateBallPosition,
+  updateBallSize,
+  updateBallSpeed,
+  initializeBallPosition,
+  initializeBallSpeed,
+  ballY,
+} from "./ball.js";
 
 // デュース機能を追加する
 //　点数のプログレスバーを追加する
@@ -32,25 +40,24 @@ import {
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-let ballRadius, ballX, ballY, ballDx, ballDy;
 let previousCanvasWidth, previousCanvasHeight;
 
 // Score
-let playerScore = 0;
-let cpuScore = 0;
+export let playerScore = 0;
+export let cpuScore = 0;
+export const winningScore = 11;
 
 // Countdown
 let countdown = 3;
 let countdownActive = true;
 let gamePaused = false;
-const winningScore = 11;
 
 function initialize() {
   updateCanvasSize();
 
-  updateBallSize();
-  initializeBallPosition();
-  initializeBallSpeed();
+  updateBallSize(canvas);
+  initializeBallPosition(canvas);
+  initializeBallSpeed(canvas);
 
   updatePaddleSize(canvas);
   updateLeftPaddlePosition(previousCanvasHeight, canvas);
@@ -58,19 +65,12 @@ function initialize() {
   updatePaddleSpeed(canvas);
 }
 
-function initializeBallPosition() {
-  ballX = canvas.width / 2;
-  ballY = canvas.height / 2;
+export function incrementCpuScore() {
+  cpuScore++;
 }
 
-function getRandomDirection() {
-  return Math.random() < 0.5 ? 1 : -1;
-}
-
-function initializeBallSpeed() {
-  const angle = Math.random() * 2 * Math.PI;
-  ballDx = canvas.width * 0.01 * getRandomDirection();
-  ballDy = canvas.height * 0.01 * Math.sin(angle);
+export function incrementPlayerScore() {
+  playerScore++;
 }
 
 function updateCanvasSize() {
@@ -90,27 +90,6 @@ function updateCanvasSize() {
   }
 }
 
-function updateBallPosition() {
-  const ballPositionRatioX = isNaN(ballX / previousCanvasWidth)
-    ? 0.5
-    : ballX / previousCanvasWidth;
-  const ballPositionRatioY = isNaN(ballY / previousCanvasHeight)
-    ? 0.5
-    : ballY / previousCanvasHeight;
-
-  ballX = canvas.width * ballPositionRatioX;
-  ballY = canvas.height * ballPositionRatioY;
-}
-
-function updateBallSize() {
-  ballRadius = Math.min(canvas.width, canvas.height) * 0.05;
-}
-
-function updateBallSpeed() {
-  ballDx = canvas.width * 0.01;
-  ballDy = canvas.height * 0.01;
-}
-
 function drawCountdown() {
   const fontSize = canvas.width * 0.2;
   ctx.font = `${fontSize}px Arial`;
@@ -125,14 +104,6 @@ function drawCountdown() {
   }
 }
 
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
-  ctx.closePath();
-}
-
 function drawCenterLine() {
   const lineWidth = canvas.width * 0.01;
   const radius = lineWidth * 0.7;
@@ -141,9 +112,9 @@ function drawCenterLine() {
   ctx.setLineDash([]);
   ctx.fillStyle = "#0095DD";
 
-  for (let ballY = radius; ballY < canvas.height; ballY += radius * 4) {
-    ctx.moveTo(canvas.width / 2, ballY);
-    ctx.arc(canvas.width / 2, ballY, radius, 0, Math.PI * 2);
+  for (let y = radius; y < canvas.height; y += radius * 4) {
+    ctx.moveTo(canvas.width / 2, y);
+    ctx.arc(canvas.width / 2, y, radius, 0, Math.PI * 2);
   }
 
   ctx.fill();
@@ -194,61 +165,17 @@ function showRestartButton(message) {
   };
 }
 
-function gameOver(message) {
+export function gameOver(message) {
   gamePaused = true;
   showRestartButton(message);
 }
 
-function resetGame() {
+export function resetGame() {
   gamePaused = true;
   setTimeout(() => {
     initialize();
     gamePaused = false;
   }, 500);
-}
-
-function moveBall() {
-  if (ballX + ballDx < paddleWidth * 2) {
-    if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
-      ballDx = -ballDx;
-      const hitPosition =
-        (ballY - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-      ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
-    } else {
-      // Game Over
-      cpuScore++;
-      if (cpuScore >= winningScore) {
-        gameOver("CPU wins! Better luck next time.");
-      } else {
-        resetGame();
-      }
-    }
-  } else if (ballX + ballDx > canvas.width - paddleWidth * 2) {
-    if (ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
-      ballDx = -ballDx;
-      const hitPosition =
-        (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-      ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
-    } else {
-      // Game Over
-      playerScore++;
-      if (playerScore >= winningScore) {
-        gameOver("Congratulations! You win!");
-      } else {
-        resetGame();
-      }
-    }
-  }
-
-  if (
-    ballY + ballDy > canvas.height - ballRadius ||
-    ballY + ballDy < ballRadius
-  ) {
-    ballDy = -ballDy;
-  }
-
-  ballX += ballDx;
-  ballY += ballDy;
 }
 
 function draw() {
@@ -258,7 +185,7 @@ function draw() {
     drawCountdown();
   } else {
     // draw objects
-    drawBall();
+    drawBall(ctx);
     drawCenterLine();
     drawLeftPaddle(ctx);
     drawRightPaddle(ctx, canvas);
@@ -266,7 +193,7 @@ function draw() {
 
     // move objects
     if (!gamePaused) {
-      moveBall();
+      moveBall(canvas);
       moveLeftPaddle(upPressed, downPressed, canvas);
       moveRightPaddle(ballY, canvas);
     }
@@ -281,9 +208,9 @@ function onResize() {
 
   updateCanvasSize();
 
-  updateBallSize();
-  updateBallPosition();
-  updateBallSpeed();
+  updateBallSize(canvas);
+  updateBallPosition(canvas, previousCanvasWidth, previousCanvasHeight);
+  updateBallSpeed(canvas);
 
   updatePaddleSize(canvas);
   updateLeftPaddlePosition(previousCanvasHeight, canvas);
