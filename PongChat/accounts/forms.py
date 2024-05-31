@@ -1,8 +1,12 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django import forms
-from .widgets import CustomClearableFileInput
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm,
+    UserCreationForm,
+)
 
 from .models import CustomUser
+from .widgets import CustomClearableFileInput
 
 
 class LoginForm(AuthenticationForm):
@@ -75,31 +79,29 @@ class CustomUserCreationForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('username',)
+        fields = ("username",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs["class"] = "form-control"
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs["class"] = "form-control"
 
 
 class ProfileImageUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('profile_image',)
-        widgets = {
-            'profile_image': CustomClearableFileInput
-        }
+        fields = ("profile_image",)
+        widgets = {"profile_image": CustomClearableFileInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['required'] = ''
+            field.widget.attrs["class"] = "form-control"
+            field.widget.attrs["required"] = ""

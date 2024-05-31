@@ -1,10 +1,21 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordChangeDoneView,
+    PasswordChangeView,
+)
 from django.shortcuts import redirect, render, resolve_url
 from django.urls import reverse_lazy
 from django.views import View, generic
 
-from .forms import CustomUserCreationForm, LoginForm, UserUpdateForm, CustomPasswordChangeForm, ProfileImageUpdateForm
+from .forms import (
+    CustomPasswordChangeForm,
+    CustomUserCreationForm,
+    LoginForm,
+    ProfileImageUpdateForm,
+    UserUpdateForm,
+)
 from .models import CustomUser
 
 
@@ -145,10 +156,10 @@ class SignupDone(generic.TemplateView):
 class UserUpdate(OnlyYouMixin, generic.UpdateView):
     model = CustomUser
     form_class = UserUpdateForm
-    template_name = 'accounts/user_form.html'
+    template_name = "accounts/user_form.html"
 
     def get_success_url(self):
-        return resolve_url('accounts:my_page', pk=self.kwargs['pk'])
+        return resolve_url("accounts:my_page", pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -159,10 +170,10 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 class ProfileImageUpdate(OnlyYouMixin, generic.UpdateView):
     model = CustomUser
     form_class = ProfileImageUpdateForm
-    template_name = 'accounts/user_form.html'
+    template_name = "accounts/user_form.html"
 
     def get_success_url(self):
-        return resolve_url('accounts:my_page', pk=self.kwargs['pk'])
+        return resolve_url("accounts:my_page", pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -172,8 +183,8 @@ class ProfileImageUpdate(OnlyYouMixin, generic.UpdateView):
 
 class PasswordChange(PasswordChangeView):
     form_class = CustomPasswordChangeForm
-    success_url = reverse_lazy('accounts:password_change_done')
-    template_name = 'accounts/user_form.html'
+    success_url = reverse_lazy("accounts:password_change_done")
+    template_name = "accounts/user_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -182,4 +193,4 @@ class PasswordChange(PasswordChangeView):
 
 
 class PasswordChangeDone(PasswordChangeDoneView):
-    template_name = 'accounts/password_change_done.html'
+    template_name = "accounts/password_change_done.html"
