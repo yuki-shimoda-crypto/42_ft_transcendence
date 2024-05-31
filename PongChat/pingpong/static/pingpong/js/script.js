@@ -1,4 +1,5 @@
 import {keyDownHandler, keyUpHandler, upPressed, downPressed} from "./key_handle.js";
+import {moveLeftPaddle, moveRightPaddle} from "./paddle.js";
 
 // デュース機能を追加する
 //　点数のプログレスバーを追加する
@@ -17,9 +18,6 @@ const ctx = canvas.getContext("2d");
 let ballRadius, x, y, dx, dy;
 let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
 let previousCanvasWidth, previousCanvasHeight;
-
-// let upPressed = false;
-// let downPressed = false;
 
 // Score
 let playerScore = 0;
@@ -119,22 +117,6 @@ function updatePaddleSize() {
 function updatePaddleSpeed() {
   paddleDy = canvas.height * 0.015;
 }
-
-// function keyDownHandler(e) {
-//   if (e.key === "Up" || e.key === "ArrowUp") {
-//     upPressed = true;
-//   } else if (e.key === "Down" || e.key === "ArrowDown") {
-//     downPressed = true;
-//   }
-// }
-
-// function keyUpHandler(e) {
-//   if (e.key === "Up" || e.key === "ArrowUp") {
-//     upPressed = false;
-//   } else if (e.key === "Down" || e.key === "ArrowDown") {
-//     downPressed = false;
-//   }
-// }
 
 function drawCountdown() {
   const fontSize = canvas.width * 0.2;
@@ -313,33 +295,6 @@ function moveBall() {
   y += dy;
 }
 
-function moveLeftPaddle() {
-  if (upPressed && leftPaddleY > 0) {
-    leftPaddleY -= paddleDy;
-  } else if (downPressed && leftPaddleY < canvas.height - paddleHeight) {
-    leftPaddleY += paddleDy;
-  }
-}
-
-function moveRightPaddle() {
-  const diff = y - (rightPaddleY + paddleHeight / 2);
-  if (Math.abs(diff) > paddleDy && Math.random() < 0.8) {
-    let direction = 1;
-    if (Math.random() < 0.1) {
-      direction = -1;
-    }
-
-    if (y < rightPaddleY + paddleHeight / 2 && rightPaddleY > 0) {
-      rightPaddleY -= paddleDy * direction;
-    } else if (
-      y > rightPaddleY + paddleHeight / 2 &&
-      rightPaddleY < canvas.height - paddleHeight
-    ) {
-      rightPaddleY += paddleDy * direction;
-    }
-  }
-}
-
 function draw() {
   clearCanvas();
 
@@ -356,8 +311,8 @@ function draw() {
     // move objects
     if (!gamePaused) {
       moveBall();
-      moveLeftPaddle();
-      moveRightPaddle();
+      leftPaddleY = moveLeftPaddle(upPressed, downPressed, leftPaddleY, paddleDy, paddleHeight, canvas);
+      rightPaddleY = moveRightPaddle(y, rightPaddleY, paddleDy, paddleHeight, canvas);
     }
   }
 
