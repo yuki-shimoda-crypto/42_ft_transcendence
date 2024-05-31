@@ -200,6 +200,7 @@ class ProfileImageUpdate(OnlyYouMixin, generic.UpdateView):
         form_class (Form): The form used for updating the profile image.
         template_name (str): The template used for rendering the view.
     """
+
     model = CustomUser
     form_class = ProfileImageUpdateForm
     template_name = "accounts/user_form.html"
@@ -263,4 +264,5 @@ class PasswordChangeDone(PasswordChangeDoneView):
     Attributes:
         template_name (str): The template used for rendering the view.
     """
+
     template_name = "accounts/password_change_done.html"
