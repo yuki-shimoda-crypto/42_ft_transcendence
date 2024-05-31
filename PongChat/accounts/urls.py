@@ -11,4 +11,6 @@ urlpatterns = [
     path("my_page/<int:pk>/", views.MyPage.as_view(), name="my_page"),
     path("signup/", views.SignUpView.as_view(), name="signup"),
     path("signup_done/", views.SignupDone.as_view(), name="signup_done"),
+    path('user_update/<int:pk>', views.UserUpdate.as_view(), name='user_update'),
+    path('profile_image_update/<int:pk>', views.ProfileImageUpdate.as_view(), name='profile_image_update'),
 ]

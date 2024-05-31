@@ -22,6 +22,21 @@
     </tbody>
   </table>
 
+  <!-- プロフィール画像 -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <h3 class="mr-2">プロフィール画像</h3>
+        <a href="{% url 'accounts:profile_image_update' user.pk %}"><i class="bi bi-pencil-square"></i></a>
+      </div>
+      {% if user.profile_image %}
+      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 150px; height: 150px; object-fit: cover;">
+      {% else %}
+      <strong>プロフィール画像がありません</strong>
+      {% endif %}
+    </div>
+  </div>
+
   <!-- パスワード -->
   <div class="row mt-4">
     <div class="col"><h3>パスワード</h3></div>

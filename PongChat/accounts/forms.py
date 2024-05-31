@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django import forms
+from .widgets import CustomClearableFileInput
 
 from .models import CustomUser
 
@@ -68,3 +69,19 @@ class CustomUserCreationForm(UserCreationForm):
             field.widget.attrs["class"] = "form-control"
             if field_name == "profile_image":
                 field.label = "プロフィール画像"
+
+
+
+class ProfileImageUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('profile_image',)
+        widgets = {
+            'profile_image': CustomClearableFileInput
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['required'] = ''
