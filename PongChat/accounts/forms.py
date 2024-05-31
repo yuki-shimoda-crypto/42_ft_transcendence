@@ -77,30 +77,76 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class UsernameUpdateForm(forms.ModelForm):
+    """Form for updating the username.
+
+    This form allows users to update their username.
+
+    Attributes:
+        model (Model): The model associated with this form.
+        fields (tuple): The fields to be included in the form.
+    """
+
     class Meta:
         model = CustomUser
         fields = ("username",)
 
     def __init__(self, *args, **kwargs):
+        """Initializes the form with Bootstrap CSS classes.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
+    """Form for changing the user's password.
+
+    This form allows users to change their password.
+
+    Attributes:
+        model (Model): The model associated with this form.
+        fields (tuple): The fields to be included in the form.
+    """
+
     def __init__(self, *args, **kwargs):
+        """Initializes the form with Bootstrap CSS classes.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 
 
 class ProfileImageUpdateForm(forms.ModelForm):
+    """Form for updating the profile image.
+
+    This form allows users to update their profile image.
+
+    Attributes:
+        model (Model): The model associated with this form.
+        fields (tuple): The fields to be included in the form.
+        widgets (dict): Custom widgets for the form fields.
+    """
+
     class Meta:
         model = CustomUser
         fields = ("profile_image",)
         widgets = {"profile_image": CustomClearableFileInput}
 
     def __init__(self, *args, **kwargs):
+        """Initializes the form with Bootstrap CSS classes and custom labels.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.label = "プロフィール画像"

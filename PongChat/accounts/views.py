@@ -154,43 +154,113 @@ class SignupDone(generic.TemplateView):
 
 
 class UsernameUpdate(OnlyYouMixin, generic.UpdateView):
+    """View for updating the username.
+
+    This view allows users to update their username.
+
+    Attributes:
+        model (Model): The model associated with this view.
+        form_class (Form): The form used for updating the username.
+        template_name (str): The template used for rendering the view.
+    """
+
     model = CustomUser
     form_class = UsernameUpdateForm
     template_name = "accounts/user_form.html"
 
     def get_success_url(self):
+        """Returns the URL to redirect to after successful form submission.
+
+        Returns:
+            str: The URL to redirect to.
+        """
         return resolve_url("accounts:my_page", pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
+        """Adds extra context data to the view.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            dict: The context data.
+        """
         context = super().get_context_data(**kwargs)
         context["process_name"] = "Update Username"
         return context
 
 
 class ProfileImageUpdate(OnlyYouMixin, generic.UpdateView):
+    """View for updating the profile image.
+
+    This view allows users to update their profile image.
+
+    Attributes:
+        model (Model): The model associated with this view.
+        form_class (Form): The form used for updating the profile image.
+        template_name (str): The template used for rendering the view.
+    """
     model = CustomUser
     form_class = ProfileImageUpdateForm
     template_name = "accounts/user_form.html"
 
     def get_success_url(self):
+        """Returns the URL to redirect to after successful form submission.
+
+        Returns:
+            str: The URL to redirect to.
+        """
         return resolve_url("accounts:my_page", pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
+        """Adds extra context data to the view.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            dict: The context data.
+        """
         context = super().get_context_data(**kwargs)
         context["process_name"] = "Update Profile Image"
         return context
 
 
 class PasswordChange(PasswordChangeView):
+    """View for changing the password.
+
+    This view allows users to change their password.
+
+    Attributes:
+        form_class (Form): The form used for changing the password.
+        success_url (str): The URL to redirect to after successful password change.
+        template_name (str): The template used for rendering the view.
+    """
+
     form_class = CustomPasswordChangeForm
     success_url = reverse_lazy("accounts:password_change_done")
     template_name = "accounts/user_form.html"
 
     def get_context_data(self, **kwargs):
+        """Adds extra context data to the view.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            dict: The context data.
+        """
         context = super().get_context_data(**kwargs)
         context["process_name"] = "Change Password"
         return context
 
 
 class PasswordChangeDone(PasswordChangeDoneView):
+    """View for password change confirmation.
+
+    This view confirms that the user's password has been successfully changed.
+
+    Attributes:
+        template_name (str): The template used for rendering the view.
+    """
     template_name = "accounts/password_change_done.html"
