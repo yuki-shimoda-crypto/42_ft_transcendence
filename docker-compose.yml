@@ -9,10 +9,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_PORT: ${DATABASE_PORT}
+      POSTGRES_USER: ${DATABASE_USER}
 
   web_prod:
     build:
@@ -20,11 +20,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_USER: ${POSTGRES_USER}
     restart: always
     ports:
       - "8000:8000"
@@ -36,19 +31,15 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
-      - ${SSH_AUTH_SOCK}:/ssh-agent
       - .:/app
-      - ~/.gitconfig:/home/user/.gitconfig
-      - ~/.ssh/:/home/user/.ssh
-      - ~/.vimrc:/home/user/.vimrc
-      - ~/.gnupg/:/home/user/.gnupg/
       - node_volume:/app/node_modules
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_USER: ${POSTGRES_USER}
-      SSH_AUTH_SOCK: /ssh-agent
+#      - ${SSH_AUTH_SOCK}:/ssh-agent
+#      - ~/.gitconfig:/home/user/.gitconfig
+#      - ~/.ssh/:/home/user/.ssh
+#      - ~/.vimrc:/home/user/.vimrc
+#      - ~/.gnupg/:/home/user/.gnupg/
+#    environment:
+#      SSH_AUTH_SOCK: /ssh-agent
     restart: always
     ports:
       - "8001:8000"
