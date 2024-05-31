@@ -14,7 +14,7 @@ from .forms import (
     CustomUserCreationForm,
     LoginForm,
     ProfileImageUpdateForm,
-    UserUpdateForm,
+    UsernameUpdateForm,
 )
 from .models import CustomUser
 
@@ -153,9 +153,9 @@ class SignupDone(generic.TemplateView):
     template_name = "accounts/signup_done.html"
 
 
-class UserUpdate(OnlyYouMixin, generic.UpdateView):
+class UsernameUpdate(OnlyYouMixin, generic.UpdateView):
     model = CustomUser
-    form_class = UserUpdateForm
+    form_class = UsernameUpdateForm
     template_name = "accounts/user_form.html"
 
     def get_success_url(self):
