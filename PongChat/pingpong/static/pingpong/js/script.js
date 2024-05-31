@@ -1,5 +1,23 @@
-import {keyDownHandler, keyUpHandler, upPressed, downPressed} from "./key_handle.js";
-import {moveLeftPaddle, moveRightPaddle} from "./paddle.js";
+import {
+  keyDownHandler,
+  keyUpHandler,
+  upPressed,
+  downPressed,
+} from "./key_handle.js";
+import {
+  drawLeftPaddle,
+  drawRightPaddle,
+  moveLeftPaddle,
+  moveRightPaddle,
+  updateLeftPaddlePosition,
+  updatePaddleSize,
+  updatePaddleSpeed,
+  updateRightPaddlePosition,
+  paddleWidth,
+  paddleHeight,
+  leftPaddleY,
+  rightPaddleY,
+} from "./paddle.js";
 
 // デュース機能を追加する
 //　点数のプログレスバーを追加する
@@ -12,11 +30,9 @@ import {moveLeftPaddle, moveRightPaddle} from "./paddle.js";
 // スタートボタンを作成する
 // スタートボタンを押すと、ゲームが始まる
 
-
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-let ballRadius, x, y, dx, dy;
-let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY, paddleDy;
+let ballRadius, ballX, ballY, ballDx, ballDy;
 let previousCanvasWidth, previousCanvasHeight;
 
 // Score
@@ -36,15 +52,15 @@ function initialize() {
   initializeBallPosition();
   initializeBallSpeed();
 
-  updatePaddleSize();
-  updateLeftPaddlePosition();
-  updateRightPaddlePosition();
-  updatePaddleSpeed();
+  updatePaddleSize(canvas);
+  updateLeftPaddlePosition(previousCanvasHeight, canvas);
+  updateRightPaddlePosition(previousCanvasHeight, canvas);
+  updatePaddleSpeed(canvas);
 }
 
 function initializeBallPosition() {
-  x = canvas.width / 2;
-  y = canvas.height / 2;
+  ballX = canvas.width / 2;
+  ballY = canvas.height / 2;
 }
 
 function getRandomDirection() {
@@ -53,8 +69,8 @@ function getRandomDirection() {
 
 function initializeBallSpeed() {
   const angle = Math.random() * 2 * Math.PI;
-  dx = canvas.width * 0.01 * getRandomDirection();
-  dy = canvas.height * 0.01 * Math.sin(angle);
+  ballDx = canvas.width * 0.01 * getRandomDirection();
+  ballDy = canvas.height * 0.01 * Math.sin(angle);
 }
 
 function updateCanvasSize() {
@@ -75,15 +91,15 @@ function updateCanvasSize() {
 }
 
 function updateBallPosition() {
-  const ballPositionRatioX = isNaN(x / previousCanvasWidth)
+  const ballPositionRatioX = isNaN(ballX / previousCanvasWidth)
     ? 0.5
-    : x / previousCanvasWidth;
-  const ballPositionRatioY = isNaN(y / previousCanvasHeight)
+    : ballX / previousCanvasWidth;
+  const ballPositionRatioY = isNaN(ballY / previousCanvasHeight)
     ? 0.5
-    : y / previousCanvasHeight;
+    : ballY / previousCanvasHeight;
 
-  x = canvas.width * ballPositionRatioX;
-  y = canvas.height * ballPositionRatioY;
+  ballX = canvas.width * ballPositionRatioX;
+  ballY = canvas.height * ballPositionRatioY;
 }
 
 function updateBallSize() {
@@ -91,31 +107,8 @@ function updateBallSize() {
 }
 
 function updateBallSpeed() {
-  dx = canvas.width * 0.01;
-  dy = canvas.height * 0.01;
-}
-
-function updateLeftPaddlePosition() {
-  const paddlePositionRatioY = isNaN(leftPaddleY / previousCanvasHeight)
-    ? 0.5
-    : leftPaddleY / previousCanvasHeight;
-  leftPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
-}
-
-function updateRightPaddlePosition() {
-  const paddlePositionRatioY = isNaN(rightPaddleY / previousCanvasHeight)
-    ? 0.5
-    : rightPaddleY / previousCanvasHeight;
-  rightPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
-}
-
-function updatePaddleSize() {
-  paddleWidth = canvas.width * 0.015;
-  paddleHeight = canvas.height * 0.2;
-}
-
-function updatePaddleSpeed() {
-  paddleDy = canvas.height * 0.015;
+  ballDx = canvas.width * 0.01;
+  ballDy = canvas.height * 0.01;
 }
 
 function drawCountdown() {
@@ -134,7 +127,7 @@ function drawCountdown() {
 
 function drawBall() {
   ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+  ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
@@ -148,53 +141,13 @@ function drawCenterLine() {
   ctx.setLineDash([]);
   ctx.fillStyle = "#0095DD";
 
-  for (let y = radius; y < canvas.height; y += radius * 4) {
-    ctx.moveTo(canvas.width / 2, y);
-    ctx.arc(canvas.width / 2, y, radius, 0, Math.PI * 2);
+  for (let ballY = radius; ballY < canvas.height; ballY += radius * 4) {
+    ctx.moveTo(canvas.width / 2, ballY);
+    ctx.arc(canvas.width / 2, ballY, radius, 0, Math.PI * 2);
   }
 
   ctx.fill();
   ctx.closePath();
-}
-
-function drawRoundedRect(x, y, width, height, radius) {
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + width - radius, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  ctx.lineTo(x + width, y + height - radius);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x + radius, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
-}
-
-function drawLeftPaddle() {
-  const radius = paddleWidth;
-  drawRoundedRect(
-    paddleWidth,
-    leftPaddleY,
-    paddleWidth,
-    paddleHeight,
-    radius / 2,
-  );
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
-}
-
-function drawRightPaddle() {
-  const radius = paddleWidth;
-  drawRoundedRect(
-    canvas.width - paddleWidth * 2,
-    rightPaddleY,
-    paddleWidth,
-    paddleHeight,
-    radius / 2,
-  );
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
 }
 
 function drawScores() {
@@ -255,12 +208,12 @@ function resetGame() {
 }
 
 function moveBall() {
-  if (x + dx < paddleWidth * 2) {
-    if (y > leftPaddleY && y < leftPaddleY + paddleHeight) {
-      dx = -dx;
+  if (ballX + ballDx < paddleWidth * 2) {
+    if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
+      ballDx = -ballDx;
       const hitPosition =
-        (y - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-      dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
+        (ballY - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
     } else {
       // Game Over
       cpuScore++;
@@ -270,12 +223,12 @@ function moveBall() {
         resetGame();
       }
     }
-  } else if (x + dx > canvas.width - paddleWidth * 2) {
-    if (y > rightPaddleY && y < rightPaddleY + paddleHeight) {
-      dx = -dx;
+  } else if (ballX + ballDx > canvas.width - paddleWidth * 2) {
+    if (ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
+      ballDx = -ballDx;
       const hitPosition =
-        (y - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-      dy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてdyを変更
+        (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
     } else {
       // Game Over
       playerScore++;
@@ -287,12 +240,15 @@ function moveBall() {
     }
   }
 
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-    dy = -dy;
+  if (
+    ballY + ballDy > canvas.height - ballRadius ||
+    ballY + ballDy < ballRadius
+  ) {
+    ballDy = -ballDy;
   }
 
-  x += dx;
-  y += dy;
+  ballX += ballDx;
+  ballY += ballDy;
 }
 
 function draw() {
@@ -304,15 +260,15 @@ function draw() {
     // draw objects
     drawBall();
     drawCenterLine();
-    drawLeftPaddle();
-    drawRightPaddle();
+    drawLeftPaddle(ctx);
+    drawRightPaddle(ctx, canvas);
     drawScores();
 
     // move objects
     if (!gamePaused) {
       moveBall();
-      leftPaddleY = moveLeftPaddle(upPressed, downPressed, leftPaddleY, paddleDy, paddleHeight, canvas);
-      rightPaddleY = moveRightPaddle(y, rightPaddleY, paddleDy, paddleHeight, canvas);
+      moveLeftPaddle(upPressed, downPressed, canvas);
+      moveRightPaddle(ballY, canvas);
     }
   }
 
@@ -329,10 +285,10 @@ function onResize() {
   updateBallPosition();
   updateBallSpeed();
 
-  updatePaddleSize();
-  updateLeftPaddlePosition();
-  updateRightPaddlePosition();
-  updatePaddleSpeed();
+  updatePaddleSize(canvas);
+  updateLeftPaddlePosition(previousCanvasHeight, canvas);
+  updateRightPaddlePosition(previousCanvasHeight, canvas);
+  updatePaddleSpeed(canvas);
 }
 
 initialize();
