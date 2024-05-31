@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django import forms
 from .widgets import CustomClearableFileInput
 
@@ -70,6 +71,23 @@ class CustomUserCreationForm(UserCreationForm):
             if field_name == "profile_image":
                 field.label = "プロフィール画像"
 
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class ProfileImageUpdateForm(forms.ModelForm):

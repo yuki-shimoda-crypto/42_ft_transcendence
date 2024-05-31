@@ -39,8 +39,10 @@
 
   <!-- パスワード -->
   <div class="row mt-4">
-    <div class="col"><h3>パスワード</h3></div>
-    <!-- 後で更新ボタン追加 -->
+    <div class="col d-flex align-items-center">
+      <h3 class="mr-2">パスワード</h3>
+      <a href="{% url 'accounts:password_change' %}"><i class="bi bi-pencil-square"></i></a>
+    </div>
   </div>
   <table class="table table-bordered">
     <tbody>

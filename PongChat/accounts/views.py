@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.shortcuts import redirect, render, resolve_url
 from django.urls import reverse_lazy
 from django.views import View, generic
@@ -154,3 +154,32 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         context["process_name"] = "Update Username"
         return context
+
+
+class ProfileImageUpdate(OnlyYouMixin, generic.UpdateView):
+    model = CustomUser
+    form_class = ProfileImageUpdateForm
+    template_name = 'accounts/user_form.html'
+
+    def get_success_url(self):
+        return resolve_url('accounts:my_page', pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["process_name"] = "Update Profile Image"
+        return context
+
+
+class PasswordChange(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    success_url = reverse_lazy('accounts:password_change_done')
+    template_name = 'accounts/user_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["process_name"] = "Change Password"
+        return context
+
+
+class PasswordChangeDone(PasswordChangeDoneView):
+    template_name = 'accounts/password_change_done.html'
