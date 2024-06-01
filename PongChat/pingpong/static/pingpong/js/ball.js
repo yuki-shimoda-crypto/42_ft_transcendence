@@ -1,12 +1,18 @@
 import {
+  canvas,
+  ctx,
+  previousCanvasHeight,
+  previousCanvasWidth,
+} from "./script.js";
+import {
   cpuScore,
   playerScore,
   winningScore,
-  gameOver,
-  resetGame,
   incrementCpuScore,
   incrementPlayerScore,
-} from "./script.js";
+} from "./score.js";
+
+import { gameOver, resetGame } from "./game_control.js";
 
 import {
   paddleWidth,
@@ -18,7 +24,7 @@ import {
 export let ballY;
 let ballRadius, ballX, ballDx, ballDy;
 
-export function drawBall(ctx) {
+export function drawBall() {
   ctx.beginPath();
   ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
   ctx.fillStyle = "#0095DD";
@@ -26,7 +32,13 @@ export function drawBall(ctx) {
   ctx.closePath();
 }
 
-export function initializeBallPosition(canvas) {
+export function initializeBallElement() {
+  updateBallSize();
+  initializeBallPosition();
+  initializeBallSpeed();
+}
+
+function initializeBallPosition() {
   ballX = canvas.width / 2;
   ballY = canvas.height / 2;
 }
@@ -35,13 +47,13 @@ function getRandomDirection() {
   return Math.random() < 0.5 ? 1 : -1;
 }
 
-export function initializeBallSpeed(canvas) {
+function initializeBallSpeed() {
   const angle = Math.random() * 2 * Math.PI;
   ballDx = canvas.width * 0.01 * getRandomDirection();
   ballDy = canvas.height * 0.01 * Math.sin(angle);
 }
 
-export function moveBall(canvas) {
+export function moveBall() {
   if (ballX + ballDx < paddleWidth * 2) {
     if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
       ballDx = -ballDx;
@@ -85,11 +97,13 @@ export function moveBall(canvas) {
   ballY += ballDy;
 }
 
-export function updateBallPosition(
-  canvas,
-  previousCanvasWidth,
-  previousCanvasHeight,
-) {
+export function updateBallElement() {
+  updateBallSize();
+  updateBallPosition();
+  updateBallSpeed();
+}
+
+function updateBallPosition() {
   const ballPositionRatioX = isNaN(ballX / previousCanvasWidth)
     ? 0.5
     : ballX / previousCanvasWidth;
@@ -101,11 +115,11 @@ export function updateBallPosition(
   ballY = canvas.height * ballPositionRatioY;
 }
 
-export function updateBallSize(canvas) {
+function updateBallSize() {
   ballRadius = Math.min(canvas.width, canvas.height) * 0.05;
 }
 
-export function updateBallSpeed(canvas) {
+function updateBallSpeed() {
   ballDx = canvas.width * 0.01;
   ballDy = canvas.height * 0.01;
 }

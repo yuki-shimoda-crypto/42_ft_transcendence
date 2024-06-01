@@ -1,3 +1,4 @@
+import { canvas, previousCanvasHeight } from "./script.js";
 export let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY;
 let paddleDy;
 
@@ -75,6 +76,13 @@ export function moveRightPaddle(ballY, canvas) {
     }
   }
   return rightPaddleY;
+}
+
+export function updatePaddleElement() {
+  updatePaddleSize(canvas);
+  updateLeftPaddlePosition(previousCanvasHeight, canvas);
+  updateRightPaddlePosition(previousCanvasHeight, canvas);
+  updatePaddleSpeed(canvas);
 }
 
 export function updateLeftPaddlePosition(previousCanvasHeight, canvas) {
