@@ -1,4 +1,4 @@
-import { canvas, previousCanvasHeight } from "./script.js";
+import { canvas, previousCanvasHeight } from "./main.js";
 export let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY;
 let paddleDy;
 

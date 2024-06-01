@@ -1,5 +1,5 @@
 import { pauseGame, resumeGame, showRestartButton } from "./ui.js";
-import { initialize } from "./script.js";
+import { initialize } from "./main.js";
 
 export function gameOver(message) {
   pauseGame();

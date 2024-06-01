@@ -1,5 +1,5 @@
 import { resetScores, playerScore, cpuScore } from "./score.js";
-import { canvas, ctx, initialize } from "./script.js";
+import { canvas, ctx, initialize } from "./main.js";
 
 // Countdown
 let countdown = 3;

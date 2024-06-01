@@ -3,7 +3,7 @@ import {
   ctx,
   previousCanvasHeight,
   previousCanvasWidth,
-} from "./script.js";
+} from "./main.js";
 import {
   cpuScore,
   playerScore,
