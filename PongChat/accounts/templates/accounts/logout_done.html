@@ -1,8 +1,5 @@
-{% extends "common/base.html" %}
-
-{% block title%}Logout Done{% endblock %}
-
-{% block content %}
+{% extends "common/base.html" %} {% block title%}Logout Done{% endblock %} {%
+block content %}
 <div class="container">
   <div class="col-md-6 offset-md-3">
     <div class="card mt-3 mb-3 bg-light">
@@ -13,10 +10,14 @@
         <p>ログアウトしました</p>
         <hr class="mt-2 mb-2" />
         <p>
-          <a href="{% url 'accounts:login' %}" class="logout">もう一度ログインする</a>
+          <a href="{% url 'accounts:login' %}" class="logout"
+            >もう一度ログインする</a
+          >
         </p>
         <p>
-          <a href="{% url 'accounts:top' %}" class="logout">トップページに戻る</a>
+          <a href="{% url 'accounts:top' %}" class="logout"
+            >トップページに戻る</a
+          >
         </p>
       </div>
     </div>
