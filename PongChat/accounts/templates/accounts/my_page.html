@@ -1,9 +1,13 @@
 {% extends 'common/base.html' %}
-
 {% block content %}
 <div class="container">
   <div class="d-flex align-items-center mt-1">
-    <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 50px; height: 50px; object-fit: cover;">
+    <img
+      src="{{ user.profile_image.url }}"
+      alt="Profile Image"
+      class="rounded-circle border"
+      style="width: 50px; height: 50px; object-fit: cover"
+    />
     <h2 class="ml-3">{{ user.username }}</h2>
   </div>
   <hr />
@@ -12,14 +16,16 @@
   <div class="row">
     <div class="col d-flex align-items-center">
       <h3 class="mr-2">登録情報</h3>
-      <a href="{% url 'accounts:username_update' user.pk %}"><i class="bi bi-pencil-square"></i></a>
+      <a href="{% url 'accounts:username_update' user.pk %}"
+        ><i class="bi bi-pencil-square"></i
+      ></a>
     </div>
   </div>
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td style="width: 50%;">ユーザー名</td>
-        <td style="width: 50%;">{{ user.username }}</td>
+        <td style="width: 50%">ユーザー名</td>
+        <td style="width: 50%">{{ user.username }}</td>
       </tr>
     </tbody>
   </table>
@@ -29,10 +35,17 @@
     <div class="col">
       <div class="d-flex align-items-center">
         <h3 class="mr-2">プロフィール画像</h3>
-        <a href="{% url 'accounts:profile_image_update' user.pk %}"><i class="bi bi-pencil-square"></i></a>
+        <a href="{% url 'accounts:profile_image_update' user.pk %}"
+          ><i class="bi bi-pencil-square"></i
+        ></a>
       </div>
       {% if user.profile_image %}
-      <img src="{{ user.profile_image.url }}" alt="Profile Image" class="rounded-circle border" style="width: 150px; height: 150px; object-fit: cover;">
+      <img
+        src="{{ user.profile_image.url }}"
+        alt="Profile Image"
+        class="rounded-circle border"
+        style="width: 150px; height: 150px; object-fit: cover"
+      />
       {% else %}
       <strong>プロフィール画像がありません</strong>
       {% endif %}
@@ -43,7 +56,9 @@
   <div class="row mt-4">
     <div class="col d-flex align-items-center">
       <h3 class="mr-2">パスワード</h3>
-      <a href="{% url 'accounts:password_change' %}"><i class="bi bi-pencil-square"></i></a>
+      <a href="{% url 'accounts:password_change' %}"
+        ><i class="bi bi-pencil-square"></i
+      ></a>
     </div>
   </div>
   <table class="table table-bordered">
@@ -66,18 +81,17 @@
         <td style="width: 50%">スタッフ権限</td>
         <td style="width: 50%">{{ user.is_staff }}</td>
       </tr>
-	  {% else %}
+      {% else %}
       <tr>
         <td style="width: 50%">スタッフ権限</td>
         <td style="width: 50%">なし</td>
       </tr>
-      {% endif %}
-	  {% if user.is_superuser %}
+      {% endif %} {% if user.is_superuser %}
       <tr>
         <td>スーパーユーザー権限</td>
         <td>{{ user.is_superuser }}</td>
       </tr>
-	  {% else %}
+      {% else %}
       <tr>
         <td>スーパーユーザー権限</td>
         <td>なし</td>

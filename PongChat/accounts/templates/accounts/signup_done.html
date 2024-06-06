@@ -1,7 +1,5 @@
 {% extends "common/base.html" %}
-
 {% block title%} Signup Done {% endblock %}
-
 {% block content %}
 <div class="container">
   <div class="col-md-6 offset-md-3">
@@ -13,10 +11,10 @@
       <!-- カードボディー -->
       <div class="card-body">
         <p>サインアップが完了しました</p>
-        <hr>
-		<p>
-			<a href="{% url 'accounts:login' %}">ログイン</a>
-		</p>
+        <hr />
+        <p>
+          <a href="{% url 'accounts:login' %}">ログイン</a>
+        </p>
       </div>
     </div>
   </div>

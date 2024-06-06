@@ -40,7 +40,9 @@
         <a class="dropdown-item" href="{% url 'accounts:login' %}">ログイン</a>
       </li>
       <li>
-        <a class="dropdown-item" href="{% url 'accounts:signup' %}">サインアップ</a>
+        <a class="dropdown-item" href="{% url 'accounts:signup' %}"
+          >サインアップ</a
+        >
       </li>
       {% else %}
       <p class="dropdown-item-text">{{ user.username }}</p>

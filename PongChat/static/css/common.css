@@ -7,6 +7,7 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
+  width: 200px; /* 幅を固定 */
   padding: 90px 0 0;
   box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
   z-index: 99;
@@ -36,4 +37,19 @@ body {
 
 p a:hover {
   text-decoration: none;
+}
+
+.main-content {
+  margin-left: 200px; /* サイドバーの幅に合わせてマージンを設定 */
+}
+
+/* 小さい画面でサイドバーを非表示にする */
+@media (width <= 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
 }

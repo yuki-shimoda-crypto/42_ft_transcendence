@@ -1,7 +1,6 @@
 {% extends "common/base.html" %}
-{% block title %}{{ process_name }}{% endblock %}
+{% block title %}{{ process_name }} {% endblock %}
 {% load static %}
-
 {% block content %}
 <div class="container">
   <div class="row justify-content-center">
@@ -12,32 +11,55 @@
         </div>
         <div class="card-body">
           <form action="" method="POST" enctype="multipart/form-data">
-            {{ form.non_field_errors }}
-            {% csrf_token %}
-            {% for field in form %}
-              <div class="form-group p-2">
-                <label for="{{ field.id_for_label }}">{{ field.label_tag }}{% if field.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-                {{ field }}
-                {% if field.errors %}
-                <div class="alert alert-danger mt-2" role="alert">
-                  {% for error in field.errors %}
-                    <div>{{ error }}</div>
-                  {% endfor %}
-                </div>
-                {% endif %}
+            {{ form.non_field_errors }} {% csrf_token %} {% for field in form %}
+            <div class="form-group p-2">
+              <label for="{{ field.id_for_label }}"
+                >{{ field.label_tag }}{% if field.field.required %}<span
+                  class="text-danger"
+                  >*</span
+                >{% endif %}</label
+              >
+              {{ field }} {% if field.errors %}
+              <div class="alert alert-danger mt-2" role="alert">
+                {% for error in field.errors %}
+                <div>{{ error }}</div>
+                {% endfor %}
               </div>
+              {% endif %}
+            </div>
             {% endfor %}
             <div class="form-group text-center">
-              <img id="image-preview" src="#" alt="Profile Image Preview" class="rounded-circle border" style="width: 200px; height: 200px; object-fit: cover; display: none;">
+              <img
+                id="image-preview"
+                src="#"
+                alt="Profile Image Preview"
+                class="rounded-circle border"
+                style="
+                  width: 200px;
+                  height: 200px;
+                  object-fit: cover;
+                  display: none;
+                "
+              />
             </div>
 
             <div class="d-flex justify-content-between">
               {% if process_name == 'Sign Up'%}
-                <a href="{% url 'accounts:top' %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
+              <a
+                href="{% url 'accounts:top' %}"
+                class="btn btn-outline-secondary btn-lg mt-4"
+                >キャンセル</a
+              >
               {% else %}
-                <a href="{% url 'accounts:my_page' user.pk %}" class="btn btn-outline-secondary btn-lg mt-4">キャンセル</a>
+              <a
+                href="{% url 'accounts:my_page' user.pk %}"
+                class="btn btn-outline-secondary btn-lg mt-4"
+                >キャンセル</a
+              >
               {% endif %}
-              <button type="submit" class="btn btn-success btn-lg mt-4">{{ process_name }}</button>
+              <button type="submit" class="btn btn-success btn-lg mt-4">
+                {{ process_name }}
+              </button>
             </div>
           </form>
         </div>
