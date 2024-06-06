@@ -53,9 +53,9 @@ export function drawScores() {
 }
 
 export function showRestartButton(message) {
-  const gameOverMessage = document.getElementById("game-over-message");
-  const gameOverText = document.getElementById("gameOverText");
-  const restartButton = document.getElementById("restartButton");
+  const gameOverMessage = document.querySelector("#game-over-message");
+  const gameOverText = document.querySelector("#gameOverText");
+  const restartButton = document.querySelector("#restartButton");
 
   gameOverText.textContent = message;
   gameOverMessage.classList.remove("d-none");

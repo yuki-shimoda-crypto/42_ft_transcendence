@@ -42,7 +42,7 @@ import {
 // スタートボタンを作成する
 // スタートボタンを押すと、ゲームが始まる
 
-export const canvas = document.getElementById("myCanvas");
+export const canvas = document.querySelector("#myCanvas");
 export const ctx = canvas.getContext("2d");
 export let previousCanvasWidth, previousCanvasHeight;
 
