@@ -7,11 +7,12 @@ from .models import Game
 # Create your views here.
 
 
+@login_required
 def index(request):
     return render(request, "pingpong/index.html")
 
 
-# @login_required
+@login_required
 def create_game(request):
     if request.method == "POST":
         player2_id = request.POST.get("player2")
