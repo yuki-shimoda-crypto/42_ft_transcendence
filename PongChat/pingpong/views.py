@@ -7,14 +7,14 @@ from .models import Game
 # Create your views here.
 
 
-# @login_required
-# def index(request):
-#     return render(request, "pingpong/index.html")
-
-
 @login_required
 def index(request):
-    return render(request, "pingpong/home.html")
+    return render(request, "pingpong/index.html")
+
+
+# @login_required
+# def index(request):
+#     return render(request, "pingpong/home.html")
 
 
 @login_required

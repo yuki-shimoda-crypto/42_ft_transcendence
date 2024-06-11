@@ -1,5 +1,5 @@
 <li class="nav-item mb-1">
-  <a class="nav-link" aria-current="page" href="#">
+  <a class="nav-link" aria-current="page" href="{% url 'accounts:top' %}">
     <i class="bi bi-house-door"></i>
     <span class="ml-2">Home</span>
   </a>
@@ -16,12 +16,5 @@
   <a class="nav-link" href="{% url 'pingpong:index' %}">
     <i class="bi bi-controller"></i>
     <span class="ml-2">Game</span>
-  </a>
-</li>
-
-<li class="nav-item mb-1">
-  <a class="nav-link" href="{% url 'accounts:login' %}">
-    <i class="bi bi-door-open"></i>
-    <span class="ml-2">Login</span>
   </a>
 </li>
