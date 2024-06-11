@@ -7,9 +7,14 @@ from .models import Game
 # Create your views here.
 
 
+# @login_required
+# def index(request):
+#     return render(request, "pingpong/index.html")
+
+
 @login_required
 def index(request):
-    return render(request, "pingpong/index.html")
+    return render(request, "pingpong/home.html")
 
 
 @login_required
@@ -20,3 +25,38 @@ def create_game(request):
         game = Game.objects.create(player1=request.user, player2=player2)
         return redirect("pingpong:game", game_id=game.id)
     return render(request, "pingpong/create_game.html")
+
+
+@login_required
+def game_play(request):
+    return render(request, "pingpong/game_play.html")
+
+
+@login_required
+def home(request):
+    return render(request, "pingpong/home.html")
+
+
+@login_required
+def multiplayer_lobby(request):
+    return render(request, "pingpong/multiplayer_lobby.html")
+
+
+@login_required
+def multiplayer_options(request):
+    return render(request, "pingpong/multiplayer_options.html")
+
+
+@login_required
+def single_play_setup(request):
+    return render(request, "pingpong/single_play_setup.html")
+
+
+@login_required
+def tournament_bracket(request):
+    return render(request, "pingpong/tournament_bracket.html")
+
+
+@login_required
+def tournament_registration(request):
+    return render(request, "pingpong/tournament_registration.html")
