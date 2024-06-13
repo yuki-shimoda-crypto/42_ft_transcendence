@@ -53,18 +53,18 @@ export function initialize() {
 }
 
 function updateCanvasSize() {
-  // adjust canvas size
-  const windowWidth = window.innerWidth;
+  const baseWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   const aspectRatio = 16 / 9; // 16:9
 
+  const windowWidth =
+    baseWidth > 768 ? Math.max(0, baseWidth - 200) : baseWidth;
+
   if (windowWidth / windowHeight > aspectRatio) {
-    // if window is wider than 16:9
-    // adjust canvas width to window height * 16:9
-    canvas.width = windowHeight * aspectRatio;
+    canvas.width = Math.max(0, windowHeight * aspectRatio);
     canvas.height = windowHeight;
   } else {
-    canvas.width = windowWidth;
+    canvas.width = Math.max(0, windowWidth);
     canvas.height = windowWidth / aspectRatio;
   }
 }
