@@ -18,4 +18,5 @@ urlpatterns = [
         views.tournament_registration,
         name="tournament_registration",
     ),
+    path("start_single_play", views.start_single_play, name="start_single_play"),
 ]

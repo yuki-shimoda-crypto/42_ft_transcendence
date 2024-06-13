@@ -7,14 +7,14 @@ from .models import Game
 # Create your views here.
 
 
-@login_required
-def index(request):
-    return render(request, "pingpong/index.html")
-
-
 # @login_required
 # def index(request):
-#     return render(request, "pingpong/home.html")
+#     return render(request, "pingpong/index.html")
+
+
+@login_required
+def index(request):
+    return render(request, "pingpong/home.html")
 
 
 @login_required
@@ -49,7 +49,18 @@ def multiplayer_options(request):
 
 @login_required
 def single_play_setup(request):
+    if request.method == "POST":
+        difficulty = request.POST.get("difficulty")
+        return redirect("pingpong:game_play", difficulty=difficulty)
     return render(request, "pingpong/single_play_setup.html")
+
+
+@login_required
+def start_single_play(request):
+    difficulty = request.POST.get("difficulty")
+    return render(
+        request, "pingpong/start_single_play.html", {"difficulty": difficulty}
+    )
 
 
 @login_required
