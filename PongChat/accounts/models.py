@@ -19,6 +19,8 @@ class CustomUser(AbstractUser):
         upload_to="profile_images/", null=True, blank=True
     )
 
+    is_remote_multiplayer_active = models.BooleanField(default=False)
+
     def __str__(self):
         """Returns the string representation of the user.
 

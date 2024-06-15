@@ -1,5 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
+# from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 from .models import Game
@@ -10,6 +12,9 @@ from .models import Game
 # @login_required
 # def index(request):
 #     return render(request, "pingpong/index.html")
+
+
+User = get_user_model()
 
 
 @login_required
@@ -25,6 +30,14 @@ def create_game(request):
         game = Game.objects.create(player1=request.user, player2=player2)
         return redirect("pingpong:game", game_id=game.id)
     return render(request, "pingpong/create_game.html")
+
+
+@login_required
+def deactivate_remote_multiplayer(request):
+    if request.user.is_remote_multiplayer_active:
+        request.user.is_remote_multiplayer_active = False
+        request.user.save()
+    return render(request, "pingpong/multiplayer_options.html")
 
 
 @login_required
@@ -44,7 +57,14 @@ def local_play_setup(request):
 
 @login_required
 def multiplayer_lobby(request):
-    return render(request, "pingpong/multiplayer_lobby.html")
+    request.user.is_remote_multiplayer_active = True
+    request.user.save()
+    online_players = User.objects.filter(is_remote_multiplayer_active=True).exclude(
+        id=request.user.id
+    )
+    return render(
+        request, "pingpong/multiplayer_lobby.html", {"online_players": online_players}
+    )
 
 
 @login_required

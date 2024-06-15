@@ -1,0 +1,24 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Multiplayer Lobby{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Multiplayer Lobby</h1>
+    <p>Select a player to start the game:</p>
+    <ul class="list-group">
+        {% for player in online_players %}
+            <li class="list-group-item d-flex justify-content-between align-center">
+                {{ player.username }}
+                <button class="btn btn-primary" onclick="startGameWith('{{ player.username }}')">Play</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'pingpong:deactivate_remote_multiplayer' %}" class="btn btn-warning">Exit Lobby</a>
+</div>
+<script>
+    function startGameWith(playerUsername) {
+        console.log("Starting game with ", playerUsername);
+    }
+</script>
+{% endblock %}

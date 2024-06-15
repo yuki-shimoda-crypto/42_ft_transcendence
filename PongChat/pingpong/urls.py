@@ -12,6 +12,11 @@ urlpatterns = [
     path("local_play_setup", views.local_play_setup, name="local_play_setup"),
     path("multiplayer_lobby", views.multiplayer_lobby, name="multiplayer_lobby"),
     path("multiplayer_options", views.multiplayer_options, name="multiplayer_options"),
+    path(
+        "deactivate_multiplayer",
+        views.deactivate_remote_multiplayer,
+        name="deactivate_remote_multiplayer",
+    ),
     path("single_play_setup", views.single_play_setup, name="single_play_setup"),
     path("tournament_bracket", views.tournament_bracket, name="tournament_bracket"),
     path(
