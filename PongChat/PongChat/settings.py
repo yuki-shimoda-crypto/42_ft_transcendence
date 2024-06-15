@@ -55,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "pingpong.middleware.RemoteMultiplayerMiddleware",
 ]
 
 ROOT_URLCONF = "PongChat.urls"

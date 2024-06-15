@@ -14,18 +14,11 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'pingpong:deactivate_remote_multiplayer' %}" class="btn btn-warning">Exit Lobby</a>
+    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-warning">Exit Lobby</a>
 </div>
 <script>
     function startGameWith(playerUsername) {
         console.log("Starting game with ", playerUsername);
     }
-    window.addEventListener('beforeunload', function(event) {
-        const url = "{% url 'pingpong:deactivate_remote_multiplayer' %}";
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-
-        navigator.sendBeacon(url, data);
-    });
 </script>
 {% endblock %}

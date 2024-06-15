@@ -33,14 +33,6 @@ def create_game(request):
 
 
 @login_required
-def deactivate_remote_multiplayer(request):
-    if request.user.is_remote_multiplayer_active:
-        request.user.is_remote_multiplayer_active = False
-        request.user.save()
-    return render(request, "pingpong/multiplayer_options.html")
-
-
-@login_required
 def game_play(request):
     return render(request, "pingpong/game_play.html")
 
@@ -57,8 +49,6 @@ def local_play_setup(request):
 
 @login_required
 def multiplayer_lobby(request):
-    request.user.is_remote_multiplayer_active = True
-    request.user.save()
     online_players = User.objects.filter(is_remote_multiplayer_active=True).exclude(
         id=request.user.id
     )
