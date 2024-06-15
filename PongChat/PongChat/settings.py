@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts.apps.AccountsConfig",
+    "chat",
 ]
 
 MIDDLEWARE = [
@@ -74,8 +75,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "PongChat.wsgi.application"
+# WSGI_APPLICATION = "PongChat.wsgi.application"
+ASGI_APPLICATION = "PongChat.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
