@@ -118,5 +118,12 @@ lint-YAML:
 # test
 .PHONY: test
 test:
-	pytest
+	PYTHONPATH=$(shell pwd)/PongChat pytest --cache-clear
 
+.PHONY: test-cov
+test-cov:
+	pytest --cov
+
+.PHONY: test-html
+test-html:
+	pytest --cov=. --cov-report=html
