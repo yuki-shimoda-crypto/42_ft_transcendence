@@ -7,6 +7,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV MY_USER=user
+ENV PYTHONPATH /app/PongChat
 
 # 依存関係をインストール
 COPY requirements.txt .
