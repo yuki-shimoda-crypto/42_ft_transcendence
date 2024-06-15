@@ -1,5 +1,5 @@
 """
-ASGI config for a_core project.
+ASGI config for PongChat project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
