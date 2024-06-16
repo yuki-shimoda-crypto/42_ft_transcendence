@@ -1,21 +1,21 @@
 {% extends 'chat_base.html' %}
 
 {% block layout %}
-<content class="block w-full">
-
-<div class="max-w-lg mx-auto flex flex-col items-center pt-20 px-4">
-    <img class="w-36 h-36 rounded-full object-cover mb-4" src="{{ profile.avatar }}" />
-    <div class="text-center">
-        <h1>{{ profile.name }}</h1>
-        <div class="text-gray-400 mb-2 -mt-3">@{{ profile.username }}</div>
-        {% if profile.info %}
-        <div class="mt-8 hyphens-auto">{{ profile.info|linebreaksbr }}</div>
-        {% endif %}  
-        {% if profile.user != user %}
-          <a class="button" href="{% url 'start-chat'  profile.username %}">Chat with me</a>
-        {% endif %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center">
+                <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
+                <h1>{{ profile.name }}</h1>
+                <div class="text-muted mb-3">@{{ profile.username }}</div>
+                {% if profile.info %}
+                <div class="mt-4">{{ profile.info|linebreaksbr }}</div>
+                {% endif %}
+                {% if profile.username != user.username %}
+                <a class="btn btn-primary" href="{% url 'start-chat'  profile.username %}">Chat with me</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
-
-</content>
 {% endblock %}

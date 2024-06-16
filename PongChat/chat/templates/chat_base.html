@@ -10,7 +10,6 @@
   <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
   <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/tailwindcss">
     [x-cloak] { 
             display: none !important; 
@@ -100,6 +99,7 @@
 
 <body class="{% block class %}{% endblock %}">
 
+  {% include 'common/base.html' %}
 
   {% block layout %}
   {% endblock %}

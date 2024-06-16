@@ -1,9 +1,10 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends 'chat_base.html' %}
 
 {% block layout %}
 <content class="block w-full">
 <wrapper class="block max-w-2xl mx-auto my-10 px-6">
-  <div id="chat_window" class="h-[45rem] flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1">
+  <div id="chat_window" class="h-[45rem] flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1 ml-auto md:w-5/6">
     <div class="flex justify-center text-emerald-400 bg-gray-800 p-2 sticky top-0 z-10">
       {% if other_user %}
         <div id="online-icon"></div>

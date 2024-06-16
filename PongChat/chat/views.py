@@ -81,3 +81,9 @@ def get_or_create_chatroom(request, username):
         chatroom.members.add(other_user, request.user)
 
     return redirect("chatroom", chatroom.group_name)
+
+
+def user_list(request):
+    users = get_user_model()
+    users = users.objects.all()
+    return render(request, "chat/user_list.html", {"users": users})
