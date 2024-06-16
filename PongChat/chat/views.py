@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.exceptions import Http404
@@ -11,7 +12,7 @@ from .models import ChatGroup
 @login_required
 def profile_view(request, username=None):
     if username:
-        profile = get_object_or_404(settings.AUTH_USER_MODEL, username=username).profile
+        profile = get_object_or_404(get_user_model(), username=username)
     else:
         try:
             profile = request.user.profile
@@ -63,7 +64,8 @@ def get_or_create_chatroom(request, username):
     if request.user.username == username:
         return redirect("home")
 
-    other_user = settings.AUTH_USER_MODEL.objects.get(username=username)
+    User = get_user_model()
+    other_user = User.objects.get(username=username)
     my_chatrooms = request.user.chat_groups.filter(is_private=True)
 
     if my_chatrooms.exists():
