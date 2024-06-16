@@ -5,6 +5,9 @@ class RemoteMultiplayerMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
+        if request.user.is_authenticated:
+            request.user.update_last_activity()
+
         if request.user.is_authenticated and not request.path.endswith("multiplayer_lobby"):
             if request.user.is_remote_multiplayer_active:
                 request.user.is_remote_multiplayer_active = False
