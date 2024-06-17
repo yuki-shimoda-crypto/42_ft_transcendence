@@ -87,3 +87,14 @@ def user_list(request):
     users = get_user_model()
     users = users.objects.all()
     return render(request, "chat/user_list.html", {"users": users})
+
+
+def user_block_post(request, username):
+    is_blocked = username in [u.username for u in request.user.block_users.all()]
+
+    if is_blocked:
+        request.user.block_users.remove(request.user)
+    else:
+        request.user.block_users.add(request.user)
+    request.user.save()
+    return redirect("profile", username=username)

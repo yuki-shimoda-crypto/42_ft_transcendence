@@ -20,6 +20,10 @@ class CustomUser(AbstractUser):
         upload_to="profile_images/", null=True, blank=True
     )
 
+    block_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="blocked", blank=True
+    )
+
     def __str__(self):
         """Returns the string representation of the user.
 

@@ -5,15 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="text-center">
-                <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
-                <h1>{{ profile.name }}</h1>
-                <div class="text-muted mb-3">@{{ profile.username }}</div>
-                {% if profile.info %}
+              <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
+              <h1>{{ profile.username }}</h1>
+              <div class="text-muted mb-3">@{{ profile.username }}</div>
+              {% if profile.info %}
                 <div class="mt-4">{{ profile.info|linebreaksbr }}</div>
-                {% endif %}
-                {% if profile.username != user.username %}
+              {% endif %}
+              {% if profile.username != user.username %}
                 <a class="btn btn-primary" href="{% url 'start-chat'  profile.username %}">Chat with me</a>
+                {% if is_blocked %}
+                  <a class="btn btn btn-success" href="{% url 'block'  profile.username %}">Unblock user</a>
+                {% else %}
+                  <a class="btn btn btn-danger" href="{% url 'block'  profile.username %}">Block user</a>
                 {% endif %}
+              {% endif %}
             </div>
         </div>
     </div>
