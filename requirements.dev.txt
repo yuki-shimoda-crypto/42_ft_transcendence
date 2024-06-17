@@ -2,6 +2,7 @@ APScheduler==3.10.4
 asgiref==3.8.1
 attrs==23.2.0
 black==24.3.0
+channels==4.1.0
 click==8.1.7
 coverage==7.4.4
 Django==5.0.4
