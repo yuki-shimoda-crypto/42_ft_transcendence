@@ -91,8 +91,7 @@ def get_or_create_chatroom(request, username):
 
 
 def user_list(request):
-    users = get_user_model()
-    users = users.objects.all()
+    users = get_user_model().objects.exclude(id=request.user.id)
     return render(request, "chat/user_list.html", {"users": users})
 
 
