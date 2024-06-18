@@ -22,25 +22,28 @@
         <span id="online-count" class="pr-1"></span>online
       {% endif %}
     </div>
-    <div id='chat_container' class="overflow-y-auto grow">
-      <ul id='chat_messages' class="flex flex-col justify-end gap-2 p-4">
-        {% for message in chat_messages reversed%}
-        {% include "chat/chat_message.html"%}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
-      <div class="flex items-center rounded-xl px-2 py-2">
-        <form id="chat_message_form" class="w-full" 
-          hx-ext="ws"
-          ws-connect="/ws/chatroom/{{ chatroom_name }}"
-          ws-send
-          _="on htmx:wsAfterSend reset() me">
-          {% csrf_token %}
-          {{ form }}
-        </form>
+    {% if is_blocked %}
+    {% else %}
+      <div id='chat_container' class="overflow-y-auto grow">
+        <ul id='chat_messages' class="flex flex-col justify-end gap-2 p-4">
+          {% for message in chat_messages reversed%}
+          {% include "chat/chat_message.html"%}
+          {% endfor %}
+        </ul>
       </div>
-    </div>
+      <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
+        <div class="flex items-center rounded-xl px-2 py-2">
+          <form id="chat_message_form" class="w-full" 
+            hx-ext="ws"
+            ws-connect="/ws/chatroom/{{ chatroom_name }}"
+            ws-send
+            _="on htmx:wsAfterSend reset() me">
+            {% csrf_token %}
+            {{ form }}
+          </form>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </wrapper>
 {% endblock %}

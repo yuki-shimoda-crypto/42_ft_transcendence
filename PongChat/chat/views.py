@@ -13,12 +13,16 @@ from .models import ChatGroup
 def profile_view(request, username=None):
     if username:
         profile = get_object_or_404(get_user_model(), username=username)
+        is_blocked = profile in request.user.block_users.all()
     else:
         try:
             profile = request.user.profile
+            is_blocked = False
         except:
             return redirect("account_login")
-    return render(request, "chat/profile.html", {"profile": profile})
+    return render(
+        request, "chat/profile.html", {"profile": profile, "is_blocked": is_blocked}
+    )
 
 
 @login_required
@@ -35,6 +39,8 @@ def chat_view(request, chatroom_name="public-chat"):
             if member != request.user:
                 other_user = member
                 break
+
+    is_blocked = other_user in request.user.block_users.all()
 
     if request.htmx:
         form = ChatmessageCreateForm(request.POST)
@@ -54,6 +60,7 @@ def chat_view(request, chatroom_name="public-chat"):
         "form": form,
         "other_user": other_user,
         "chatroom_name": chatroom_name,
+        "is_blocked": is_blocked,
     }
 
     return render(request, "chat/chat.html", context)
@@ -90,11 +97,12 @@ def user_list(request):
 
 
 def user_block_post(request, username):
-    is_blocked = username in [u.username for u in request.user.block_users.all()]
+    block_user = get_object_or_404(get_user_model(), username=username)
+    is_blocked = block_user in request.user.block_users.all()
 
     if is_blocked:
-        request.user.block_users.remove(request.user)
+        request.user.block_users.remove(block_user)
     else:
-        request.user.block_users.add(request.user)
+        request.user.block_users.add(block_user)
     request.user.save()
     return redirect("profile", username=username)
