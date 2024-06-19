@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<head>
+{% extends 'chat_base.html' %}
+{% block head %}
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
@@ -90,10 +91,9 @@
           .alert-warning { @apply bg-orange-600 }
           .alert-danger { @apply bg-red-600 }
   </style>
-</head>
+{% endblock %}
 
 
-{% extends 'chat_base.html' %}
 {% block layout %}
 <content class="block w-full">
 <wrapper class="block max-w-2xl mx-auto my-10 px-6">
