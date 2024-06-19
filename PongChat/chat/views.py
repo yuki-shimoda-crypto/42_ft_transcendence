@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
@@ -18,7 +17,7 @@ def profile_view(request, username=None):
         try:
             profile = request.user.profile
             is_blocked = False
-        except:
+        except get_user_model().DoesNotExist:
             return redirect("account_login")
     return render(
         request, "chat/profile.html", {"profile": profile, "is_blocked": is_blocked}
@@ -26,7 +25,7 @@ def profile_view(request, username=None):
 
 
 @login_required
-def chat_view(request, chatroom_name="public-chat"):
+def chat_view(request, chatroom_name=None):
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
     chat_messages = chat_group.chat_messages.all()[:30]
     form = ChatmessageCreateForm()
