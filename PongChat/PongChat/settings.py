@@ -39,6 +39,7 @@ ALLOWED_HOSTS: list[str] = []
 INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "channels",
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
