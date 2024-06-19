@@ -37,13 +37,14 @@ ALLOWED_HOSTS: list[str] = []
 # Application definition
 
 INSTALLED_APPS = [
+    "accounts.apps.AccountsConfig",
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
-    "accounts.apps.AccountsConfig",
     "pingpong",
 ]
 
@@ -76,7 +77,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "PongChat.wsgi.application"
+# WSGI_APPLICATION = "PongChat.wsgi.application"
+ASGI_APPLICATION = "PongChat.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
 
 
 # Database
