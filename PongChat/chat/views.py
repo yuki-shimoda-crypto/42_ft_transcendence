@@ -55,6 +55,7 @@ def chat_view(request, chatroom_name=None):
             return render(request, "chat/partials/chat_message_p.html", context)
 
     context = {
+        "user": request.user,
         "chat_messages": chat_messages,
         "form": form,
         "other_user": other_user,
@@ -68,7 +69,9 @@ def chat_view(request, chatroom_name=None):
 @login_required
 def get_or_create_chatroom(request, username):
     if request.user.username == username:
-        return redirect("chat-home")
+        chatroom = ChatGroup.objects.create(is_private=True)
+        chatroom.members.add(request.user)
+        return redirect("chatroom", chatroom.group_name)
 
     User = get_user_model()
     other_user = User.objects.get(username=username)
@@ -90,7 +93,8 @@ def get_or_create_chatroom(request, username):
 
 
 def user_list(request):
-    users = get_user_model().objects.exclude(id=request.user.id)
+    # users = get_user_model().objects.exclude(id=request.user.id)
+    users = get_user_model().objects.all()
     return render(request, "chat/user_list.html", {"users": users})
 
 

@@ -111,8 +111,15 @@
           </div>
         </a>
       {% else %}
-        <div id="online-icon"></div>
-        <span id="online-count" class="pr-1"></span>online
+        <a href="{% url 'profile' user.username %}">
+          <div class="flex items-center gap-2 p-4 sticky top-0 z-10">
+            <img class="w-10 h-10 rounded-full object-cover" src="{{ user.avatar }}" />
+            <div>
+              <span class="font-bold test-white">{{ user.profile.name }}</span>
+              <span class="text-sm font-light text-gray-400">Notifications</span>
+            </div>
+          </div>
+        </a>
       {% endif %}
     </div>
     {% if is_blocked %}
@@ -124,18 +131,20 @@
           {% endfor %}
         </ul>
       </div>
-      <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
-        <div class="flex items-center rounded-xl px-2 py-2">
-          <form id="chat_message_form" class="w-full" 
-            hx-ext="ws"
-            ws-connect="/ws/chatroom/{{ chatroom_name }}"
-            ws-send
-            _="on htmx:wsAfterSend reset() me">
-            {% csrf_token %}
-            {{ form }}
-          </form>
+      {% if other_user %}
+        <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
+          <div class="flex items-center rounded-xl px-2 py-2">
+            <form id="chat_message_form" class="w-full"
+              hx-ext="ws"
+              ws-connect="/ws/chatroom/{{ chatroom_name }}"
+              ws-send
+              _="on htmx:wsAfterSend reset() me">
+              {% csrf_token %}
+              {{ form }}
+            </form>
+          </div>
         </div>
-      </div>
+      {% endif %}
     {% endif %}
   </div>
 </wrapper>

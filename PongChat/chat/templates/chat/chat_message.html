@@ -1,7 +1,11 @@
 {% if message.author == user %}
 <li class="flex justify-end mb-4">
   <div class="bg-green-200 rounded-l-lg rounded-tr-lg p-4 max-w-[75%]">
-    <span>{{ message.body }}</span>
+    {% if message.body == ":invite" %}
+      <a href="{% url 'chat-home' %}">Invite game</a>
+    {% else %}
+      <span>{{ message.body }}</span>
+    {% endif %}
   </div>
   <div class="flex items-end">
     <svg height="13" width="8">
@@ -23,7 +27,11 @@
       </svg>
     </div>
     <div class="bg-white p-4 max-w-[75%] rounded-r-lg rounded-tl-lg">
-      <span>{{ message.body }}</span>
+      {% if message.body == ":invite" %}
+        <a href="{% url 'chat-home' %}">Invite game</a>
+      {% else %}
+        <span>{{ message.body }}</span>
+      {% endif %}
     </div>
   </div>
   <div class="text-sm font-light py-1 ml-10">
