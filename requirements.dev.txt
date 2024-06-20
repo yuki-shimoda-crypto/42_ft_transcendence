@@ -6,6 +6,7 @@ Automat==22.10.0
 black==24.3.0
 cffi==1.16.0
 channels==4.1.0
+channels-redis==4.2.0
 click==8.1.7
 constantly==23.10.4
 coverage==7.4.4
@@ -25,6 +26,7 @@ incremental==22.10.0
 iniconfig==2.0.0
 isort==5.13.2
 mccabe==0.7.0
+msgpack==1.0.8
 mypy==1.9.0
 mypy-extensions==1.0.0
 packaging==24.0
@@ -47,6 +49,7 @@ pytest-xdist==3.5.0
 python-dotenv==1.0.1
 pytz==2024.1
 PyYAML==6.0.1
+redis==5.0.6
 service-identity==24.1.0
 setuptools==69.2.0
 six==1.16.0
