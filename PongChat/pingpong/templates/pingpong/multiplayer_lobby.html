@@ -4,21 +4,45 @@
 
 {% block content %}
 <div class="container">
-    <h1>Multiplayer Lobby</h1>
-    <p>Select a player to start the game:</p>
-    <ul class="list-group">
-        {% for player in online_players %}
-            <li class="list-group-item d-flex justify-content-between align-center">
-                {{ player.username }}
-                <button class="btn btn-primary" onclick="startGameWith('{{ player.username }}')">Play</button>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-warning">Exit Lobby</a>
+    <h1>Multiplayer lobby</h1>
+    <p>Click the button below to find a match:</p>
+    <button id="matchButton" class="btn btn-success">Find Match</button>
+    <p id="statusMessage"></p>
+    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-warning">Exit</a>
 </div>
 <script>
-    function startGameWith(playerUsername) {
-        console.log("Starting game with ", playerUsername);
-    }
+    const button = document.querySelector('#matchButton');
+    const statusMessage = document.querySelector('#statusMessage');
+    
+    button.addEventListener('click', function () {
+        statusMessage.textContent = 'Finding match...';
+        button.disabled = true;
+
+        const host = window.location.host;
+        const socket = new WebSocket('ws://{{ request.get_host }}/ws/game/');
+
+        socket.onopen = function(event) {
+            socket.send(JSON.stringify({
+                'action': 'start_match'
+            }));
+        };
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.message === 'match_found') {
+                window.location.href = data.url;
+            }
+        };
+
+        socket.onclose = function(event) {
+            statusMessage.textContent = '';
+            button.disabled = false;
+        };
+
+        socket.onerror = function(event) {
+            statusMessage.textContent = 'An error occurred. Please try again.';
+            button.disabled = false;
+        };
+    });
 </script>
 {% endblock %}
