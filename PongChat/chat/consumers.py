@@ -1,7 +1,8 @@
 import json
 
-from channels.generic.websocket import WebsocketConsumer
-from django.dispatch.dispatcher import async_to_sync
+# from django.dispatch.dispatcher import async_to_sync
+from asgiref.sync import async_to_sync
+from channels.generic.websocket import WebsocketConsumer  # type:ignore
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 

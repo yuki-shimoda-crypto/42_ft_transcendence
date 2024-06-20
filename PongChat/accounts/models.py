@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
         upload_to="profile_images/", null=True, blank=True
     )
 
-    block_users = models.ManyToManyField(
+    block_users: models.ManyToManyField = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="blocked", blank=True
     )
 
