@@ -20,4 +20,5 @@ urlpatterns = [
         name="tournament_registration",
     ),
     path("start_single_play", views.start_single_play, name="start_single_play"),
+    path("multiplayer_play/<str:game_id>", views.multiplayer_play, name="multipalyer_play"),
 ]

@@ -86,3 +86,9 @@ def tournament_bracket(request):
 @login_required
 def tournament_registration(request):
     return render(request, "pingpong/tournament_registration.html")
+
+
+@login_required
+def multiplayer_play(request, game_id):
+    context = {"game_id": game_id}
+    return render(request, "pingpong/multiplayer_play.html", context)
