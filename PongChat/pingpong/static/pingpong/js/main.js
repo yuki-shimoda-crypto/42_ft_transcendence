@@ -53,12 +53,14 @@ export function initialize() {
 }
 
 function updateCanvasSize() {
-  const baseWidth = window.innerWidth;
+  const contentPlaceholder = document.querySelector("#content-placeholder");
+  if (!contentPlaceholder) {
+    return;
+  }
+
+  const windowWidth = contentPlaceholder.clientWidth;
   const windowHeight = window.innerHeight;
   const aspectRatio = 16 / 9; // 16:9
-
-  const windowWidth =
-    baseWidth > 768 ? Math.max(0, baseWidth - 200) : baseWidth;
 
   if (windowWidth / windowHeight > aspectRatio) {
     canvas.width = Math.max(0, windowHeight * aspectRatio);
