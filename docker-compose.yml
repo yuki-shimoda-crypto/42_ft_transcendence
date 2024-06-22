@@ -13,6 +13,14 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
       POSTGRES_PORT: ${DATABASE_PORT:-5432}
       POSTGRES_USER: ${DATABASE_USER:-user}
+  
+  redis:
+    image: redis:alpine
+    restart: always
+    # ports:
+    #   - "6379:6379"
+    volumes:
+      - redis_data:/data
 
   web_prod:
     build:
@@ -25,6 +33,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
 
   web_dev:
     build:
@@ -45,7 +54,9 @@ services:
       - "8001:8000"
     depends_on:
       - db
+      - redis
 
 volumes:
   postgres_data:
   node_volume:
+  redis_data:
