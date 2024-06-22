@@ -17,7 +17,7 @@ from .models import Game
 User = get_user_model()
 
 
-@login_required
+# @login_required
 def index(request):
     return render(request, "pingpong/home.html")
 
@@ -37,7 +37,7 @@ def game_play(request):
     return render(request, "pingpong/game_play.html")
 
 
-@login_required
+# @login_required
 def home(request):
     return render(request, "pingpong/home.html")
 
@@ -68,7 +68,7 @@ def multiplayer_play(request, game_id):
     return render(request, "pingpong/multiplayer_play.html", context)
 
 
-@login_required
+# @login_required
 def single_play_setup(request):
     if request.method == "POST":
         difficulty = request.POST.get("difficulty")
@@ -76,7 +76,7 @@ def single_play_setup(request):
     return render(request, "pingpong/single_play_setup.html")
 
 
-@login_required
+# @login_required
 def start_single_play(request):
     difficulty = request.POST.get("difficulty")
     return render(
