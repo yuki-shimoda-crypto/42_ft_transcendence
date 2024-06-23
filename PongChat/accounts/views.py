@@ -96,6 +96,14 @@ class MyPage(OnlyYouMixin, generic.DetailView):
     template_name = "accounts/my_page.html"
 
     def get_context_data(self, **kwargs):
+        """Adds extra context data to the view.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            dict: The context data.
+        """
         context = super().get_context_data(**kwargs)
         context["friends"] = self.object.friend_users.all()
         return context

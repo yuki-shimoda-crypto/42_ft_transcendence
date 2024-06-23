@@ -115,6 +115,21 @@ def user_block_post(request, username):
 
 
 def user_friend_post(request, username):
+    """Add or remove a user from the friend list.
+
+    This view handles adding or removing a user from the current user's
+    friend list. If the user is already a friend, they will be removed;
+    otherwise, they will be added.
+
+    Args:
+        request: The HTTP request object.
+        username (str): The username of the user to add or remove from the
+            friend list.
+
+    Returns:
+        HttpResponseRedirect: A redirect to the profile page of the user.
+    """
+
     friend_user = get_object_or_404(get_user_model(), username=username)
     is_friend = friend_user in request.user.friend_users.all()
 
