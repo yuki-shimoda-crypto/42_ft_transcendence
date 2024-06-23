@@ -1,6 +1,6 @@
-from django.apps import AppConfig
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+from django.apps import AppConfig
 
 
 class PingpongConfig(AppConfig):
@@ -9,6 +9,7 @@ class PingpongConfig(AppConfig):
 
     def ready(self):
         from pingpong.tasks import deactivate_inactive_users
+
         scheduler = BackgroundScheduler()
         scheduler.add_job(
             deactivate_inactive_users,

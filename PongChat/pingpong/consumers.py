@@ -1,8 +1,9 @@
 import json
-from urllib.parse import urljoin
 import random
-from channels.generic.websocket import AsyncWebsocketConsumer
+from urllib.parse import urljoin
+
 import redis
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 redis_client = redis.Redis(host="redis", port=6379, db=0)
 
@@ -43,8 +44,8 @@ class GameConsumer(AsyncWebsocketConsumer):
                     "type": "game_start",
                     "game_id": game_id,
                     "message": "match_found",
-                    "url": game_url
-                }
+                    "url": game_url,
+                },
             )
 
     # def get_header(self, header_name, default=None):
@@ -55,8 +56,12 @@ class GameConsumer(AsyncWebsocketConsumer):
     #     return default
 
     async def game_start(self, event):
-        await self.send(text_data=json.dumps({
-            "game_id": event["game_id"],
-            "message": event["message"],
-            "url": event["url"]
-        }))
+        await self.send(
+            text_data=json.dumps(
+                {
+                    "game_id": event["game_id"],
+                    "message": event["message"],
+                    "url": event["url"],
+                }
+            )
+        )
