@@ -1,17 +1,15 @@
 {% extends "common/base.html" %}
-
 {% block title %}Ping Pong Game{% endblock %}
-
 {% load static %}
-
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'pingpong/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'pingpong/css/style.css' %}" />
 {% endblock %}
-
 {% block content %}
-<div class="container fullscreen d-flex justify-content-center align-items-center">
-    <canvas id="myCanvas"></canvas>
-    <!-- <div id="game-over-message" class="text-center d-none position-absolute top-50 start-50 translate-middle">
+<div
+  class="container fullscreen d-flex justify-content-center align-items-center"
+>
+  <canvas id="myCanvas"></canvas>
+  <!-- <div id="game-over-message" class="text-center d-none position-absolute top-50 start-50 translate-middle">
         <div class="alert alert-info rounded-pill shadow-lg p-4 fs-1" role="alert">
             <span id="gameOverText"></span>
         </div>
@@ -19,5 +17,8 @@
         <button id="homeButton" class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3">Home</button>
     </div> -->
 </div>
-<script type="module" src="{% static 'pingpong/js/multiplay_local/main.js' %}"></script>
+<script
+  type="module"
+  src="{% static 'pingpong/js/multiplay_local/main.js' %}"
+></script>
 {% endblock %}
