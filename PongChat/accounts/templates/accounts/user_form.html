@@ -47,13 +47,13 @@
               {% if process_name == 'Sign Up'%}
               <a
                 href="{% url 'accounts:top' %}"
-                class="btn btn-outline-secondary btn-lg mt-4"
+                class="btn btn-outline-secondary btn-lg mt-4 async-link"
                 >キャンセル</a
               >
               {% else %}
               <a
                 href="{% url 'accounts:my_page' user.pk %}"
-                class="btn btn-outline-secondary btn-lg mt-4"
+                class="btn btn-outline-secondary btn-lg mt-4 async-link"
                 >キャンセル</a
               >
               {% endif %}
