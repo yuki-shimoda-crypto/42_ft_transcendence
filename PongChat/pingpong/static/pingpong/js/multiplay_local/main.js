@@ -7,7 +7,7 @@ import {
   downPressedRight,
   upPressedLeft,
   downPressedLeft,
-} from "./key_handle_multiplayer_local.js";
+} from "./key_handle.js";
 
 import {
   drawLeftPaddle,
@@ -15,7 +15,7 @@ import {
   moveLeftPaddle,
   moveRightPaddle,
   updatePaddleElement,
-} from "./paddle_multiplayer_local.js";
+} from "./paddle.js";
 
 import {
   drawBall,
