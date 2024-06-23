@@ -64,7 +64,7 @@ export function moveBall() {
       // Game Over
       incrementCpuScore();
       if (cpuScore >= winningScore) {
-        gameOver("CPU wins! Better luck next time.");
+        gameOver("Congratulations! Right win!");
       } else {
         resetGame();
       }
@@ -79,7 +79,7 @@ export function moveBall() {
       // Game Over
       incrementPlayerScore();
       if (playerScore >= winningScore) {
-        gameOver("Congratulations! You win!");
+        gameOver("Congratulations! Left win!");
       } else {
         resetGame();
       }

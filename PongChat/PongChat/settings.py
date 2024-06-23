@@ -38,7 +38,6 @@ ALLOWED_HOSTS: list[str] = []
 
 INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
-    "accounts.apps.AccountsConfig",
     "channels",
     "daphne",
     "django.contrib.admin",
@@ -88,7 +87,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [("redis", 6379)],
-        }
+        },
     }
 }
 
