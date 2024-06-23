@@ -5,8 +5,8 @@ from .views import (
     get_or_create_chatroom,
     profile_view,
     user_block_post,
+    user_friend_post,
     user_list,
-    user_friend_post
 )
 
 urlpatterns = [

@@ -97,7 +97,7 @@ class MyPage(OnlyYouMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['friends'] = self.object.friend_users.all()
+        context["friends"] = self.object.friend_users.all()
         return context
 
 

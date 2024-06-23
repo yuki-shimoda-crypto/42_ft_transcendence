@@ -24,7 +24,7 @@ def profile_view(request, username=None):
     return render(
         request,
         "chat/profile.html",
-        {"profile": profile, "is_blocked": is_blocked, "is_friend": is_friend}
+        {"profile": profile, "is_blocked": is_blocked, "is_friend": is_friend},
     )
 
 
