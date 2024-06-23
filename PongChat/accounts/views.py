@@ -95,6 +95,11 @@ class MyPage(OnlyYouMixin, generic.DetailView):
     model = CustomUser
     template_name = "accounts/my_page.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['friends'] = self.object.friend_users.all()
+        return context
+
 
 class SignUpView(View):
     """View for the user sign-up page.

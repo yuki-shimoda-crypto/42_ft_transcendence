@@ -25,6 +25,11 @@
               {% else %}
                 <a class="btn btn-success" href="{% url 'start-chat'  profile.username %}">view notifications</a>
               {% endif %}
+              {% if is_friend %}
+                <a class="btn btn-danger" href="{% url 'friend'  profile.username %}">Remove Friend</a>
+              {% else %}
+                <a class="btn btn-secondary" href="{% url 'friend'  profile.username %}">Add Friend</a>
+              {% endif %}
             </div>
         </div>
     </div>
