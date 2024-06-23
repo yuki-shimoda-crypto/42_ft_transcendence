@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "pingpong",
     "accounts.apps.AccountsConfig",
     "django_htmx",
     "chat.apps.ChatConfig",
