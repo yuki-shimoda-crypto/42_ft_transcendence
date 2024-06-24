@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
       POSTGRES_PORT: ${DATABASE_PORT:-5432}
       POSTGRES_USER: ${DATABASE_USER:-user}
-  
+
   redis:
     image: redis:alpine
     restart: always
