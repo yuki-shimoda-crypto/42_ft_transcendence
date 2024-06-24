@@ -5,6 +5,7 @@ from .views import (
     get_or_create_chatroom,
     profile_view,
     user_block_post,
+    user_friend_post,
     user_list,
 )
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path("room/<chatroom_name>", chat_view, name="chatroom"),
     path("@<username>/", profile_view, name="profile"),
     path("block/<str:username>", user_block_post, name="block"),
+    path("friend/<str:username>", user_friend_post, name="friend"),
 ]

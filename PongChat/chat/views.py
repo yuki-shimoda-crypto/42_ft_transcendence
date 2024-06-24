@@ -13,14 +13,18 @@ def profile_view(request, username=None):
     if username:
         profile = get_object_or_404(get_user_model(), username=username)
         is_blocked = profile in request.user.block_users.all()
+        is_friend = profile in request.user.friend_users.all()
     else:
         try:
             profile = request.user.profile
             is_blocked = False
+            is_friend = False
         except get_user_model().DoesNotExist:
             return redirect("account_login")
     return render(
-        request, "chat/profile.html", {"profile": profile, "is_blocked": is_blocked}
+        request,
+        "chat/profile.html",
+        {"profile": profile, "is_blocked": is_blocked, "is_friend": is_friend},
     )
 
 
@@ -106,5 +110,32 @@ def user_block_post(request, username):
         request.user.block_users.remove(block_user)
     else:
         request.user.block_users.add(block_user)
+    request.user.save()
+    return redirect("profile", username=username)
+
+
+def user_friend_post(request, username):
+    """Add or remove a user from the friend list.
+
+    This view handles adding or removing a user from the current user's
+    friend list. If the user is already a friend, they will be removed;
+    otherwise, they will be added.
+
+    Args:
+        request: The HTTP request object.
+        username (str): The username of the user to add or remove from the
+            friend list.
+
+    Returns:
+        HttpResponseRedirect: A redirect to the profile page of the user.
+    """
+
+    friend_user = get_object_or_404(get_user_model(), username=username)
+    is_friend = friend_user in request.user.friend_users.all()
+
+    if is_friend:
+        request.user.friend_users.remove(friend_user)
+    else:
+        request.user.friend_users.add(friend_user)
     request.user.save()
     return redirect("profile", username=username)

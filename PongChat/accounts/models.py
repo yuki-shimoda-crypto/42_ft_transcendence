@@ -24,6 +24,10 @@ class CustomUser(AbstractUser):
         settings.AUTH_USER_MODEL, related_name="blocked", blank=True
     )
 
+    friend_users: models.ManyToManyField = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="friend", blank=True
+    )
+
     def __str__(self):
         """Returns the string representation of the user.
 
