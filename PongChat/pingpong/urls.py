@@ -6,7 +6,7 @@ app_name = "pingpong"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("create_game", views.create_game, name="create_game"),
+    # path("create_game", views.create_game, name="create_game"),
     path("game_play", views.game_play, name="game_play"),
     path("home", views.home, name="home"),
     path(

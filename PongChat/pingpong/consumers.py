@@ -1,6 +1,5 @@
 import json
 import random
-from urllib.parse import urljoin
 
 import redis
 from channels.generic.websocket import AsyncWebsocketConsumer

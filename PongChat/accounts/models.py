@@ -20,8 +20,10 @@ class CustomUser(AbstractUser):
         upload_to="profile_images/", null=True, blank=True
     )
 
-    is_remote_multiplayer_active = models.BooleanField(default=False)
-    last_activity = models.DateTimeField(default=timezone.now)
+    is_remote_multiplayer_active: models.BooleanField = models.BooleanField(
+        default=False
+    )
+    last_activity: models.DateField = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         """Returns the string representation of the user.
