@@ -1,6 +1,6 @@
 import pytest
-from django.urls import reverse
 from accounts.models import CustomUser
+from django.urls import reverse
 
 
 @pytest.fixture
@@ -28,12 +28,12 @@ def test_add_friend(client, create_users):
     user1, user2 = create_users
     client.login(username=user1.username, password="password1")
 
-    profile_url = reverse('profile', kwargs={'username': user2.username})
+    profile_url = reverse("profile", kwargs={"username": user2.username})
     response = client.get(profile_url)
     assert response.status_code == 200
     assert "Add Friend" in response.content.decode()
 
-    friend_url = reverse('friend', kwargs={'username': user2.username})
+    friend_url = reverse("friend", kwargs={"username": user2.username})
     response = client.post(friend_url)
     assert response.status_code == 302
 
@@ -58,7 +58,7 @@ def test_remove_friend(client, create_users):
     user1.friend_users.add(user2)
     client.login(username=user1.username, password="password1")
 
-    url = reverse('friend', kwargs={'username': user2.username})
+    url = reverse("friend", kwargs={"username": user2.username})
     response = client.post(url)
 
     assert response.status_code == 302
@@ -84,7 +84,7 @@ def test_toggle_friend(client, create_users):
     user1, user2 = create_users
     client.login(username=user1.username, password="password1")
 
-    url = reverse('friend', kwargs={'username': user2.username})
+    url = reverse("friend", kwargs={"username": user2.username})
 
     response = client.post(url)
     assert response.status_code == 302
