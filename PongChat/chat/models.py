@@ -29,7 +29,6 @@ class ChatGroup(models.Model):
         return self.members.count()
 
 
-
 class GroupMessage(models.Model):
     group: models.ForeignKey = models.ForeignKey(
         ChatGroup, related_name="chat_messages", on_delete=models.CASCADE
