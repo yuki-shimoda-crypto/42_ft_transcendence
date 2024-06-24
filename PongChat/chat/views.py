@@ -88,16 +88,15 @@ def get_or_create_chatroom(request, username):
     if my_chatrooms.exists():
         for chatroom in my_chatrooms:
             if other_user in chatroom.members.all():
-                chatroom = chatroom
-                break
-            chatroom = ChatGroup.objects.create(is_private=True)
-            chatroom.members.add(other_user, request.user)
+                return redirect("chatroom", chatroom.group_name)
+        chatroom = ChatGroup.objects.create(is_private=True)
+        chatroom.members.add(other_user, request.user)
+        return redirect("chatroom", chatroom.group_name)
 
     else:
         chatroom = ChatGroup.objects.create(is_private=True)
         chatroom.members.add(other_user, request.user)
-
-    return redirect("chatroom", chatroom.group_name)
+        return redirect("chatroom", chatroom.group_name)
 
 
 def user_list(request):
@@ -150,14 +149,17 @@ def user_friend_post(request, username):
     message = form.save(commit=False)
     message.author = request.user
     my_chatrooms = request.user.chat_groups.filter(is_private=True)
+    exists_flag = False
     for chatroom in my_chatrooms:
         if chatroom.member_count == 1:
             message.group = chatroom
             message.save()
-        else:
-            chatroom = ChatGroup.objects.create(is_private=True)
-            chatroom.members.add(request.user)
-            message.group = chatroom
-            message.save()
+            exists_flag = True
+            break
+    if exists_flag == False:
+        chatroom = ChatGroup.objects.create(is_private=True)
+        chatroom.members.add(request.user)
+        message.group = chatroom
+        message.save()
 
     return redirect("profile", username=username)
