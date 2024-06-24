@@ -73,6 +73,10 @@ def chat_view(request, chatroom_name=None):
 @login_required
 def get_or_create_chatroom(request, username):
     if request.user.username == username:
+        my_chatrooms = request.user.chat_groups.filter(is_private=True)
+        for chatroom in my_chatrooms:
+            if chatroom.member_count == 1:
+                return redirect("chatroom", chatroom.group_name)
         chatroom = ChatGroup.objects.create(is_private=True)
         chatroom.members.add(request.user)
         return redirect("chatroom", chatroom.group_name)
@@ -135,7 +139,25 @@ def user_friend_post(request, username):
 
     if is_friend:
         request.user.friend_users.remove(friend_user)
+        form = ChatmessageCreateForm(
+            data={"body": f"Remove exists friend user: {username}"}
+        )
     else:
         request.user.friend_users.add(friend_user)
+        form = ChatmessageCreateForm(data={"body": f"Add new friend user: {username}"})
     request.user.save()
+
+    message = form.save(commit=False)
+    message.author = request.user
+    my_chatrooms = request.user.chat_groups.filter(is_private=True)
+    for chatroom in my_chatrooms:
+        if chatroom.member_count == 1:
+            message.group = chatroom
+            message.save()
+        else:
+            chatroom = ChatGroup.objects.create(is_private=True)
+            chatroom.members.add(request.user)
+            message.group = chatroom
+            message.save()
+
     return redirect("profile", username=username)

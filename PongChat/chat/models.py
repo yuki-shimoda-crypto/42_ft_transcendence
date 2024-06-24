@@ -24,6 +24,10 @@ class ChatGroup(models.Model):
     def __str__(self):
         return self.group_name
 
+    @property
+    def member_count(self):
+        return self.members.count()
+
 
 class GroupMessage(models.Model):
     group: models.ForeignKey = models.ForeignKey(
