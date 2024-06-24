@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleClick(event) {
-  if (
-    event.target.tagName === "A" &&
-    event.target.classList.contains("async-link") // async-linkクラスを持つリンクのみloadContentを呼び出す
-  ) {
+  if (event.target.tagName === "A") {
     event.preventDefault();
     const url = event.target.href;
     loadContent(url);
