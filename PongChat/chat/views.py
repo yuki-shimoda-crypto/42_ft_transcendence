@@ -156,7 +156,7 @@ def user_friend_post(request, username):
             message.save()
             exists_flag = True
             break
-    if exists_flag == False:
+    if exists_flag is False:
         chatroom = ChatGroup.objects.create(is_private=True)
         chatroom.members.add(request.user)
         message.group = chatroom
