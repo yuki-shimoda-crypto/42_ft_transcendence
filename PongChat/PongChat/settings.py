@@ -37,6 +37,7 @@ ALLOWED_HOSTS: list[str] = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -45,6 +46,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "pingpong",
     "accounts.apps.AccountsConfig",
+    "django_htmx",
+    "chat.apps.ChatConfig",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = "PongChat.urls"
@@ -75,8 +80,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "PongChat.wsgi.application"
+# WSGI_APPLICATION = "PongChat.wsgi.application"
+ASGI_APPLICATION = "PongChat.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

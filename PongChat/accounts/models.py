@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -17,6 +18,14 @@ class CustomUser(AbstractUser):
 
     profile_image = models.ImageField(
         upload_to="profile_images/", null=True, blank=True
+    )
+
+    block_users: models.ManyToManyField = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="blocked", blank=True
+    )
+
+    friend_users: models.ManyToManyField = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="friend", blank=True
     )
 
     def __str__(self):
@@ -40,3 +49,9 @@ class CustomUser(AbstractUser):
         if not self.profile_image:
             self.profile_image = generate_default_profile_image(self.username)
         super().save(*args, **kwargs)
+
+    @property
+    def avatar(self):
+        if self.profile_image:
+            return self.profile_image.url
+        return generate_default_profile_image(self.username)
