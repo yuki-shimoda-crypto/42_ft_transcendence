@@ -30,8 +30,8 @@ class GameConsumer(AsyncWebsocketConsumer):
         # host = self.get_header("host", "localhost")
         # scheme = self.scope.get("scheme", "ws")
         # base_url = f"{scheme}://{host}"
-        # game_url = urljoin(base_url, f"/pingpong/multiplayer_play/{game_id}/")
-        game_url = "http://localhost:8001/pingpong/multiplayer_play/" + game_id
+        # game_url = urljoin(base_url, f"/pingpong/multiplayer_play_remote/{game_id}/")
+        game_url = "http://localhost:8001/pingpong/multiplayer_play_remote/" + game_id
 
         for player in players:
             redis_client.sadd(game_id, player)

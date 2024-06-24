@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
   <h1>Single Play Setup</h1>
-  <form action="{% url 'pingpong:start_single_play' %}" method="post">
+  <form action="{% url 'pingpong:single_play_start' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
       <label for="difficulty">Select Difficulty:</label>

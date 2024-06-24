@@ -43,8 +43,8 @@ def home(request):
 
 
 # @login_required
-def multiplayer_local_play(request):
-    return render(request, "pingpong/multiplayer_local_play.html")
+def multiplayer_play_local(request):
+    return render(request, "pingpong/multiplayer_play_local.html")
 
 
 @login_required
@@ -63,9 +63,9 @@ def multiplayer_options(request):
 
 
 @login_required
-def multiplayer_play(request, game_id):
+def multiplayer_play_remote(request, game_id):
     context = {"game_id": game_id}
-    return render(request, "pingpong/multiplayer_play.html", context)
+    return render(request, "pingpong/multiplayer_play_remote.html", context)
 
 
 # @login_required
@@ -77,10 +77,10 @@ def single_play_setup(request):
 
 
 # @login_required
-def start_single_play(request):
+def single_play_start(request):
     difficulty = request.POST.get("difficulty")
     return render(
-        request, "pingpong/start_single_play.html", {"difficulty": difficulty}
+        request, "pingpong/single_play_start.html", {"difficulty": difficulty}
     )
 
 
