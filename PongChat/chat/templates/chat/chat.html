@@ -12,7 +12,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center my-3">
     <div class="col-md-7 col-lg-5">
-      <div id="chat_window" class="d-flex flex-column bg-dark rounded-4 shadow-lg position-relative p-1">
+      <div id="chat-window" class="d-flex flex-column bg-dark rounded-4 shadow-lg position-relative p-1">
         <div class="d-flex justify-content-center text-success bg-dark p-2 sticky-top">
           {% if other_user %}
             <div id="online-icon"></div>
@@ -39,7 +39,7 @@
         </div>
         {% if is_blocked %}
         {% else %}
-          <div id='chat_container' class="overflow-auto flex-grow-1">
+          <div id='chat-container' class="overflow-auto flex-grow-1">
             <ul id='chat_messages' class="list-unstyled d-flex flex-column justify-content-end gap-2 p-4">
               {% for message in chat_messages reversed%}
               {% include "chat/chat_message.html"%}
@@ -74,7 +74,7 @@
 <script>
   function scrollToBottom(time = 0) {
     setTimeout(function () {
-      const container = document.getElementById('chat_container');
+      const container = document.getElementById('chat-container');
       container.scrollTop = container.scrollHeight;
     }, time);
   }
