@@ -1,4 +1,8 @@
 ---
+networks:
+  monitoring:
+    driver: bridge
+
 services:
   db:
     build:
@@ -13,8 +17,10 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
       POSTGRES_PORT: ${DATABASE_PORT:-5432}
       POSTGRES_USER: ${DATABASE_USER:-user}
+    networks:
+      - monitoring
 
-  web_prod:
+  web-prod:
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,8 +31,10 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - monitoring
 
-  web_dev:
+  web-dev:
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -38,13 +46,16 @@ services:
 #      - ~/.ssh/:/home/user/.ssh
 #      - ~/.vimrc:/home/user/.vimrc
 #      - ~/.gnupg/:/home/user/.gnupg/
-#    environment:
+    environment:
+      DJANGO_ALLOWED_HOSTS: "localhost web-dev"
 #      SSH_AUTH_SOCK: /ssh-agent
     restart: always
     ports:
       - "8001:8000"
     depends_on:
       - db
+    networks:
+      - monitoring
 
 volumes:
   postgres_data:
