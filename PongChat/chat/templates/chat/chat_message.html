@@ -2,9 +2,9 @@
 <li class="d-flex justify-content-end mb-4">
   <div class="bg-success bg-opacity-25 rounded-start rounded-top-end p-3" style="max-width: 75%;">
     {% if message.body == ":invite" %}
-      <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
+    <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
     {% else %}
-      <span class="text-secondary">{{ message.body }}</span>
+    <span class="text-secondary">{{ message.body }}</span>
     {% endif %}
   </div>
   <div class="d-flex align-items-end">
@@ -28,9 +28,9 @@
     </div>
     <div class="bg-white p-3 rounded-end rounded-top-start" style="max-width: 75%;">
       {% if message.body == ":invite" %}
-        <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
+      <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
       {% else %}
-        <span>{{ message.body }}</span>
+      <span>{{ message.body }}</span>
       {% endif %}
     </div>
   </div>
