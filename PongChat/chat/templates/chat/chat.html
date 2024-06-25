@@ -1,162 +1,111 @@
 <!DOCTYPE html>
 {% include 'chat_base.html' %}
 {% block head %}
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
   <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <style type="text/tailwindcss">
-      [x-cloak] {
-              display: none !important;
-          }
-          h1 {
-              @apply text-4xl font-bold mb-4
-          }
-          h2 {
-              @apply text-xl font-bold mb-2
-          }
-          p {
-              @apply mb-4
-          }
-          nav {
-            @apply h-20
-          }
-          .button, button, [type='submit'], [type='button'] {
-              @apply bg-indigo-600 text-white font-bold px-6 py-4 inline-block
-              rounded-lg shadow-lg transition-all cursor-pointer
-          }
-          .button:hover, button:hover, [type='submit']:hover, [type='button']:hover {
-              @apply bg-indigo-700
-          }
-          .button:active, button:active, [type='submit']:active, [type='button']:active {
-              @apply scale-95
-          }
-          .button.alert, button.alert {
-              @apply bg-red-700
-          }
-          .button.alert:hover, button.alert:hover {
-              @apply bg-red-600
-          }
-          .button-red {
-              @apply !bg-red-500 hover:!bg-red-600
-          }
-          .button-gray {
-              @apply !bg-gray-300 hover:!bg-[#c3c9d0]
-          }
-          .navitems>li>a {
-              @apply flex items-center gap-2 h-12 px-4 hover:bg-[rgba(31,41,55,0.3)] rounded-lg;
-          }
-          .hoverlist>* {
-              @apply hover:bg-gray-100 rounded-md transition duration-150;
-          }
-          .hoverlist>*>a {
-              @apply flex items-center p-2;
-          }
-          .highlight {
-              @apply !bg-indigo-100;
-          }
-          .allauth content a {
-              @apply underline underline-offset-2
-          }
-          .allauth content a:hover {
-              @apply text-indigo-500
-          }
-          .allauth form[action="/accounts/signup/"] ul {
-              @apply hidden
-          }
-          .allauth form[action="/accounts/signup/"] ul.errorlist {
-              @apply block
-          }
-          .allauth .helptext {
-              @apply block mt-4
-          }
-          label {
-              @apply hidden
-          }
-          input[type=file] {
-              @apply bg-white pl-0
-          }
-          .textarea, textarea, input {
-              @apply w-full rounded-lg py-4 px-5 bg-gray-100
-          }
-          .errorlist li {
-              @apply p-1 pl-4 border-l-red-500 border-l-4 border-solid mb-2 text-red-500
-          }
-          label[for="id_remember"] {
-              @apply inline-block w-auto mr-2
-          }
-          input[name="remember"] {
-              @apply w-auto
-          }
-          .alert-info { @apply bg-sky-600 }
-          .alert-success { @apply bg-emerald-600 }
-          .alert-warning { @apply bg-orange-600 }
-          .alert-danger { @apply bg-red-600 }
+  <style>
+    [x-cloak] { display: none !important; }
+    body { background-color: #f8f9fa; }
+    h1 { font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; }
+    h2 { font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    .btn-primary { background-color: #4f46e5; border-color: #4f46e5; }
+    .btn-primary:hover { background-color: #4338ca; border-color: #4338ca; }
+    .btn-danger { background-color: #b91c1c; border-color: #b91c1c; }
+    .btn-danger:hover { background-color: #991b1b; border-color: #991b1b; }
+    .btn-secondary { background-color: #d1d5db; border-color: #d1d5db; color: #111827; }
+    .btn-secondary:hover { background-color: #9ca3af; border-color: #9ca3af; color: #111827; }
+    .nav-link { display: flex; align-items: center; gap: 0.5rem; height: 3rem; padding: 0 1rem; }
+    .nav-link:hover { background-color: rgba(31,41,55,0.3); border-radius: 0.5rem; }
+    .list-group-item-action:hover { background-color: #f3f4f6; border-radius: 0.375rem; transition: background-color 150ms; }
+    .highlight { background-color: #e0e7ff !important; }
+    .allauth a { text-decoration: underline; text-underline-offset: 2px; }
+    .allauth a:hover { color: #4f46e5; }
+    .allauth form[action="/accounts/signup/"] ul { display: none; }
+    .allauth form[action="/accounts/signup/"] ul.errorlist { display: block; }
+    .allauth .helptext { display: block; margin-top: 1rem; }
+    label { display: none; }
+    .form-control[type=file] { background-color: white; padding-left: 0; }
+    .form-control, .form-control-file { background-color: #f3f4f6; border-radius: 0.5rem; padding: 1rem 1.25rem; }
+    .invalid-feedback { display: block; padding: 0.25rem 0 0.25rem 1rem; border-left: 4px solid #dc3545; margin-bottom: 0.5rem; }
+    #id_remember + label { display: inline-block; width: auto; margin-right: 0.5rem; }
+    input[name="remember"] { width: auto; }
+    .alert-info { background-color: #0dcaf0; }
+    .alert-success { background-color: #198754; }
+    .alert-warning { background-color: #ffc107; }
+    .alert-danger { background-color: #dc3545; }
+    #chat_window { height: calc(100vh - 6rem); }
+    #chat_container { height: calc(100% - 130px); }
   </style>
 {% endblock %}
 
-
 {% block layout %}
-<content class="block w-full">
-<wrapper class="block max-w-2xl mx-auto my-10 px-6">
-  <div id="chat_window" class="h-[45rem] flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1 ml-auto md:w-5/6">
-    <div class="flex justify-center text-emerald-400 bg-gray-800 p-2 sticky top-0 z-10">
-      {% if other_user %}
-        <div id="online-icon"></div>
-        <a href="{% url 'profile' other_user.username %}">
-          <div class="flex items-center gap-2 p-4 sticky top-0 z-10">
-            <img class="w-10 h-10 rounded-full object-cover" src="{{ other_user.avatar }}" />
-            <div>
-              <span class="font-bold test-white">{{ other_user.profile.name }}</span>
-              <span class="text-sm font-light text-gray-400">@{{ other_user.username }}</span>
-            </div>
-          </div>
-        </a>
-      {% else %}
-        <a href="{% url 'profile' user.username %}">
-          <div class="flex items-center gap-2 p-4 sticky top-0 z-10">
-            <img class="w-10 h-10 rounded-full object-cover" src="{{ user.avatar }}" />
-            <div>
-              <span class="font-bold test-white">{{ user.profile.name }}</span>
-              <span class="text-sm font-light text-gray-400">Notifications</span>
-            </div>
-          </div>
-        </a>
-      {% endif %}
-    </div>
-    {% if is_blocked %}
-    {% else %}
-      <div id='chat_container' class="overflow-y-auto grow">
-        <ul id='chat_messages' class="flex flex-col justify-end gap-2 p-4">
-          {% for message in chat_messages reversed%}
-          {% include "chat/chat_message.html"%}
-          {% endfor %}
-        </ul>
-      </div>
-      {% if other_user %}
-        <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
-          <div class="flex items-center rounded-xl px-2 py-2">
-            <form id="chat_message_form" class="w-full"
-              hx-ext="ws"
-              ws-connect="/ws/chatroom/{{ chatroom_name }}"
-              ws-send
-              _="on htmx:wsAfterSend reset() me">
-              {% csrf_token %}
-              {{ form }}
-            </form>
-          </div>
+<div class="container-fluid">
+  <div class="row justify-content-center my-3">
+    <div class="col-md-7 col-lg-5">
+      <div id="chat_window" class="d-flex flex-column bg-dark rounded-4 shadow-lg position-relative p-1">
+        <div class="d-flex justify-content-center text-success bg-dark p-2 sticky-top">
+          {% if other_user %}
+            <div id="online-icon"></div>
+            <a href="{% url 'profile' other_user.username %}" class="text-decoration-none">
+              <div class="d-flex align-items-center gap-2 p-4 sticky-top">
+                <img class="rounded-circle object-fit-cover" src="{{ other_user.avatar }}" width="40" height="40" />
+                <div>
+                  <span class="fw-bold text-white">{{ other_user.profile.name }}</span>
+                  <span class="small fw-light text-secondary">@{{ other_user.username }}</span>
+                </div>
+              </div>
+            </a>
+          {% else %}
+            <a href="{% url 'profile' user.username %}" class="text-decoration-none">
+              <div class="d-flex align-items-center gap-2 p-4 sticky-top">
+                <img class="rounded-circle object-fit-cover" src="{{ user.avatar }}" width="40" height="40" />
+                <div>
+                  <span class="fw-bold text-white">{{ user.profile.name }}</span>
+                  <span class="small fw-light text-secondary">Notifications</span>
+                </div>
+              </div>
+            </a>
+          {% endif %}
         </div>
-      {% endif %}
-    {% endif %}
+        {% if is_blocked %}
+        {% else %}
+          <div id='chat_container' class="overflow-auto flex-grow-1">
+            <ul id='chat_messages' class="list-unstyled d-flex flex-column justify-content-end gap-2 p-4">
+              {% for message in chat_messages reversed%}
+              {% include "chat/chat_message.html"%}
+              {% endfor %}
+            </ul>
+          </div>
+          {% if other_user %}
+            <div class="sticky-bottom p-2 bg-dark">
+              <div class="d-flex justify-content-center align-items-center rounded-4 px-2 py-2">
+                <form id="chat_message_form" class="w-100"
+                  hx-ext="ws"
+                  ws-connect="/ws/chatroom/{{ chatroom_name }}"
+                  ws-send
+                  _="on htmx:wsAfterSend reset() me">
+                  {% csrf_token %}
+                  <div class="input-group">
+                    {{ form.body }}
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
   </div>
-</wrapper>
+</div>
 {% endblock %}
-
 
 {% block javascript %}
 <script>
-
   function scrollToBottom(time = 0) {
     setTimeout(function () {
       const container = document.getElementById('chat_container');
@@ -164,7 +113,5 @@
     }, time);
   }
   scrollToBottom()
-
 </script>
 {% endblock %}
-</content>
