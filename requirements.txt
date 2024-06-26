@@ -8,10 +8,12 @@ constantly==23.10.4
 cryptography==42.0.8
 daphne==4.1.2
 django-htmx==1.17.3
+django-prometheus==2.3.1
 hyperlink==21.0.0
 idna==3.7
 incremental==22.10.0
 pillow==10.3.0
+prometheus_client==0.20.0
 psycopg==3.1.18
 psycopg2-binary==2.9.9
 pyasn1==0.6.0
