@@ -3,6 +3,12 @@ networks:
   monitoring:
     driver: bridge
 
+volumes:
+  postgres_data: {}
+  node_volume: {}
+  prometheus_data: {}
+  grafana-data: {}
+
 services:
   db:
     build:
@@ -41,14 +47,6 @@ services:
     volumes:
       - .:/app
       - node_volume:/app/node_modules
-#      - ${SSH_AUTH_SOCK}:/ssh-agent
-#      - ~/.gitconfig:/home/user/.gitconfig
-#      - ~/.ssh/:/home/user/.ssh
-#      - ~/.vimrc:/home/user/.vimrc
-#      - ~/.gnupg/:/home/user/.gnupg/
-    environment:
-      DJANGO_ALLOWED_HOSTS: "localhost web-dev"
-#      SSH_AUTH_SOCK: /ssh-agent
     restart: always
     ports:
       - "8001:8000"
@@ -57,6 +55,31 @@ services:
     networks:
       - monitoring
 
-volumes:
-  postgres_data:
-  node_volume:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
