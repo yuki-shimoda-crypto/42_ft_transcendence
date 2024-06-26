@@ -59,5 +59,6 @@ types-pytz==2024.1.0.20240203
 types-PyYAML==6.0.12.20240311
 typing_extensions==4.11.0
 wheel==0.43.0
+whitenoise==6.7.0
 yamllint==1.35.1
 zope.interface==6.4.post2
