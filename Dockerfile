@@ -16,7 +16,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # RUN pip install django psycopg2-binary
 
 # OpenSSL install
-RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openssl && \
+    rm -rf /var/lib/apt/lists/*
 
 # entrypoint.sh
 COPY tools/docker/web_prod/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
