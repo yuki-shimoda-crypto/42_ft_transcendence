@@ -124,7 +124,7 @@ msgstr "Notification Chat"
 
 #: chat/templates/chat/profile.html:20
 msgid "チャットする"
-msgstr "Notification Chat"
+msgstr "Chat with me"
 
 #: chat/templates/chat/profile.html:22
 msgid "ブロック解除"
