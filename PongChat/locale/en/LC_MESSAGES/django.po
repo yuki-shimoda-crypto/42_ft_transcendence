@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-27 17:21+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: PongChat/settings.py:147
+msgid "English"
+msgstr ""
+
+#: PongChat/settings.py:148
+msgid "Japanese"
+msgstr ""
+
+#: PongChat/settings.py:149
+msgid "French"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:24
+#: accounts/templates/accounts/signup_done.html:17
+#: templates/common/header.html:67
+msgid "ログイン"
+msgstr "Log In"
+
+#: accounts/templates/accounts/logout_done.html:12
+msgid "ログアウトしました"
+msgstr "Log Out"
+
+#: accounts/templates/accounts/logout_done.html:16
+msgid "もう一度ログインする"
+msgstr "Log in again"
+
+#: accounts/templates/accounts/logout_done.html:21
+msgid "トップページに戻る"
+msgstr "Return to Top Page"
+
+#: accounts/templates/accounts/my_page.html:19
+msgid "登録情報"
+msgstr "Registration Information"
+
+#: accounts/templates/accounts/my_page.html:28
+msgid "ユーザー名"
+msgstr "Username"
+
+#: accounts/templates/accounts/my_page.html:38
+msgid "プロフィール画像"
+msgstr "Profile Image"
+
+#: accounts/templates/accounts/my_page.html:51
+msgid "プロフィール画像がありません"
+msgstr "No Profile Picture"
+
+#: accounts/templates/accounts/my_page.html:59
+#: accounts/templates/accounts/my_page.html:68
+msgid "パスワード"
+msgstr "Password"
+
+#: accounts/templates/accounts/my_page.html:69
+msgid "非表示"
+msgstr "Hidden"
+
+#: accounts/templates/accounts/my_page.html:76
+msgid "権限"
+msgstr "Permission"
+
+#: accounts/templates/accounts/my_page.html:82
+#: accounts/templates/accounts/my_page.html:87
+msgid "スタッフ権限"
+msgstr "Staff Permission"
+
+#: accounts/templates/accounts/my_page.html:88
+#: accounts/templates/accounts/my_page.html:98
+msgid "なし"
+msgstr "None"
+
+#: accounts/templates/accounts/my_page.html:92
+#: accounts/templates/accounts/my_page.html:97
+msgid "スーパーユーザー権限"
+msgstr "Superuser Permission"
+
+#: accounts/templates/accounts/my_page.html:104
+msgid "フレンド情報"
+msgstr "Friends Information"
+
+#: accounts/templates/accounts/my_page.html:119
+msgid "フレンドはいません"
+msgstr "No Friends"
+
+#: accounts/templates/accounts/password_change_done.html:13
+msgid "パスワードを更新しました。"
+msgstr "Password updated."
+
+#: accounts/templates/accounts/password_change_done.html:15
+#: templates/common/header.html:79
+msgid "マイページ"
+msgstr "My Page"
+
+#: accounts/templates/accounts/signup_done.html:14
+msgid "サインアップが完了しました"
+msgstr "Sign Up"
+
+#: accounts/templates/accounts/user_form.html:52
+#: accounts/templates/accounts/user_form.html:58
+msgid "キャンセル"
+msgstr "Cansel"
+
+#: chat/templates/chat/profile.html:14
+msgid "通知チャット"
+msgstr "Notification Chat"
+
+#: chat/templates/chat/profile.html:20
+msgid "チャットする"
+msgstr "Notification Chat"
+
+#: chat/templates/chat/profile.html:22
+msgid "ブロック解除"
+msgstr "Unblock"
+
+#: chat/templates/chat/profile.html:24
+msgid "ブロック"
+msgstr "Block"
+
+#: chat/templates/chat/profile.html:27
+msgid "フレンド解除"
+msgstr "Friends Information"
+
+#: chat/templates/chat/profile.html:29
+msgid "フレンド登録"
+msgstr "Friends Information"
+
+#: chat/templates/chat/profile.html:32
+msgid "通知を確認する"
+msgstr "Check Notification"
+
+#: chat/templates/chat/user_list.html:5
+msgid "ユーザー一覧"
+msgstr "User List"
+
+#: templates/common/header.html:52
+msgid "ゲスト"
+msgstr "Guest"
+
+#: templates/common/header.html:71
+msgid "サインアップ"
+msgstr "Sign Up"
+
+#: templates/common/header.html:84
+msgid "ログアウト"
+msgstr "Log Out"

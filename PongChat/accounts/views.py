@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView,
@@ -6,8 +7,9 @@ from django.contrib.auth.views import (
     PasswordChangeView,
 )
 from django.shortcuts import redirect, render, resolve_url
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, resolve, reverse
 from django.views import View, generic
+from django.utils import translation
 
 from .forms import (
     CustomPasswordChangeForm,
@@ -279,3 +281,17 @@ class PasswordChangeDone(PasswordChangeDoneView):
     """
 
     template_name = "accounts/password_change_done.html"
+
+
+def switch_language(request, language):
+    translation.activate(language)
+    request.session[settings.LANGUAGE_SESSION_KEY] = language
+
+    referer = request.META.get("HTTP_REFERER")
+
+    if referer:
+        if language == "ja":
+            return redirect("accounts:top")
+        return redirect(f"/{language}")
+    else:
+        return redirect("accounts:top")
