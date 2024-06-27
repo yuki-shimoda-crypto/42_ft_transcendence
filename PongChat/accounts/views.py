@@ -7,9 +7,9 @@ from django.contrib.auth.views import (
     PasswordChangeView,
 )
 from django.shortcuts import redirect, render, resolve_url
-from django.urls import reverse_lazy, resolve, reverse
-from django.views import View, generic
+from django.urls import reverse_lazy
 from django.utils import translation
+from django.views import View, generic
 
 from .forms import (
     CustomPasswordChangeForm,
