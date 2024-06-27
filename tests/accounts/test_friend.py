@@ -31,7 +31,7 @@ def test_add_friend(client, create_users):
     profile_url = reverse("profile", kwargs={"username": user2.username})
     response = client.get(profile_url)
     assert response.status_code == 200
-    assert "Add Friend" in response.content.decode()
+    assert "フレンド登録" in response.content.decode()
 
     friend_url = reverse("friend", kwargs={"username": user2.username})
     response = client.post(friend_url)
