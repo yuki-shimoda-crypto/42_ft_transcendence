@@ -23,18 +23,12 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        {% if request.LANGUAGE_CODE == 'ja' %}
-          <i class="bi bi-globe"></i> 日本語
-        {% elif request.LANGUAGE_CODE == 'en' %}
-          <i class="bi bi-globe"></i> English
-        {% elif request.LANGUAGE_CODE == 'fr' %}
-          <i class="bi bi-globe"></i> Français
-        {% endif %}
+          <i class="bi bi-type"></i>
       </button>
       <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'ja' %}"><i class="bi bi-flag-fill"></i> 日本語</a></li>
-        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'en' %}"><i class="bi bi-flag-fill"></i> English</a></li>
-        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'fr' %}"><i class="bi bi-flag-fill"></i> Français</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'ja' %}">日本語</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'en' %}">English</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'fr' %}">Français</a></li>
       </ul>
     </div>
     <!-- ユーザードロップダウン -->
