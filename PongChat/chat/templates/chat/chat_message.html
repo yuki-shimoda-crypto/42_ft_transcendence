@@ -1,10 +1,18 @@
+<style>
+  .message-body {
+    word-wrap: break-word; /* 長い単語やURLを適切な位置で改行 */
+    overflow-wrap: break-word; /* Firefox向けのプロパティ */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+</style>
 {% if message.author == user %}
 <li class="d-flex justify-content-end mb-4">
   <div class="bg-success bg-opacity-25 rounded-start rounded-top-end p-3" style="max-width: 75%;">
     {% if message.body == ":invite" %}
     <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
     {% else %}
-    <span class="text-secondary">{{ message.body }}</span>
+    <span class="message-body text-secondary">{{ message.body }}</span>
     {% endif %}
   </div>
   <div class="d-flex align-items-end">
@@ -30,7 +38,7 @@
       {% if message.body == ":invite" %}
       <a href="{% url 'chat-home' %}" class="text-decoration-none">Invite game</a>
       {% else %}
-      <span>{{ message.body }}</span>
+      <span class="message-body">{{ message.body }}</span>
       {% endif %}
     </div>
   </div>
