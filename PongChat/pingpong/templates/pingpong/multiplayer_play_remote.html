@@ -17,8 +17,9 @@
         <button id="homeButton" class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3">Home</button>
     </div> -->
 </div>
-<script
-  type="module"
-  src="{% static 'pingpong/js/multiplay_remote/main.js' %}"
-></script>
+<script type="module">
+  import { initializeGame } from"{% static 'pingpong/js/multiplay_remote/main.js' %}";
+  const gameId = "{{ game_id }}";
+  initializeGame(gameId);
+</script>
 {% endblock %}

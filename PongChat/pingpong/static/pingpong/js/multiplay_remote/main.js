@@ -49,28 +49,6 @@ export const canvas = document.querySelector("#myCanvas");
 export const ctx = canvas.getContext("2d");
 export let previousCanvasWidth, previousCanvasHeight;
 
-const gameId = "game_3000";
-const gameSocket = new WebSocket(
-  `ws://${window.location.host}/ws/game/${gameId}/`
-);
-console.log(`ws://${window.location.host}/ws/game/${gameId}/`);
-
-gameSocket.onmessage = function (event) {
-  const data = JSON.parse(event.data);
-};
-
-gameSocket.onopen = function (event) {
-  console.log("Connected to websocket");
-};
-
-gameSocket.onclose = function (event) {
-  console.error("Disconnected from websocket");
-};
-
-gameSocket.onerror = function (event) {
-  console.error("Error in websocket");
-};
-
 export function initialize() {
   updateCanvasSize();
   initializeBallElement();
@@ -129,14 +107,37 @@ function onResize() {
   updatePaddleElement();
 }
 
-initialize();
-startCountdown();
+export function initializeGame(gameId) {
+  const gameSocket = new WebSocket(
+    `ws://${window.location.host}/ws/game/${gameId}/`
+  );
+  console.log(`WebSocket URL: ws://${window.location.host}/ws/game/${gameId}/`);
 
-// resize event
-window.addEventListener("resize", onResize, false);
-document.addEventListener("keydown", keyDownHandlerRight, false);
-document.addEventListener("keyup", keyUpHandlerRight, false);
-document.addEventListener("keydown", keyDownHandlerLeft, false);
-document.addEventListener("keyup", keyUpHandlerLeft, false);
+  gameSocket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+  };
 
-requestAnimationFrame(draw);
+  gameSocket.onopen = function (event) {
+    console.log("Connected to websocket");
+  };
+
+  gameSocket.onclose = function (event) {
+    console.error("Disconnected from websocket");
+  };
+
+  gameSocket.onerror = function (event) {
+    console.error("Error in websocket");
+  };
+
+  initialize();
+  startCountdown();
+
+  // resize event
+  window.addEventListener("resize", onResize, false);
+  document.addEventListener("keydown", keyDownHandlerRight, false);
+  document.addEventListener("keyup", keyUpHandlerRight, false);
+  document.addEventListener("keydown", keyDownHandlerLeft, false);
+  document.addEventListener("keyup", keyUpHandlerLeft, false);
+
+  requestAnimationFrame(draw);
+}
