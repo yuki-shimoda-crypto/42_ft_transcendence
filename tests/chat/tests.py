@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from .models import ChatGroup, GroupMessage
+from chat.models import ChatGroup, GroupMessage
 
 User = get_user_model()
 
