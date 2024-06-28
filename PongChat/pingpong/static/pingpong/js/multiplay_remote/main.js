@@ -115,6 +115,21 @@ export function initializeGame(gameId) {
 
   gameSocket.onmessage = function (event) {
     const data = JSON.parse(event.data);
+
+    if (data.type === "player_position") {
+      // if (data.player === "left") {
+      //   updatePaddleElement(data.player, data.position);
+      // } else if (data.player === "right") {
+      //   updatePaddleElement(data.player, data.position);
+      // }
+      if (data.position === "left") {
+        console.log("left");
+        // updatePaddleElement("left", data.y);
+      } else {
+        console.log("right");
+        // updatePaddleElement("right", data.y);
+      }
+    }
   };
 
   gameSocket.onopen = function (event) {

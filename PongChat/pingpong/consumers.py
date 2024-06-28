@@ -73,18 +73,35 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
+        redis_client.incr(f"{self.group_name}_size")
+        group_size = int(redis_client.get(f"{self.group_name}_size") or 0)
+        player_position = "left" if group_size % 2 == 0 else "right"
+
+        await self.send(
+            json.dumps(
+                {
+                    "type": "player_position",
+                    "position": player_position,
+                }
+            )
+        )
+
     async def disconnect(self, close_code):
+        redis_client.decr(f"{self.group_name}_size")
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        data = json.loads(text_data)
+        action = data.get("action")
 
-        await self.channel_layer.group_send(
-            self.group_name, {"type": "game_message", "message": message}
-        )
+        if action == "updata_paddle":
+            paddle_data = {
+                "type": "paddle_update",
+                "player": data["player"],
+                "position": data["position"],
+            }
 
-    async def game_message(self, event):
-        message = event["message"]
+        await self.channel_layer.group_send(self.group_name, paddle_data)
 
-        await self.send(text_data=json.dumps({"message": message}))
+    async def paddle_update(self, event):
+        await self.send(json.dumps(event))
