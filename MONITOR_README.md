@@ -39,7 +39,7 @@ urlpatterns = [
 以下は、PrometheusとGrafanaをセットアップするためのDocker Composeファイルです。`docker-compose.monitoring.yml`という名前で保存してください。
 
 ```yml
-version: '3.8'
+version: "3.8"
 
 networks:
   monitoring:
@@ -58,11 +58,11 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--web.enable-lifecycle'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.enable-lifecycle"
     ports:
       - 9090:9090
     networks:
@@ -72,7 +72,7 @@ services:
     image: grafana/grafana-oss:latest
     container_name: grafana
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
@@ -86,10 +86,10 @@ services:
 global:
   scrape_interval: 15s
 scrape_configs:
-  - job_name: 'django_app'
-    metrics_path: '/prometheus/metrics'
+  - job_name: "django_app"
+    metrics_path: "/prometheus/metrics"
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ["host.docker.internal:8080"]
 ```
 
 上記の設定では、Prometheusがホストマシンの`localhost:8080/prometheus/metrics`からメトリクスを取得します。
@@ -101,8 +101,6 @@ docker-compose -f docker-compose.monitoring.yml up --build
 ```
 
 これで、Grafanaには`localhost:3000`、Prometheusには`localhost:9090`でアクセスできるようになります。
-
-
 
 ## Grafanaダッシュボードの追加
 
