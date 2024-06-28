@@ -23,11 +23,11 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        {% if LANGUAGE_CODE == 'ja' %}
+        {% if request.LANGUAGE_CODE == 'ja' %}
           <i class="bi bi-globe"></i> 日本語
-        {% elif LANGUAGE_CODE == 'en' %}
+        {% elif request.LANGUAGE_CODE == 'en' %}
           <i class="bi bi-globe"></i> English
-        {% elif LANGUAGE_CODE == 'fr' %}
+        {% elif request.LANGUAGE_CODE == 'fr' %}
           <i class="bi bi-globe"></i> Français
         {% endif %}
       </button>
