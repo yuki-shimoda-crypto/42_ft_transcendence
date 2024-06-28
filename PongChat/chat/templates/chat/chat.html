@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-{% include 'chat_base.html' %}
-{% block head %}
+{% extends 'common/base.html' %}
+{% block content %}
   <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
   <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/chat.css' %}" />
-{% endblock %}
 
-{% block layout %}
 <div class="container-fluid">
   <div class="row justify-content-center my-3">
-    <div class="col-md-7 col-lg-5">
+    <div class="col-md-11 col-lg-5">
       <div id="chat-window" class="d-flex flex-column bg-dark rounded-4 shadow-lg position-relative p-1">
         <div class="d-flex justify-content-center text-success bg-dark p-2 sticky-top">
           {% if other_user %}
@@ -68,9 +65,7 @@
     </div>
   </div>
 </div>
-{% endblock %}
 
-{% block javascript %}
 <script>
   function scrollToBottom(time = 0) {
     setTimeout(function () {
@@ -80,4 +75,4 @@
   }
   scrollToBottom()
 </script>
-{% endblock %}
+{% endblock content %}
