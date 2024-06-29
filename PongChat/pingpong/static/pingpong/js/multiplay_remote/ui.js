@@ -71,18 +71,18 @@ export function drawName(text) {
 export function showRestartButton(message) {
   const gameOverMessage = document.querySelector("#game-over-message");
   const gameOverText = document.querySelector("#gameOverText");
-  const restartButton = document.querySelector("#restartButton");
+  // const restartButton = document.querySelector("#restartButton");
 
   gameOverText.textContent = message;
   gameOverMessage.classList.remove("d-none");
 
-  restartButton.onclick = () => {
-    resetScores();
-    gameOverMessage.classList.add("d-none");
-    initialize();
-    startCountdown();
-    resumeGame();
-  };
+  // restartButton.onclick = () => {
+  //   resetScores();
+  //   gameOverMessage.classList.add("d-none");
+  //   initialize();
+  //   startCountdown();
+  //   resumeGame();
+  // };
 }
 
 export function startCountdown() {

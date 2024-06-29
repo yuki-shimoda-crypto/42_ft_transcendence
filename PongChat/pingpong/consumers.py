@@ -116,6 +116,6 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
     async def paddle_update(self, event):
         await self.send(json.dumps(event))
-    
+
     async def ball_update(self, event):
         await self.send(json.dumps(event))

@@ -9,13 +9,27 @@
   class="container fullscreen d-flex justify-content-center align-items-center"
 >
   <canvas id="myCanvas"></canvas>
-  <!-- <div id="game-over-message" class="text-center d-none position-absolute top-50 start-50 translate-middle">
-        <div class="alert alert-info rounded-pill shadow-lg p-4 fs-1" role="alert">
-            <span id="gameOverText"></span>
-        </div>
-        <button id="restartButton" class="btn btn-primary btn-lg rounded-pill shadow-sm mt-3">Restart</button>
-        <button id="homeButton" class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3">Home</button>
-    </div> -->
+  <div
+    id="game-over-message"
+    class="text-center d-none position-absolute top-50 start-50 translate-middle"
+  >
+    <div class="alert alert-info rounded-pill shadow-lg p-4 fs-1" role="alert">
+      <span id="gameOverText"></span>
+    </div>
+    <a
+      id="restartButton"
+      href="{% url 'pingpong:multiplayer_lobby' %}"
+      class="btn btn-primary btn-lg rounded-pill shadow-sm mt-3"
+    >
+      Restart
+  </a>
+    <a
+      id="homeButton"
+      href="{% url 'pingpong:home' %}"
+      class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3"
+      >Home</a
+    >
+  </div>
 </div>
 <script type="module">
   import { initializeGame } from"{% static 'pingpong/js/multiplay_remote/main.js' %}";

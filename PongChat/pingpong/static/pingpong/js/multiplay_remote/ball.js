@@ -100,8 +100,6 @@ export function moveBall(gameSocket) {
 
   ballX += ballDx;
   ballY += ballDy;
-  // if (gameSocket && player_position === "left") {
-  // }
 
   if (Math.random() < 0.05) {
     sendBallPosition(gameSocket);
