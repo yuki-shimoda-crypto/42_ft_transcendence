@@ -15,6 +15,8 @@ import {
   moveLeftPaddle,
   moveRightPaddle,
   updatePaddleElement,
+  updateLeftPaddlePositionFromRatio,
+  updateRightPaddlePositionFromRatio,
 } from "./paddle.js";
 
 import {
@@ -48,6 +50,7 @@ import {
 export const canvas = document.querySelector("#myCanvas");
 export const ctx = canvas.getContext("2d");
 export let previousCanvasWidth, previousCanvasHeight;
+window.gameSocket = null;
 
 export function initialize() {
   updateCanvasSize();
@@ -90,8 +93,13 @@ function draw() {
     // move objects
     if (!gamePaused) {
       moveBall(canvas);
-      moveLeftPaddle(upPressedLeft, downPressedLeft, canvas);
-      moveRightPaddle(upPressedRight, downPressedRight, canvas);
+      moveLeftPaddle(upPressedLeft, downPressedLeft, canvas, window.gameSocket);
+      moveRightPaddle(
+        upPressedRight,
+        downPressedRight,
+        canvas,
+        window.gameSocket
+      );
     }
   }
 
@@ -108,12 +116,12 @@ function onResize() {
 }
 
 export function initializeGame(gameId) {
-  const gameSocket = new WebSocket(
+  window.gameSocket = new WebSocket(
     `ws://${window.location.host}/ws/game/${gameId}/`
   );
   console.log(`WebSocket URL: ws://${window.location.host}/ws/game/${gameId}/`);
 
-  gameSocket.onmessage = function (event) {
+  window.gameSocket.onmessage = function (event) {
     const data = JSON.parse(event.data);
 
     if (data.type === "player_position") {
@@ -130,17 +138,27 @@ export function initializeGame(gameId) {
         // updatePaddleElement("right", data.y);
       }
     }
+
+    if (data.type === "paddle_update") {
+      if (data.player_position === "left") {
+        updateLeftPaddlePositionFromRatio(data.paddle_position_ratio);
+        drawLeftPaddle(ctx);
+      } else {
+        updateRightPaddlePositionFromRatio(data.paddle_position_ratio);
+        drawRightPaddle(ctx, canvas);
+      }
+    }
   };
 
-  gameSocket.onopen = function (event) {
+  window.gameSocket.onopen = function (event) {
     console.log("Connected to websocket");
   };
 
-  gameSocket.onclose = function (event) {
+  window.gameSocket.onclose = function (event) {
     console.error("Disconnected from websocket");
   };
 
-  gameSocket.onerror = function (event) {
+  window.gameSocket.onerror = function (event) {
     console.error("Error in websocket");
   };
 
@@ -154,5 +172,11 @@ export function initializeGame(gameId) {
   document.addEventListener("keydown", keyDownHandlerLeft, false);
   document.addEventListener("keyup", keyUpHandlerLeft, false);
 
+  // function customDraw(time, gameSocket) {
+  // draw(gameSocket);
+  // requestAnimationFrame(customDraw);
+  // }
+
+  // requestAnimationFrame(customDraw);
   requestAnimationFrame(draw);
 }

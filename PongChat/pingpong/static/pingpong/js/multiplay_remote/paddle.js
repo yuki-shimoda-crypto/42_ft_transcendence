@@ -12,7 +12,7 @@ function drawRoundedRect(ctx, ballX, ballY, width, height, radius) {
     ballX + width,
     ballY + height,
     ballX + width - radius,
-    ballY + height,
+    ballY + height
   );
   ctx.lineTo(ballX + radius, ballY + height);
   ctx.quadraticCurveTo(ballX, ballY + height, ballX, ballY + height - radius);
@@ -29,7 +29,7 @@ export function drawLeftPaddle(ctx) {
     leftPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2,
+    radius / 2
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
@@ -43,28 +43,68 @@ export function drawRightPaddle(ctx, canvas) {
     rightPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2,
+    radius / 2
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
 }
 
-export function moveRightPaddle(upPressedRight, downPressedRight, canvas) {
+export function moveRightPaddle(
+  upPressedRight,
+  downPressedRight,
+  canvas,
+  gameSocket
+) {
+  let moved = false;
   if (upPressedRight && rightPaddleY > 0) {
     rightPaddleY -= paddleDy;
+    moved = true;
   } else if (downPressedRight && rightPaddleY < canvas.height - paddleHeight) {
     rightPaddleY += paddleDy;
+    moved = true;
+  }
+
+  if (moved) {
+    console.log("rightPaddleY", rightPaddleY);
+    sendPaddlePosition(gameSocket, rightPaddleY, "right");
   }
   return rightPaddleY;
 }
 
-export function moveLeftPaddle(upPressedLeft, downPressedLeft, canvas) {
+export function moveLeftPaddle(
+  upPressedLeft,
+  downPressedLeft,
+  canvas,
+  gameSocket
+) {
+  let moved = false;
   if (upPressedLeft && leftPaddleY > 0) {
     leftPaddleY -= paddleDy;
+    moved = true;
   } else if (downPressedLeft && leftPaddleY < canvas.height - paddleHeight) {
     leftPaddleY += paddleDy;
+    moved = true;
+  }
+
+  if (moved) {
+    console.log("leftPaddleY", leftPaddleY);
+    sendPaddlePosition(gameSocket, leftPaddleY, "left");
   }
   return leftPaddleY;
+}
+
+function sendPaddlePosition(gameSocket, paddleY, rightLeft) {
+  // const paddlePositionRatioY = isNaN(paddleY / previousCanvasHeight)
+  //   ? 0.5
+  //   : paddleY / previousCanvasHeight;
+  const paddlePositionRatioY = paddleY / canvas.height;
+  gameSocket.send(
+    JSON.stringify({
+      type: "update_paddle",
+      player_position: rightLeft,
+      paddle_position_ratio: paddlePositionRatioY,
+    })
+  );
 }
 
 export function updatePaddleElement() {
@@ -95,4 +135,12 @@ export function updatePaddleSize(canvas) {
 
 export function updatePaddleSpeed(canvas) {
   paddleDy = canvas.height * 0.015;
+}
+
+export function updateLeftPaddlePositionFromRatio(paddlePositionRatioY) {
+  leftPaddleY = canvas.height * paddlePositionRatioY;
+}
+
+export function updateRightPaddlePositionFromRatio(paddlePositionRatioY) {
+  rightPaddleY = canvas.height * paddlePositionRatioY;
 }

@@ -92,16 +92,16 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
-        action = data.get("action")
+        type = data.get("type")
 
-        if action == "updata_paddle":
+        if type == "update_paddle":
             paddle_data = {
                 "type": "paddle_update",
-                "player": data["player"],
-                "position": data["position"],
+                "paddle_position_ratio": data["paddle_position_ratio"],
+                "player_position": data["player_position"],
             }
 
-        await self.channel_layer.group_send(self.group_name, paddle_data)
+            await self.channel_layer.group_send(self.group_name, paddle_data)
 
     async def paddle_update(self, event):
         await self.send(json.dumps(event))
