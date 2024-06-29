@@ -61,9 +61,9 @@ export function drawName(text) {
   ctx.textBaseline = "middle";
   if (text === "left") {
     ctx.fillText("You", canvas.width / 4, canvas.height / 4);
-    ctx.fillText("Rival", (canvas.width / 4) * 3, canvas.height / 4);
+    ctx.fillText("Opponent", (canvas.width / 4) * 3, canvas.height / 4);
   } else {
-    ctx.fillText("Rival", canvas.width / 4, canvas.height / 4);
+    ctx.fillText("Opponent", canvas.width / 4, canvas.height / 4);
     ctx.fillText("You", (canvas.width / 4) * 3, canvas.height / 4);
   }
 }

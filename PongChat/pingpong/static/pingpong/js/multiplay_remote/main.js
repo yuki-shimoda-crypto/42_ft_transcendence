@@ -24,6 +24,7 @@ import {
   moveBall,
   initializeBallElement,
   updateBallElement,
+  updateBallFromRemote,
 } from "./ball.js";
 
 import {
@@ -95,7 +96,7 @@ function draw() {
 
     // move objects
     if (!gamePaused) {
-      moveBall(canvas);
+      moveBall(window.gameSocket, player_position);
       moveLeftPaddle(upPressedLeft, downPressedLeft, canvas, window.gameSocket);
       moveRightPaddle(
         upPressedRight,
@@ -128,23 +129,16 @@ export function initializeGame(gameId) {
     const data = JSON.parse(event.data);
 
     if (data.type === "player_position") {
-      // if (data.player === "left") {
-      //   updatePaddleElement(data.player, data.position);
-      // } else if (data.player === "right") {
-      //   updatePaddleElement(data.player, data.position);
-      // }
       if (data.position === "left") {
         console.log("left");
-        // updatePaddleElement("left", data.y);
+        player_position = "left";
         document.addEventListener("keydown", keyDownHandlerLeft, false);
         document.addEventListener("keyup", keyUpHandlerLeft, false);
-        player_position = "left";
       } else {
         console.log("right");
-        // updatePaddleElement("right", data.y);
+        player_position = "right";
         document.addEventListener("keydown", keyDownHandlerRight, false);
         document.addEventListener("keyup", keyUpHandlerRight, false);
-        player_position = "right";
       }
     }
 
@@ -156,6 +150,10 @@ export function initializeGame(gameId) {
         updateRightPaddlePositionFromRatio(data.paddle_position_ratio);
         drawRightPaddle(ctx, canvas);
       }
+    }
+
+    if (data.type === "ball_update") {
+      updateBallFromRemote(data);
     }
   };
 

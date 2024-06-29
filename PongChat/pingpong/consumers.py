@@ -103,5 +103,19 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
             await self.channel_layer.group_send(self.group_name, paddle_data)
 
+        if type == "update_ball":
+            ball_data = {
+                "type": "ball_update",
+                "ball_position_ratio_x": data["ball_position_ratio_x"],
+                "ball_position_ratio_y": data["ball_position_ratio_y"],
+                "ball_position_ratio_dx": data["ball_position_ratio_dx"],
+                "ball_position_ratio_dy": data["ball_position_ratio_dy"],
+            }
+
+            await self.channel_layer.group_send(self.group_name, ball_data)
+
     async def paddle_update(self, event):
+        await self.send(json.dumps(event))
+    
+    async def ball_update(self, event):
         await self.send(json.dumps(event))
