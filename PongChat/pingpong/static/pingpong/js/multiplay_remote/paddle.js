@@ -118,14 +118,14 @@ export function updateLeftPaddlePosition(previousCanvasHeight, canvas) {
   const paddlePositionRatioY = isNaN(leftPaddleY / previousCanvasHeight)
     ? 0.5
     : leftPaddleY / previousCanvasHeight;
-  leftPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
+  leftPaddleY = canvas.height * paddlePositionRatioY;
 }
 
 export function updateRightPaddlePosition(previousCanvasHeight, canvas) {
   const paddlePositionRatioY = isNaN(rightPaddleY / previousCanvasHeight)
     ? 0.5
     : rightPaddleY / previousCanvasHeight;
-  rightPaddleY = (canvas.height - paddleHeight) * paddlePositionRatioY;
+  rightPaddleY = canvas.height * paddlePositionRatioY;
 }
 
 export function updatePaddleSize(canvas) {
