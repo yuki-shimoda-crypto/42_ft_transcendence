@@ -94,9 +94,6 @@ export function moveLeftPaddle(
 }
 
 function sendPaddlePosition(gameSocket, paddleY, rightLeft) {
-  // const paddlePositionRatioY = isNaN(paddleY / previousCanvasHeight)
-  //   ? 0.5
-  //   : paddleY / previousCanvasHeight;
   const paddlePositionRatioY = paddleY / canvas.height;
   gameSocket.send(
     JSON.stringify({

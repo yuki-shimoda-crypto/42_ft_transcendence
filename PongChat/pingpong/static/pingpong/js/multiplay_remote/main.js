@@ -32,6 +32,7 @@ import {
   drawCenterLine,
   drawCountdown,
   drawScores,
+  drawName,
   countdownActive,
   gamePaused,
 } from "./ui.js";
@@ -51,6 +52,7 @@ export const canvas = document.querySelector("#myCanvas");
 export const ctx = canvas.getContext("2d");
 export let previousCanvasWidth, previousCanvasHeight;
 window.gameSocket = null;
+let player_position = null;
 
 export function initialize() {
   updateCanvasSize();
@@ -89,6 +91,7 @@ function draw() {
     drawLeftPaddle(ctx);
     drawRightPaddle(ctx, canvas);
     drawScores();
+    drawName(player_position);
 
     // move objects
     if (!gamePaused) {
@@ -133,9 +136,15 @@ export function initializeGame(gameId) {
       if (data.position === "left") {
         console.log("left");
         // updatePaddleElement("left", data.y);
+        document.addEventListener("keydown", keyDownHandlerLeft, false);
+        document.addEventListener("keyup", keyUpHandlerLeft, false);
+        player_position = "left";
       } else {
         console.log("right");
         // updatePaddleElement("right", data.y);
+        document.addEventListener("keydown", keyDownHandlerRight, false);
+        document.addEventListener("keyup", keyUpHandlerRight, false);
+        player_position = "right";
       }
     }
 
@@ -167,16 +176,6 @@ export function initializeGame(gameId) {
 
   // resize event
   window.addEventListener("resize", onResize, false);
-  document.addEventListener("keydown", keyDownHandlerRight, false);
-  document.addEventListener("keyup", keyUpHandlerRight, false);
-  document.addEventListener("keydown", keyDownHandlerLeft, false);
-  document.addEventListener("keyup", keyUpHandlerLeft, false);
 
-  // function customDraw(time, gameSocket) {
-  // draw(gameSocket);
-  // requestAnimationFrame(customDraw);
-  // }
-
-  // requestAnimationFrame(customDraw);
   requestAnimationFrame(draw);
 }
