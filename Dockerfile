@@ -25,12 +25,8 @@ RUN apt-get update && \
 COPY tools/docker/web_prod/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Create Key
-RUN openssl req -x509 -newkey rsa:4096 -keyout /app/key.pem -out /app/cert.pem -days 365 -nodes -subj "/CN=localhost"
-
 # ユーザーを作成して切り替える
 RUN useradd -m ${MY_USER}
-RUN chown ${MY_USER}:${MY_USER} /app/key.pem /app/cert.pem
 USER ${MY_USER}
 
 # プロジェクトのコードをコピー
@@ -39,6 +35,4 @@ COPY --chown=user:user . .
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Djangoサーバーを起動
-# CMD ["python", "PongChat/manage.py", "runserver", "0.0.0.0:8000"]
-# CMD ["daphne", "PongChat.asgi:application", "-b", "0.0.0.0", "-p", "8000"]
 CMD ["daphne", "-e", "ssl:8000:privateKey=/app/key.pem:certKey=/app/cert.pem", "PongChat.asgi:application"]

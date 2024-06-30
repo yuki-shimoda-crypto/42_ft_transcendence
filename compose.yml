@@ -6,6 +6,7 @@ networks:
 volumes:
   postgres_data: {}
   node_volume: {}
+  redis_data: {}
   prometheus_data: {}
   grafana-data: {}
 
@@ -26,6 +27,16 @@ services:
     networks:
       - monitoring
 
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - monitoring
+
   web-prod:
     build:
       context: .
@@ -37,6 +48,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     networks:
       - monitoring
 
@@ -52,6 +64,7 @@ services:
       - "8001:8000"
     depends_on:
       - db
+      - redis
     networks:
       - monitoring
 

@@ -1,5 +1,7 @@
 {% extends 'common/base.html' %}
+
 {% block title %}Login{% endblock %}
+
 {% block content %}
 <div class="container">
   <div class="col-md-6 offset-md-3">
@@ -9,9 +11,12 @@
       </div>
       <div class="card-body">
         <form action="" method="POST">
-          {% csrf_token %} {% for field in form %}
+          {% csrf_token %}
+          {% for field in form %}
           <div class="form-group p-2">
-            {{ field.label_tag }} {{ field }} {% if field.errors %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
             <div class="alert alert-danger mt-2" role="alert">
               {% for error in field.errors %}
               <div>{{ error }}</div>
@@ -20,8 +25,15 @@
             {% endif %}
           </div>
           {% endfor %}
-          <button type="submit" class="btn btn-primary mt-2">ログイン</button>
-          <input type="hidden" name="next" value="{{ next }}" />
+          <div class="row text-center">
+            <div class="col-md-6 mb-2">
+              <button type="submit" class="btn btn-primary btn-lg btn-block shadow-sm">Log in</button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-secondary btn-lg btn-block shadow-sm" onclick="location.href='{% url 'accounts:signup' %}'">Sign up</button>
+            </right-click-form>
+            <input type="hidden" name="next" value="{{ next }}" />
+          </div>
         </form>
       </div>
     </div>
