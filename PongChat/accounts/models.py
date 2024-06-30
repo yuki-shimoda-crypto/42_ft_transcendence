@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 from .utils import generate_default_profile_image
 
@@ -18,6 +19,11 @@ class CustomUser(AbstractUser):
     profile_image = models.ImageField(
         upload_to="profile_images/", null=True, blank=True
     )
+
+    is_remote_multiplayer_active: models.BooleanField = models.BooleanField(
+        default=False
+    )
+    last_activity: models.DateField = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         """Returns the string representation of the user.
@@ -40,3 +46,8 @@ class CustomUser(AbstractUser):
         if not self.profile_image:
             self.profile_image = generate_default_profile_image(self.username)
         super().save(*args, **kwargs)
+
+    def update_last_activity(self):
+        """Updates the last_activity field to the current time."""
+        self.last_activity = timezone.now()
+        self.save(update_fields=["last_activity"])

@@ -1,18 +1,20 @@
 <li class="nav-item mb-1">
-  <a class="nav-link" aria-current="page" href="#">
+  <a class="nav-link" aria-current="page" href="{% url 'accounts:top' %}">
     <i class="bi bi-house-door"></i>
-    <span class="ml-2">List</span>
+    <span class="ml-2">Home</span>
   </a>
 </li>
+
 <li class="nav-item mb-1">
   <a class="nav-link" href="#">
-    <i class="bi bi-file-earmark"></i>
-    <span class="ml-2">Login</span>
+    <i class="bi bi-chat-dots"></i>
+    <span class="ml-2">Chat</span>
   </a>
 </li>
+
 <li class="nav-item mb-1">
-  <a class="nav-link" href="#">
-    <i class="bi bi-database"></i>
-    <span class="ml-2">Hoge</span>
+  <a class="nav-link" href="{% url 'pingpong:index' %}">
+    <i class="bi bi-controller"></i>
+    <span class="ml-2">Game</span>
   </a>
 </li>
