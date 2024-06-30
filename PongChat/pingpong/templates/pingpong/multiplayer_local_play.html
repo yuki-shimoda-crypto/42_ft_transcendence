@@ -22,13 +22,16 @@
     >
       Restart
     </button>
-    <button
+    <a
       id="homeButton"
+      href="{% url 'pingpong:home' %}"
       class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3"
+      >Home</a
     >
-      Home
-    </button>
   </div>
 </div>
-<script type="module" src="{% static 'pingpong/js/main.js' %}"></script>
+<script
+  type="module"
+  src="{% static 'pingpong/js/multiplay_local/main.js' %}"
+></script>
 {% endblock %}

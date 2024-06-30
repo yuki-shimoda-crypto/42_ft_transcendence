@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 17:21+0900\n"
+"POT-Creation-Date: 2024-06-30 18:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: PongChat/settings.py:147
+#: PongChat/settings.py:153
 msgid "English"
 msgstr "Anglais"
 
-#: PongChat/settings.py:148
+#: PongChat/settings.py:154
 msgid "Japanese"
 msgstr "Japonais"
 
-#: PongChat/settings.py:149
+#: PongChat/settings.py:155
 msgid "French"
 msgstr "Français"
 
-#: accounts/templates/accounts/login.html:24
+#: accounts/templates/accounts/login.html:31
 #: accounts/templates/accounts/signup_done.html:17
-#: templates/common/header.html:67
+#: templates/common/header.html:61
 msgid "ログイン"
 msgstr "Connexion"
+
+#: accounts/templates/accounts/login.html:34 templates/common/header.html:65
+msgid "サインアップ"
+msgstr "S'inscrire"
 
 #: accounts/templates/accounts/logout_done.html:12
 msgid "ログアウトしました"
@@ -105,7 +109,7 @@ msgid "パスワードを更新しました。"
 msgstr "Mot de passe mis à jour."
 
 #: accounts/templates/accounts/password_change_done.html:15
-#: templates/common/header.html:79
+#: templates/common/header.html:73
 msgid "マイページ"
 msgstr "Ma page"
 
@@ -150,14 +154,22 @@ msgstr "Vérifier les notifications"
 msgid "ユーザー一覧"
 msgstr "Liste des utilisateurs"
 
-#: templates/common/header.html:52
+#: templates/common/header.html:46
 msgid "ゲスト"
 msgstr "Invité"
 
-#: templates/common/header.html:71
-msgid "サインアップ"
-msgstr "S'inscrire"
-
-#: templates/common/header.html:84
+#: templates/common/header.html:78
 msgid "ログアウト"
 msgstr "Déconnexion"
+
+#: templates/common/sidebar_link.html:5
+msgid "ホーム"
+msgstr "Entrée"
+
+#: templates/common/sidebar_link.html:12
+msgid "チャット"
+msgstr "Chat"
+
+#: templates/common/sidebar_link.html:19
+msgid "ゲーム"
+msgstr "Jeu"

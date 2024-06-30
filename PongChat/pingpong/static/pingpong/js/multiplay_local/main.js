@@ -1,8 +1,12 @@
 import {
-  keyDownHandler,
-  keyUpHandler,
-  upPressed,
-  downPressed,
+  keyDownHandlerRight,
+  keyUpHandlerRight,
+  keyDownHandlerLeft,
+  keyUpHandlerLeft,
+  upPressedRight,
+  downPressedRight,
+  upPressedLeft,
+  downPressedLeft,
 } from "./key_handle.js";
 
 import {
@@ -18,7 +22,6 @@ import {
   moveBall,
   initializeBallElement,
   updateBallElement,
-  ballY,
 } from "./ball.js";
 
 import {
@@ -53,18 +56,20 @@ export function initialize() {
 }
 
 function updateCanvasSize() {
-  // adjust canvas size
-  const windowWidth = window.innerWidth;
+  const contentPlaceholder = document.querySelector("#content-placeholder");
+  if (!contentPlaceholder) {
+    return;
+  }
+
+  const windowWidth = contentPlaceholder.clientWidth;
   const windowHeight = window.innerHeight;
   const aspectRatio = 16 / 9; // 16:9
 
   if (windowWidth / windowHeight > aspectRatio) {
-    // if window is wider than 16:9
-    // adjust canvas width to window height * 16:9
-    canvas.width = windowHeight * aspectRatio;
+    canvas.width = Math.max(0, windowHeight * aspectRatio);
     canvas.height = windowHeight;
   } else {
-    canvas.width = windowWidth;
+    canvas.width = Math.max(0, windowWidth);
     canvas.height = windowWidth / aspectRatio;
   }
 }
@@ -85,8 +90,8 @@ function draw() {
     // move objects
     if (!gamePaused) {
       moveBall(canvas);
-      moveLeftPaddle(upPressed, downPressed, canvas);
-      moveRightPaddle(ballY, canvas);
+      moveLeftPaddle(upPressedLeft, downPressedLeft, canvas);
+      moveRightPaddle(upPressedRight, downPressedRight, canvas);
     }
   }
 
@@ -107,7 +112,9 @@ startCountdown();
 
 // resize event
 window.addEventListener("resize", onResize, false);
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("keydown", keyDownHandlerRight, false);
+document.addEventListener("keyup", keyUpHandlerRight, false);
+document.addEventListener("keydown", keyDownHandlerLeft, false);
+document.addEventListener("keyup", keyUpHandlerLeft, false);
 
 requestAnimationFrame(draw);

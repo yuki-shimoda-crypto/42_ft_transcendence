@@ -43,18 +43,18 @@ ALLOWED_HOSTS: list[str] = [
 # Application definition
 
 INSTALLED_APPS = [
+    "accounts.apps.AccountsConfig",
+    "channels",
     "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
     "pingpong",
-    "accounts.apps.AccountsConfig",
     "django_htmx",
     "chat.apps.ChatConfig",
-    "channels",
     "django_prometheus",
 ]
 
@@ -70,6 +70,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "pingpong.middleware.RemoteMultiplayerMiddleware",
     "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
@@ -96,7 +97,12 @@ ASGI_APPLICATION = "PongChat.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                (os.getenv("REDIS_HOST", "redis"), int(os.getenv("REDIS_PORT", 6379)))
+            ],
+        },
     }
 }
 
