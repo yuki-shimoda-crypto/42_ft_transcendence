@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+{% block content %}
+{% load i18n %}
+<div class="container">
+  <h1 class="my-4">{% trans "ユーザー一覧"%}</h1>
+  <div class="row">
+    {% for user in users %}
+    <div class="col-md-3 mb-4">
+      <div class="card">
+        <a href="{% url 'profile' user.username %}" style="color: inherit;">
+          <img class="card-img-top" src="{{ user.avatar }}" alt="{{ user.username }}">
+          <div class="card-body">
+            <h5 class="card-title font-weitht-bold"">@{{ user.username }}</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

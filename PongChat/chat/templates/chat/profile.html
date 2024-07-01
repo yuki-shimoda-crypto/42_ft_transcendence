@@ -1,0 +1,38 @@
+{% extends 'common/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center">
+              <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
+              {% if profile.username != user.username %}
+                <h1>{{ profile.username }}</h1>
+                <div class="text-muted mb-3">@{{ profile.username }}</div>
+              {% else %}
+                <h1>{% trans "通知チャット" %}</h1>
+              {% endif %}
+              {% if profile.info %}
+                <div class="mt-4">{{ profile.info|linebreaksbr }}</div>
+              {% endif %}
+              {% if profile.username != user.username %}
+                <a class="btn btn-primary" href="{% url 'start-chat'  profile.username %}">{% trans "チャットする" %}</a>
+                {% if is_blocked %}
+                  <a class="btn btn btn-success" href="{% url 'block'  profile.username %}">{% trans "ブロック解除" %}</a>
+                {% else %}
+                  <a class="btn btn btn-danger" href="{% url 'block'  profile.username %}">{% trans "ブロック" %}</a>
+                {% endif %}
+                {% if is_friend %}
+                  <a class="btn btn-danger" href="{% url 'friend'  profile.username %}">{% trans "フレンド解除" %}</a>
+                {% else %}
+                  <a class="btn btn-primary" href="{% url 'friend'  profile.username %}">{% trans "フレンド登録" %}</a>
+                {% endif %}
+              {% else %}
+                <a class="btn btn-success" href="{% url 'start-chat'  profile.username %}">{% trans "通知を確認する" %}</a>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

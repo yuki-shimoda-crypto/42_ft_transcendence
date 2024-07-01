@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-01 16:12+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: PongChat/settings.py:153
+msgid "English"
+msgstr "Anglais"
+
+#: PongChat/settings.py:154
+msgid "Japanese"
+msgstr "Japonais"
+
+#: PongChat/settings.py:155
+msgid "French"
+msgstr "Français"
+
+#: accounts/templates/accounts/login.html:31
+#: accounts/templates/accounts/signup_done.html:17
+#: templates/common/header.html:61
+msgid "ログイン"
+msgstr "Connexion"
+
+#: accounts/templates/accounts/login.html:34 templates/common/header.html:65
+msgid "サインアップ"
+msgstr "S'inscrire"
+
+#: accounts/templates/accounts/logout_done.html:12
+msgid "ログアウトしました"
+msgstr "Déconnexion effectuée"
+
+#: accounts/templates/accounts/logout_done.html:16
+msgid "もう一度ログインする"
+msgstr "Se connecter à nouveau"
+
+#: accounts/templates/accounts/logout_done.html:21
+msgid "トップページに戻る"
+msgstr "Retour à la page d'accueil"
+
+#: accounts/templates/accounts/my_page.html:19
+msgid "登録情報"
+msgstr "Informations d'inscription"
+
+#: accounts/templates/accounts/my_page.html:28
+msgid "ユーザー名"
+msgstr "Nom d'utilisateur"
+
+#: accounts/templates/accounts/my_page.html:38
+msgid "プロフィール画像"
+msgstr "Image de profil"
+
+#: accounts/templates/accounts/my_page.html:51
+msgid "プロフィール画像がありません"
+msgstr "Pas d'image de profil"
+
+#: accounts/templates/accounts/my_page.html:59
+#: accounts/templates/accounts/my_page.html:68
+msgid "パスワード"
+msgstr "Mot de passe"
+
+#: accounts/templates/accounts/my_page.html:69
+msgid "非表示"
+msgstr "Caché"
+
+#: accounts/templates/accounts/my_page.html:76
+msgid "権限"
+msgstr "Autorisation"
+
+#: accounts/templates/accounts/my_page.html:82
+#: accounts/templates/accounts/my_page.html:87
+msgid "スタッフ権限"
+msgstr "Autorisation du personnel"
+
+#: accounts/templates/accounts/my_page.html:83
+#: accounts/templates/accounts/my_page.html:93
+msgid "あり"
+msgstr "Oui"
+
+#: accounts/templates/accounts/my_page.html:88
+#: accounts/templates/accounts/my_page.html:98
+msgid "なし"
+msgstr "Aucun"
+
+#: accounts/templates/accounts/my_page.html:92
+#: accounts/templates/accounts/my_page.html:97
+msgid "スーパーユーザー権限"
+msgstr "Autorisation superutilisateur"
+
+#: accounts/templates/accounts/my_page.html:104
+msgid "フレンド情報"
+msgstr "Informations sur les amis"
+
+#: accounts/templates/accounts/my_page.html:119
+msgid "フレンドはいません"
+msgstr "Pas d'amis"
+
+#: accounts/templates/accounts/password_change_done.html:13
+msgid "パスワードを更新しました。"
+msgstr "Mot de passe mis à jour."
+
+#: accounts/templates/accounts/password_change_done.html:15
+#: templates/common/header.html:73
+msgid "マイページ"
+msgstr "Ma page"
+
+#: accounts/templates/accounts/signup_done.html:14
+msgid "サインアップが完了しました"
+msgstr "Inscription terminée"
+
+#: accounts/templates/accounts/top.html:9
+msgid "PongChat"
+msgstr ""
+
+#: accounts/templates/accounts/top.html:10
+msgid "42最終課題ft_transcendence"
+msgstr "Projet final de 42 \"ft_transcendence\""
+
+#: accounts/templates/accounts/top.html:11
+msgid "PingPongゲームとチャットができます!"
+msgstr "Vous pouvez jouer au ping-pong et discuter !"
+
+#: accounts/templates/accounts/top.html:13
+#: accounts/templates/accounts/top.html:56
+msgid "ログイン済み"
+msgstr "Connecté"
+
+#: accounts/templates/accounts/top.html:15
+#: accounts/templates/accounts/top.html:58
+msgid "ログイン/サインアップ"
+msgstr "Se connecter/S'inscrire"
+
+#: accounts/templates/accounts/top.html:30
+msgid "SERVICE"
+msgstr ""
+
+#: accounts/templates/accounts/top.html:31
+msgid "サービス内容"
+msgstr "Contenu du service"
+
+#: accounts/templates/accounts/top.html:38
+msgid "リアルタイムチャット"
+msgstr "Chat en temps réel"
+
+#: accounts/templates/accounts/top.html:39
+msgid "リアルタイムでのチャット機能があります!"
+msgstr "Il y a une fonction de chat en temps réel !"
+
+#: accounts/templates/accounts/top.html:45
+msgid "ピンポンゲーム"
+msgstr "Jeu de ping-pong"
+
+#: accounts/templates/accounts/top.html:46
+msgid "ピンポンゲームができます。"
+msgstr "Vous pouvez jouer au ping-pong"
+
+#: accounts/templates/accounts/top.html:54
+msgid "ログインしてみる👀"
+msgstr "Essayez de vous connecter 👀"
+
+#: accounts/templates/accounts/user_form.html:52
+#: accounts/templates/accounts/user_form.html:58
+msgid "キャンセル"
+msgstr "Annuler"
+
+#: chat/templates/chat/profile.html:14
+msgid "通知チャット"
+msgstr "Chat de notification"
+
+#: chat/templates/chat/profile.html:20
+msgid "チャットする"
+msgstr "Chat"
+
+#: chat/templates/chat/profile.html:22
+msgid "ブロック解除"
+msgstr "Débloquer"
+
+#: chat/templates/chat/profile.html:24
+msgid "ブロック"
+msgstr "Bloquer"
+
+#: chat/templates/chat/profile.html:27
+msgid "フレンド解除"
+msgstr "Informations sur les amis"
+
+#: chat/templates/chat/profile.html:29
+msgid "フレンド登録"
+msgstr "Informations sur les amis"
+
+#: chat/templates/chat/profile.html:32
+msgid "通知を確認する"
+msgstr "Vérifier les notifications"
+
+#: chat/templates/chat/user_list.html:5
+msgid "ユーザー一覧"
+msgstr "Liste des utilisateurs"
+
+#: templates/common/header.html:46
+msgid "ゲスト"
+msgstr "Invité"
+
+#: templates/common/header.html:78
+msgid "ログアウト"
+msgstr "Déconnexion"
+
+#: templates/common/sidebar_link.html:5
+msgid "ホーム"
+msgstr "Entrée"
+
+#: templates/common/sidebar_link.html:12
+msgid "チャット"
+msgstr "Chat"
+
+#: templates/common/sidebar_link.html:19
+msgid "ゲーム"
+msgstr "Jeu"

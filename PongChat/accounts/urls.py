@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import switch_language
 
 app_name = "accounts"
 
@@ -27,4 +28,5 @@ urlpatterns = [
         views.ProfileImageUpdate.as_view(),
         name="profile_image_update",
     ),
+    path("switch-language/<str:language>/", switch_language, name="switch_language"),
 ]
