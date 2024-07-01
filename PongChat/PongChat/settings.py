@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "pingpong",
+    "django_htmx",
+    "chat.apps.ChatConfig",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "pingpong.middleware.RemoteMultiplayerMiddleware",
 ]
 
@@ -83,14 +86,12 @@ ASGI_APPLICATION = "PongChat.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
-        # "BACKEND": "channels.layers.InMemoryChannelLayer",
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [("redis", 6379)],
         },
     }
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
