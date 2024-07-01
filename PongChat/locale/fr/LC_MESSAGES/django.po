@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-30 18:46+0900\n"
+"POT-Creation-Date: 2024-07-01 11:08+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,6 +116,56 @@ msgstr "Ma page"
 #: accounts/templates/accounts/signup_done.html:14
 msgid "サインアップが完了しました"
 msgstr "Inscription terminée"
+
+#: accounts/templates/accounts/top.html:9
+msgid "PongChat"
+msgstr ""
+
+#: accounts/templates/accounts/top.html:10
+msgid "42最終課題ft_transcendence"
+msgstr "Projet final de 42 \"ft_transcendence\""
+
+#: accounts/templates/accounts/top.html:11
+msgid "PingPongゲームとチャットができます!"
+msgstr "Vous pouvez jouer au ping-pong et discuter !"
+
+#: accounts/templates/accounts/top.html:13
+#: accounts/templates/accounts/top.html:56
+msgid "ログイン済み"
+msgstr "Connecté"
+
+#: accounts/templates/accounts/top.html:15
+#: accounts/templates/accounts/top.html:58
+msgid "ログイン/サインアップ"
+msgstr "Se connecter/S'inscrire"
+
+#: accounts/templates/accounts/top.html:30
+msgid "SERVICE"
+msgstr ""
+
+#: accounts/templates/accounts/top.html:31
+msgid "サービス内容"
+msgstr "Contenu du service"
+
+#: accounts/templates/accounts/top.html:38
+msgid "リアルタイムチャット"
+msgstr "Chat en temps réel"
+
+#: accounts/templates/accounts/top.html:39
+msgid "リアルタイムでのチャット機能があります!"
+msgstr "Il y a une fonction de chat en temps réel !"
+
+#: accounts/templates/accounts/top.html:45
+msgid "ピンポンゲーム"
+msgstr "Jeu de ping-pong"
+
+#: accounts/templates/accounts/top.html:46
+msgid "ピンポンゲームができます。"
+msgstr "Vous pouvez jouer au ping-pong"
+
+#: accounts/templates/accounts/top.html:54
+msgid "ログインしてみる👀"
+msgstr "Essayez de vous connecter 👀"
 
 #: accounts/templates/accounts/user_form.html:52
 #: accounts/templates/accounts/user_form.html:58
