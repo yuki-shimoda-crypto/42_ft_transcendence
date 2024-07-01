@@ -1,26 +1,28 @@
-<span id="online-count" hx-swap-oob="outerHTML" class="fade-in-scale pr-1">
-  {{ online_count }}
-  <style>
-    @keyframes fade-in-scale {
-      from {
-        opacity: 0;
-        transform: scale(4);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+<div class="d-flex align-items-center">
+  <span id="online-count" class="fade-in-scale pe-1">
+    {{ online_count }}
+  </span>
+  <span>online</span>
+</div>
+<style>
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      transform: scale(4);
     }
 
-    .fade-in-scale {
-      animation: fade-in-scale 0.6s ease;
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
-  </style>
-</span>online
+  }
 
+  .fade-in-scale {
+    animation: fade-in-scale 0.6s ease;
+  }
+</style>
 {% if online_count %}
-  <div id="online-icon" class="absolute top-2 left-2 rounded-full bg-green-500 p-1.5"></div>
-{%  else %}
-  <div id="online-icon" class="absolute top-2 left-2 rounded-full bg-gray-500 p-1.5"></div>
+<div id="online-icon" class="position-absolute top-2 start-2 rounded-circle bg-success p-2"></div>
+{% else %}
+<div id="online-icon" class="position-absolute top-2 start-2 rounded-circle bg-secondary p-2"></div>
 {% endif %}
