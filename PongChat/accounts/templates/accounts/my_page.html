@@ -100,5 +100,24 @@
     </tbody>
   </table>
   <hr />
+  <div class="col"><h3>フレンド情報</h3></div>
+  <div class="row">
+    {% for friend in friends %}
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          <a href="{% url 'profile' friend.username %}" style="color: inherit;">
+            <img class="card-img-top" src="{{ friend.avatar }}" alt="{{ friend.username }}">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">@{{ friend.username }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col">
+        <p>フレンドはいません。</p>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

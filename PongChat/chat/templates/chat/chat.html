@@ -1,0 +1,78 @@
+{% extends 'common/base.html' %}
+{% block content %}
+  <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+  <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}" />
+
+<div class="container-fluid">
+  <div class="row justify-content-center my-3">
+    <div class="col-md-11 col-lg-5">
+      <div id="chat-window" class="d-flex flex-column bg-dark rounded-4 shadow-lg position-relative p-1">
+        <div class="d-flex justify-content-center text-success bg-dark p-2 sticky-top">
+          {% if other_user %}
+            <div id="online-icon"></div>
+            <a href="{% url 'profile' other_user.username %}" class="text-decoration-none">
+              <div class="d-flex align-items-center gap-2 p-4 sticky-top">
+                <img class="rounded-circle object-fit-cover" src="{{ other_user.avatar }}" width="40" height="40" />
+                <div>
+                  <span class="fw-bold text-white">{{ other_user.profile.name }}</span>
+                  <span class="small fw-light text-secondary">@{{ other_user.username }}</span>
+                </div>
+              </div>
+            </a>
+          {% else %}
+            <a href="{% url 'profile' user.username %}" class="text-decoration-none">
+              <div class="d-flex align-items-center gap-2 p-4 sticky-top">
+                <img class="rounded-circle object-fit-cover" src="{{ user.avatar }}" width="40" height="40" />
+                <div>
+                  <span class="fw-bold text-white">{{ user.profile.name }}</span>
+                  <span class="small fw-light text-secondary">Notifications</span>
+                </div>
+              </div>
+            </a>
+          {% endif %}
+        </div>
+        {% if is_blocked %}
+        {% else %}
+          <div id='chat-container' class="overflow-auto flex-grow-1">
+            <ul id='chat_messages' class="list-unstyled d-flex flex-column justify-content-end gap-2 p-4">
+              {% for message in chat_messages reversed%}
+              {% include "chat/chat_message.html"%}
+              {% endfor %}
+            </ul>
+          </div>
+          {% if other_user %}
+            <div class="sticky-bottom p-2 bg-dark">
+              <div class="d-flex justify-content-center align-items-center rounded-4 px-2 py-2">
+                <form id="chat_message_form" class="w-100"
+                  hx-ext="ws"
+                  ws-connect="/ws/chatroom/{{ chatroom_name }}"
+                  ws-send
+                  _="on htmx:wsAfterSend reset() me">
+                  {% csrf_token %}
+                  <div class="input-group justify-content-center">
+                    {{ form.body }}
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function scrollToBottom(time = 0) {
+    setTimeout(function () {
+      const container = document.getElementById('chat-container');
+      container.scrollTop = container.scrollHeight;
+    }, time);
+  }
+  scrollToBottom()
+</script>
+{% endblock content %}
