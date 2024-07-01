@@ -1,0 +1,27 @@
+<div id="chat_messages" hx-swap-oob="beforeend">
+
+  <div class="fade-in-up">
+    {% include 'chat/chat_message.html' %}
+  </div>
+
+  <style>
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fade-in-up 0.6s ease;
+    }
+  </style>
+
+  <script>scrollToBottom()</script>
+
+</div>

@@ -31,11 +31,11 @@ jobs:
 
       - name: Set up Docker Compose
         run: |
-          docker-compose up -d
+          docker compose up -d
 
       - name: Wait for PostgreSQL
         run: |
-          docker-compose exec -T db bash -c "until pg_isready -U user; \
+          docker compose exec -T db bash -c "until pg_isready -U user; \
             do sleep 1; done"
 
       - name: Make env
@@ -49,10 +49,10 @@ jobs:
 
       - name: Run Lint and Tests
         run: |
-          docker-compose exec -T web_dev make lint
-          docker-compose exec -T web_dev python PongChat/manage.py migrate
-          docker-compose exec -T web_dev make test
+          docker compose exec -T web-dev make lint
+          docker compose exec -T web-dev python PongChat/manage.py migrate
+          docker compose exec -T web-dev make test
 
       - name: Tear Down
         if: always()
-        run: docker-compose down
+        run: docker compose down

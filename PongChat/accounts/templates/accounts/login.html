@@ -3,6 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+{% load i18n %}
 <div class="container">
   <div class="col-md-6 offset-md-3">
     <div class="card mt-3 mb-3 bg-light">
@@ -27,10 +28,10 @@
           {% endfor %}
           <div class="row text-center">
             <div class="col-md-6 mb-2">
-              <button type="submit" class="btn btn-primary btn-lg btn-block shadow-sm">Log in</button>
+              <button type="submit" class="btn btn-primary btn-lg btn-block shadow-sm">{% trans "ログイン" %}</button>
             </div>
             <div class="col-md-6">
-              <button type="button" class="btn btn-secondary btn-lg btn-block shadow-sm" onclick="location.href='{% url 'accounts:signup' %}'">Sign up</button>
+              <button type="button" class="btn btn-secondary btn-lg btn-block shadow-sm" onclick="location.href='{% url 'accounts:signup' %}'">{% trans "サインアップ" %}</button>
             </right-click-form>
             <input type="hidden" name="next" value="{{ next }}" />
           </div>
