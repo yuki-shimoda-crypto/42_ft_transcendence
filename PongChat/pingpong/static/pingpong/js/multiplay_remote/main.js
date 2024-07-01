@@ -38,6 +38,8 @@ import {
   gamePaused,
 } from "./ui.js";
 
+import { updateScoreFromRemote } from "./score.js";
+
 // デュース機能を追加する
 // 点数のプログレスバーを追加する
 // プレイヤー名を入力して、それを表示する
@@ -154,6 +156,16 @@ export function initializeGame(gameId) {
 
     if (data.type === "ball_update") {
       updateBallFromRemote(data);
+    }
+
+    if (data.type === "score_update") {
+      updateScoreFromRemote(data);
+      console.log("Score updated");
+      drawScores();
+    }
+
+    if (data.type === "score_update_error") {
+      console.log(data.error);
     }
   };
 

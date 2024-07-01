@@ -1,10 +1,20 @@
 import json
+import logging
 import random
 
 import redis
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+from .models import Game
+
+logger = logging.getLogger(__name__)
 
 redis_client = redis.Redis(host="redis", port=6379, db=0)
+
+User = get_user_model()
 
 
 class GameConsumer(AsyncWebsocketConsumer):
@@ -27,10 +37,6 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def start_game_session(self, players):
         game_id = f"game_{random.randint(1000, 9999)}"
 
-        # host = self.get_header("host", "localhost")
-        # scheme = self.scope.get("scheme", "ws")
-        # base_url = f"{scheme}://{host}"
-        # game_url = urljoin(base_url, f"/pingpong/multiplayer_play_remote/{game_id}/")
         game_url = "http://localhost:8001/pingpong/multiplayer_play_remote/" + game_id
 
         for player in players:
@@ -68,7 +74,13 @@ class GameConsumer(AsyncWebsocketConsumer):
 
 class GameSessionConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+
+        logger.info(f"Connected to {self.channel_name}")
+
         self.game_id = self.scope["url_route"]["kwargs"]["game_id"]
+        self.game_id_num = int("".join(filter(str.isdigit, self.game_id)))
+        self.user = self.scope["user"]
+        self.game = await self.create_or_update_game(self.game_id_num, self.user)
         self.group_name = f"game_{self.game_id}"
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
@@ -82,6 +94,25 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
                 {
                     "type": "player_position",
                     "position": player_position,
+                }
+            )
+        )
+
+        await self.send(
+            json.dumps(
+                {
+                    "type": "score_update",
+                    "score1": self.game.score1,
+                    "score2": self.game.score2,
+                }
+            )
+        )
+
+        await self.send(
+            json.dumps(
+                {
+                    "type": "set_user_id",
+                    "user_id": self.user.id,
                 }
             )
         )
@@ -103,7 +134,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
             await self.channel_layer.group_send(self.group_name, paddle_data)
 
-        if type == "update_ball":
+        elif type == "update_ball":
             ball_data = {
                 "type": "ball_update",
                 "ball_position_ratio_x": data["ball_position_ratio_x"],
@@ -114,8 +145,118 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
             await self.channel_layer.group_send(self.group_name, ball_data)
 
+        elif type == "update_score":
+            if self.is_valid_score_update(data):
+                logger.info("-----------------------------------------------------")
+                await self.update_game_score(data)
+                score_data = {
+                    "type": "score_update",
+                    "score1": self.game.score1,
+                    "score2": self.game.score2,
+                }
+                await self.channel_layer.group_send(self.group_name, score_data)
+            else:
+                logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                error_data = {
+                    "type": "score_update_error",
+                    "error": "Wait for 1 second before updating the score again.",
+                }
+                await self.channel_layer.group_send(self.group_name, error_data)
+
+        elif type == "end_game":
+            await self.finalize_game()
+
     async def paddle_update(self, event):
         await self.send(json.dumps(event))
 
     async def ball_update(self, event):
         await self.send(json.dumps(event))
+
+    async def score_update(self, event):
+        await self.send(json.dumps(event))
+
+    async def score_update_error(self, event):
+        await self.send(json.dumps(event))
+
+    @database_sync_to_async
+    def create_or_update_game(self, game_id, player):
+        game, created = Game.objects.get_or_create(
+            id=game_id, defaults={"player1": player}
+        )
+        if not created and game.player1 is None:
+            game.player1 = player
+            game.save()
+        elif not created and game.player2 is None:
+            game.player2 = player
+            game.save()
+        return game
+
+    # @database_sync_to_async
+    # def get_game(self, game_id):
+    #     if not Game.objects.filter(id=game_id).exists():
+    #         game = Game.objects.create(
+    #             id=game_id,
+    #         )
+    #         return game
+    #     return Game.objects.get(id=game_id)
+
+    @database_sync_to_async
+    def is_valid_score_update(self, data):
+        is_valid_score = False
+        is_valid_time = False
+        current_score1 = self.game.score1
+        current_score2 = self.game.score2
+        last_update_time = self.game.score_last_update
+
+        if data["score1"] == current_score1 + 1 and data["score2"] == current_score2:
+            is_valid_score = True
+        elif data["score2"] == current_score2 + 1 and data["score1"] == current_score1:
+            is_valid_score = True
+
+        if last_update_time + timezone.timedelta(seconds=1) < timezone.now():
+            is_valid_time = True
+
+        if is_valid_score and is_valid_time:
+            return True
+        return False
+
+    @database_sync_to_async
+    def update_game_score(self, data):
+        current_score1 = self.game.score1
+        current_score2 = self.game.score2
+        logger.info(f"Current database scores: {current_score1}, {current_score2}")
+        logger.info(
+            f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
+        )
+
+        if data["score1"] == current_score1 + 1:
+            self.game.score1 += 1
+        elif data["score2"] == current_score2 + 1:
+            self.game.score2 += 1
+        self.game.score_last_update = timezone.now()
+
+        self.game.save()
+
+        # score_data = {
+        #     "type": "score_update",
+        #     "score1": self.game.score1,
+        #     "score2": self.game.score2,
+        # }
+        # self.channel_layer.group_send(self.group_name, score_data)
+
+    @database_sync_to_async
+    def finalize_game(self):
+        self.game.date_end = timezone.now()
+        if self.game.score1 > self.game.score2:
+            self.game.winner = self.game.player1
+        elif self.game.score1 < self.game.score2:
+            self.game.winner = self.game.player2
+        self.game.status = "done"
+        self.game.save()
+        self.channel_layer.group_send(
+            self.group_name,
+            {
+                "type": "game_end",
+                "winner": self.game.winner.username,
+            },
+        )

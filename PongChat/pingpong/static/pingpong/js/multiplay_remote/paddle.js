@@ -65,7 +65,6 @@ export function moveRightPaddle(
   }
 
   if (moved) {
-    console.log("rightPaddleY", rightPaddleY);
     sendPaddlePosition(gameSocket, rightPaddleY, "right");
   }
   return rightPaddleY;
@@ -87,7 +86,6 @@ export function moveLeftPaddle(
   }
 
   if (moved) {
-    console.log("leftPaddleY", leftPaddleY);
     sendPaddlePosition(gameSocket, leftPaddleY, "left");
   }
   return leftPaddleY;

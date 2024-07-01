@@ -55,7 +55,7 @@ function initializeBallSpeed() {
   // ballDy = canvas.height * 0.01 * Math.sin(angle);
 }
 
-export function moveBall(gameSocket) {
+export function moveBall(gameSocket, player_position) {
   if (ballX + ballDx < paddleWidth * 2) {
     if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
       ballDx = -ballDx;
@@ -65,7 +65,7 @@ export function moveBall(gameSocket) {
       sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementCpuScore();
+      incrementCpuScore(gameSocket);
       if (cpuScore >= winningScore) {
         gameOver("Congratulations! Right win!");
       } else {
@@ -81,7 +81,7 @@ export function moveBall(gameSocket) {
       sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementPlayerScore();
+      incrementPlayerScore(gameSocket);
       if (playerScore >= winningScore) {
         gameOver("Congratulations! Left win!");
       } else {
