@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-30 18:46+0900\n"
+"POT-Creation-Date: 2024-07-01 16:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,10 +86,15 @@ msgstr "Permission"
 msgid "スタッフ権限"
 msgstr "Staff Permission"
 
+#: accounts/templates/accounts/my_page.html:83
+#: accounts/templates/accounts/my_page.html:93
+msgid "あり"
+msgstr "Yes"
+
 #: accounts/templates/accounts/my_page.html:88
 #: accounts/templates/accounts/my_page.html:98
 msgid "なし"
-msgstr "None"
+msgstr "No"
 
 #: accounts/templates/accounts/my_page.html:92
 #: accounts/templates/accounts/my_page.html:97

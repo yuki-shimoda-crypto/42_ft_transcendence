@@ -80,7 +80,7 @@
       {% if user.is_staff %}
       <tr>
         <td style="width: 50%">{% trans "スタッフ権限" %}</td>
-        <td style="width: 50%">{{ user.is_staff }}</td>
+        <td style="width: 50%">{% trans "あり" %}</td>
       </tr>
       {% else %}
       <tr>
@@ -90,7 +90,7 @@
       {% endif %} {% if user.is_superuser %}
       <tr>
         <td>{% trans "スーパーユーザー権限" %}</td>
-        <td>{{ user.is_superuser }}</td>
+        <td>{% trans "あり" %}</td>
       </tr>
       {% else %}
       <tr>
