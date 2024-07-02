@@ -48,8 +48,9 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def start_game_session(self, players):
         game_id = f"game_{random.randint(1000, 9999)}"
-
         game_url = "http://localhost:8001/pingpong/multiplayer_play_remote/" + game_id
+        player_ids = [json.loads(player).get("user_id") for player in players]
+        await self.create_game_coloum(game_id, player_ids[0], player_ids[1])
 
         for user_info in players:
             # redis_client.sadd(game_id, player)
@@ -73,6 +74,15 @@ class GameConsumer(AsyncWebsocketConsumer):
     #             return value.decode("utf-8")
     #     return default
 
+    @database_sync_to_async
+    def create_game_coloum(self, game_id, player_id_1, player_id_2):
+        player1 = User.objects.get(id=player_id_1)
+        player2 = User.objects.get(id=player_id_2)
+        game_id_num = int("".join(filter(str.isdigit, game_id)))
+        game = Game.objects.create(id=game_id_num, player1=player1, player2=player2)
+        game.save()
+        # return game
+
     async def game_start(self, event):
         await self.send(
             text_data=json.dumps(
@@ -93,7 +103,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         self.game_id = self.scope["url_route"]["kwargs"]["game_id"]
         self.game_id_num = int("".join(filter(str.isdigit, self.game_id)))
         self.user = self.scope["user"]
-        self.game = await self.create_or_update_game(self.game_id_num, self.user)
+        self.game = await self.get_game(self.game_id_num)
         self.group_name = f"game_{self.game_id}"
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
@@ -191,27 +201,27 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
     async def score_update_error(self, event):
         await self.send(json.dumps(event))
 
-    @database_sync_to_async
-    def create_or_update_game(self, game_id, player):
-        game, created = Game.objects.get_or_create(
-            id=game_id, defaults={"player1": player}
-        )
-        if not created and game.player1 is None:
-            game.player1 = player
-            game.save()
-        elif not created and game.player2 is None:
-            game.player2 = player
-            game.save()
-        return game
-
     # @database_sync_to_async
-    # def get_game(self, game_id):
-    #     if not Game.objects.filter(id=game_id).exists():
-    #         game = Game.objects.create(
-    #             id=game_id,
-    #         )
-    #         return game
-    #     return Game.objects.get(id=game_id)
+    # def create_or_update_game(self, game_id, player):
+    #     game, created = Game.objects.get_or_create(
+    #         id=game_id, defaults={"player1": player}
+    #     )
+    #     if not created and game.player1 is None:
+    #         game.player1 = player
+    #         game.save()
+    #     elif not created and game.player2 is None:
+    #         game.player2 = player
+    #         game.save()
+    #     return game
+
+    @database_sync_to_async
+    def get_game(self, game_id):
+        # if not Game.objects.filter(id=game_id).exists():
+        #     game = Game.objects.create(
+        #         id=game_id,
+        #     )
+        #     return game
+        return Game.objects.get(id=game_id)
 
     @database_sync_to_async
     def is_valid_score_update(self, data):
