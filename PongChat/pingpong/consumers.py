@@ -20,10 +20,22 @@ User = get_user_model()
 class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
-        redis_client.sadd("waiting_room", self.channel_name)
+        user_info = json.dumps(
+            {
+                "channel_name": self.channel_name,
+                "user_id": self.scope["user"].id,
+            }
+        )
+        redis_client.sadd("waiting_room", user_info)
 
     async def disconnect(self, close_code):
-        redis_client.srem("waiting_room", self.channel_name)
+        user_info = json.dumps(
+            {
+                "channel_name": self.channel_name,
+                "user_id": self.scope["user"].id,
+            }
+        )
+        redis_client.srem("waiting_room", user_info)
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -39,12 +51,13 @@ class GameConsumer(AsyncWebsocketConsumer):
 
         game_url = "http://localhost:8001/pingpong/multiplayer_play_remote/" + game_id
 
-        for player in players:
+        for user_info in players:
             # redis_client.sadd(game_id, player)
-            redis_client.srem("waiting_room", player)
+            channel_name = json.loads(user_info).get("channel_name")
+            redis_client.srem("waiting_room", user_info)
 
             await self.channel_layer.send(
-                player.decode("utf-8"),
+                channel_name,
                 {
                     "type": "game_start",
                     "game_id": game_id,
