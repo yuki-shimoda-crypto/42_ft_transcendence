@@ -8,7 +8,7 @@ export function updateScoreFromRemote(data) {
   cpuScore = data.score2;
 }
 
-export function incrementCpuScore(gameSocket) {
+export function incrementRightScore(gameSocket) {
   console.log("incrementCpuScore");
   const sendCpuScore = cpuScore + 1;
   gameSocket.send(
@@ -20,7 +20,7 @@ export function incrementCpuScore(gameSocket) {
   );
 }
 
-export function incrementPlayerScore(gameSocket) {
+export function incrementLeftScore(gameSocket) {
   console.log("incrementPlayerScore");
   const sendPlayerScore = playerScore + 1;
   gameSocket.send(

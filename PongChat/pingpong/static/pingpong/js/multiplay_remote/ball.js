@@ -8,8 +8,8 @@ import {
   cpuScore,
   playerScore,
   winningScore,
-  incrementCpuScore,
-  incrementPlayerScore,
+  incrementRightScore,
+  incrementLeftScore,
 } from "./score.js";
 
 import { gameOver, resetGame } from "./game_control.js";
@@ -65,7 +65,7 @@ export function moveBall(gameSocket, player_position) {
       sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementCpuScore(gameSocket);
+      incrementRightScore(gameSocket);
       if (cpuScore >= winningScore) {
         gameOver("Congratulations! Right win!");
       } else {
@@ -81,7 +81,7 @@ export function moveBall(gameSocket, player_position) {
       sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementPlayerScore(gameSocket);
+      incrementLeftScore(gameSocket);
       if (playerScore >= winningScore) {
         gameOver("Congratulations! Left win!");
       } else {
