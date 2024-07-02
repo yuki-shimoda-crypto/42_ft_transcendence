@@ -89,6 +89,6 @@ def tournament_bracket(request):
     return render(request, "pingpong/tournament_bracket.html")
 
 
-@login_required
+# @login_required
 def tournament_registration(request):
     return render(request, "pingpong/tournament_registration.html")

@@ -247,10 +247,10 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
     def update_game_score(self, data):
         current_score1 = self.game.score1
         current_score2 = self.game.score2
-        logger.info(f"Current database scores: {current_score1}, {current_score2}")
-        logger.info(
-            f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
-        )
+        # logger.info(f"Current database scores: {current_score1}, {current_score2}")
+        # logger.info(
+        #     f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
+        # )
 
         if data["score1"] == current_score1 + 1:
             self.game.score1 += 1
@@ -259,13 +259,6 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         self.game.score_last_update = timezone.now()
 
         self.game.save()
-
-        # score_data = {
-        #     "type": "score_update",
-        #     "score1": self.game.score1,
-        #     "score2": self.game.score2,
-        # }
-        # self.channel_layer.group_send(self.group_name, score_data)
 
     @database_sync_to_async
     def finalize_game(self):

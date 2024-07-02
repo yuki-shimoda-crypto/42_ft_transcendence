@@ -3,34 +3,34 @@ from django.db import models
 
 
 class Game(models.Model):
-    player1 = models.ForeignKey(
+    player1: models.ForeignKey = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="games_as_player1",
         null=True,
     )
 
-    player2 = models.ForeignKey(
+    player2: models.ForeignKey = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="games_as_player2",
         null=True,
     )
 
-    score1 = models.IntegerField(default=0)
-    score2 = models.IntegerField(default=0)
-    score_last_update = models.DateTimeField(auto_now_add=True)
+    score1: models.IntegerField = models.IntegerField(default=0)
+    score2: models.IntegerField = models.IntegerField(default=0)
+    score_last_update: models.DateTimeField = models.DateTimeField(auto_now_add=True)
 
-    status = models.CharField(
+    status: models.CharField = models.CharField(
         max_length=10,
         choices=[("ongoing", "Ongoing"), ("done", "Done")],
         default="ongoing",
     )
 
-    date_start = models.DateTimeField(auto_now_add=True)
-    date_end = models.DateTimeField(null=True, blank=True)
+    date_start: models.DateTimeField = models.DateTimeField(auto_now_add=True)
+    date_end: models.DateTimeField = models.DateTimeField(null=True, blank=True)
 
-    winner = models.ForeignKey(
+    winner: models.ForeignKey = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="games_won",
