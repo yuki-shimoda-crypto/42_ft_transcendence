@@ -3,6 +3,7 @@ import logging
 import random
 
 import redis
+from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
@@ -48,7 +49,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def start_game_session(self, players):
         game_id = f"game_{random.randint(1000, 9999)}"
-        game_url = "http://localhost:8001/pingpong/multiplayer_play_remote/" + game_id
+        game_url = "multiplayer_play_remote/" + game_id
         player_ids = [json.loads(player).get("user_id") for player in players]
         await self.create_game_coloum(game_id, player_ids[0], player_ids[1])
 
@@ -108,9 +109,19 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
-        redis_client.incr(f"{self.group_name}_size")
-        group_size = int(redis_client.get(f"{self.group_name}_size") or 0)
-        player_position = "left" if group_size % 2 == 0 else "right"
+        # if self.user == self.game.player1:
+        #     player_position = "left"
+        # elif self.user == self.game.player2:
+        #     player_position = "right"
+
+        # Access the player details asynchronously
+        player1 = await sync_to_async(getattr)(self.game, "player1")
+        player2 = await sync_to_async(getattr)(self.game, "player2")
+
+        if self.user == player1:
+            player_position = "left"
+        elif self.user == player2:
+            player_position = "right"
 
         await self.send(
             json.dumps(
@@ -141,7 +152,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         )
 
     async def disconnect(self, close_code):
-        redis_client.decr(f"{self.group_name}_size")
+        # redis_client.decr(f"{self.group_name}_size")
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
     async def receive(self, text_data):
@@ -170,7 +181,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
         elif type == "update_score":
             if await self.is_valid_score_update(data):
-                logger.info("-----------------------------------------------------")
+                # logger.info("-----------------------------------------------------")
                 await self.update_game_score(data)
                 score_data = {
                     "type": "score_update",
@@ -179,7 +190,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
                 }
                 await self.channel_layer.group_send(self.group_name, score_data)
             else:
-                logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                # logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
                 error_data = {
                     "type": "score_update_error",
                     "error": "Wait for 1 second before updating the score again.",
@@ -247,10 +258,10 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
     def update_game_score(self, data):
         current_score1 = self.game.score1
         current_score2 = self.game.score2
-        # logger.info(f"Current database scores: {current_score1}, {current_score2}")
-        # logger.info(
-        #     f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
-        # )
+        logger.info(f"Current database scores: {current_score1}, {current_score2}")
+        logger.info(
+            f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
+        )
 
         if data["score1"] == current_score1 + 1:
             self.game.score1 += 1
@@ -262,6 +273,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def finalize_game(self):
+        logger.info("Finalizing the game")
         self.game.date_end = timezone.now()
         if self.game.score1 > self.game.score2:
             self.game.winner = self.game.player1

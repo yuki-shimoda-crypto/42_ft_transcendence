@@ -1,3 +1,4 @@
+import { gameOver, resetGame } from "./game_control.js";
 // Score
 export let playerScore = 0;
 export let cpuScore = 0;
@@ -35,4 +36,14 @@ export function incrementLeftScore(gameSocket) {
 export function resetScores() {
   playerScore = 0;
   cpuScore = 0;
+}
+
+export function judgeGameFinish(gameSocket) {
+  if (cpuScore >= winningScore) {
+    gameOver("Congratulations! Right win!", gameSocket);
+  } else if (playerScore >= winningScore) {
+    gameOver("Congratulations! Left win!", gameSocket);
+  } else {
+    resetGame();
+  }
 }

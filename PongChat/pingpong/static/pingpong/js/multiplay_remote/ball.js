@@ -66,11 +66,11 @@ export function moveBall(gameSocket, player_position) {
     } else {
       // Game Over
       incrementRightScore(gameSocket);
-      if (cpuScore >= winningScore) {
-        gameOver("Congratulations! Right win!");
-      } else {
-        resetGame();
-      }
+      // if (cpuScore >= winningScore) {
+      //   gameOver("Congratulations! Right win!");
+      // } else {
+      //   resetGame();
+      // }
     }
   } else if (ballX + ballDx > canvas.width - paddleWidth * 2) {
     if (ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
@@ -82,11 +82,11 @@ export function moveBall(gameSocket, player_position) {
     } else {
       // Game Over
       incrementLeftScore(gameSocket);
-      if (playerScore >= winningScore) {
-        gameOver("Congratulations! Left win!");
-      } else {
-        resetGame();
-      }
+      // if (playerScore >= winningScore) {
+      //   gameOver("Congratulations! Left win!");
+      // } else {
+      //   resetGame();
+      // }
     }
   }
 

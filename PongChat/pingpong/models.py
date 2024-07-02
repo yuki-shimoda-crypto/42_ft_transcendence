@@ -40,33 +40,3 @@ class Game(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.player1} vs {self.player2}"
-
-    def end_game(self):
-        self.date_end = models.DateTimeField(auto_now_add=True)
-        self.status = "done"
-        if self.score1 > self.score2:
-            self.winner = self.player1
-        elif self.score1 < self.score2:
-            self.winner = self.player2
-        else:
-            self.winner = None
-        self.save()
-
-
-# class Match(models.Model):
-#     player1 = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="matches_as_player1",
-#     )
-#     player2 = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="matches_as_player2",
-#     )
-#     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="matches")
-#     date_played = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"{self.player1} vs {self.player2}
-# in {self.game} at {self.date_played}"

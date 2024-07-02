@@ -38,7 +38,7 @@ import {
   gamePaused,
 } from "./ui.js";
 
-import { updateScoreFromRemote } from "./score.js";
+import { updateScoreFromRemote, judgeGameFinish } from "./score.js";
 
 // デュース機能を追加する
 // 点数のプログレスバーを追加する
@@ -162,6 +162,7 @@ export function initializeGame(gameId) {
       updateScoreFromRemote(data);
       console.log("Score updated");
       drawScores();
+      judgeGameFinish(window.gameSocket);
     }
 
     if (data.type === "score_update_error") {
