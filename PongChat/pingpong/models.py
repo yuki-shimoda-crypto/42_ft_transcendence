@@ -39,7 +39,7 @@ class Game(models.Model):
     )
 
     def __str__(self):
-        return f"{self.player1} vs {self.player2}"
+        return f"{self.id}: {self.player1} vs {self.player2}"
 
     def end_game(self):
         self.date_end = models.DateTimeField(auto_now_add=True)

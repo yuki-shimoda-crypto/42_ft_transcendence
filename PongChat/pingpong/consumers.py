@@ -169,7 +169,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_send(self.group_name, ball_data)
 
         elif type == "update_score":
-            if self.is_valid_score_update(data):
+            if await self.is_valid_score_update(data):
                 logger.info("-----------------------------------------------------")
                 await self.update_game_score(data)
                 score_data = {
