@@ -1,6 +1,6 @@
 # ft_transcendence
 
-[日本語版はこちら](./README_ja.md)
+[日本語版はこちら](./docs/README_ja.md)
 
 ## Overview
 
@@ -65,7 +65,7 @@ This will start the following services in the background:
 - Grafana: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
 
-Note: For detailed configuration and usage of Grafana and Prometheus, please refer to [MONITOR_README.md](./MONITOR_README.md).
+Note: For detailed configuration and usage of Grafana and Prometheus, please refer to [MONITOR_README.md](./docs/MONITOR_README.md).
 
 ## Development Environment
 

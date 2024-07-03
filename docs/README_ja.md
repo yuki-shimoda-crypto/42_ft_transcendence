@@ -1,6 +1,6 @@
 # ft_transcendence
 
-[English version](./README.md)
+[English version](../README.md)
 
 ## 概要
 
@@ -67,7 +67,7 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 
 注：Grafanaと
 
-Prometheusの詳細な設定と使用方法については、[MONITOR_README.md](./MONITOR_README.md)を参照してください。
+Prometheusの詳細な設定と使用方法については、[MONITOR_README.md](./MONITOR_README_ja.md)を参照してください。
 
 ## 開発環境
 
