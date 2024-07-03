@@ -1,5 +1,5 @@
 import json
-import logging
+# import logging
 import random
 
 import redis
@@ -11,7 +11,7 @@ from django.utils import timezone
 
 from .models import Game
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 redis_client = redis.Redis(host="redis", port=6379, db=0)
 
@@ -99,7 +99,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 class GameSessionConsumer(AsyncWebsocketConsumer):
     async def connect(self):
 
-        logger.info(f"Connected to {self.channel_name}")
+        # logger.info(f"Connected to {self.channel_name}")
 
         self.game_id = self.scope["url_route"]["kwargs"]["game_id"]
         self.game_id_num = int("".join(filter(str.isdigit, self.game_id)))
@@ -258,10 +258,10 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
     def update_game_score(self, data):
         current_score1 = self.game.score1
         current_score2 = self.game.score2
-        logger.info(f"Current database scores: {current_score1}, {current_score2}")
-        logger.info(
-            f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
-        )
+        # logger.info(f"Current database scores: {current_score1}, {current_score2}")
+        # logger.info(
+        #     f"data['score1']: {data['score1']}, data['score2']: {data['score2']}"
+        # )
 
         if data["score1"] == current_score1 + 1:
             self.game.score1 += 1
@@ -273,7 +273,7 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def finalize_game(self):
-        logger.info("Finalizing the game")
+        # logger.info("Finalizing the game")
         self.game.date_end = timezone.now()
         if self.game.score1 > self.game.score2:
             self.game.winner = self.game.player1
