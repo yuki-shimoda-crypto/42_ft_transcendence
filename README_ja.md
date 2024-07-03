@@ -65,9 +65,7 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 - Grafana: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
 
-注：Grafanaと
-
-Prometheusの詳細な設定と使用方法については、[MONITOR_README.md](./MONITOR_README.md)を参照してください。
+注：GrafanaとPrometheusの詳細な設定と使用方法については、[MONITOR_README.md](./MONITOR_README.md)を参照してください。
 
 ## 開発環境
 
