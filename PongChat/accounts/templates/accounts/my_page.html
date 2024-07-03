@@ -1,5 +1,6 @@
 {% extends 'common/base.html' %}
 {% block content %}
+{% load i18n %}
 <div class="container">
   <div class="d-flex align-items-center mt-1">
     <img
@@ -15,7 +16,7 @@
   <!-- アカウント情報 -->
   <div class="row">
     <div class="col d-flex align-items-center">
-      <h3 class="mr-2">登録情報</h3>
+      <h3 class="mr-2">{% trans "登録情報" %}</h3>
       <a href="{% url 'accounts:username_update' user.pk %}"
         ><i class="bi bi-pencil-square"></i
       ></a>
@@ -24,7 +25,7 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td style="width: 50%">ユーザー名</td>
+        <td style="width: 50%">{% trans "ユーザー名" %}</td>
         <td style="width: 50%">{{ user.username }}</td>
       </tr>
     </tbody>
@@ -34,7 +35,7 @@
   <div class="row mb-4">
     <div class="col">
       <div class="d-flex align-items-center">
-        <h3 class="mr-2">プロフィール画像</h3>
+        <h3 class="mr-2">{% trans "プロフィール画像" %}</h3>
         <a href="{% url 'accounts:profile_image_update' user.pk %}"
           ><i class="bi bi-pencil-square"></i
         ></a>
@@ -47,7 +48,7 @@
         style="width: 150px; height: 150px; object-fit: cover"
       />
       {% else %}
-      <strong>プロフィール画像がありません</strong>
+      <strong>{% trans "プロフィール画像がありません" %}</strong>
       {% endif %}
     </div>
   </div>
@@ -55,7 +56,7 @@
   <!-- パスワード -->
   <div class="row mt-4">
     <div class="col d-flex align-items-center">
-      <h3 class="mr-2">パスワード</h3>
+      <h3 class="mr-2">{% trans "パスワード" %}</h3>
       <a href="{% url 'accounts:password_change' %}"
         ><i class="bi bi-pencil-square"></i
       ></a>
@@ -64,43 +65,43 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td style="width: 50%">パスワード</td>
-        <td style="width: 50%">非表示</td>
+        <td style="width: 50%">{% trans "パスワード" %}</td>
+        <td style="width: 50%">{% trans "非表示" %}</td>
       </tr>
     </tbody>
   </table>
 
   <!-- 権限 -->
   <div class="row mt-4">
-    <div class="col"><h3>権限</h3></div>
+    <div class="col"><h3>{% trans "権限" %}</h3></div>
   </div>
   <table class="table table-bordered">
     <tbody>
       {% if user.is_staff %}
       <tr>
-        <td style="width: 50%">スタッフ権限</td>
-        <td style="width: 50%">{{ user.is_staff }}</td>
+        <td style="width: 50%">{% trans "スタッフ権限" %}</td>
+        <td style="width: 50%">{% trans "あり" %}</td>
       </tr>
       {% else %}
       <tr>
-        <td style="width: 50%">スタッフ権限</td>
-        <td style="width: 50%">なし</td>
+        <td style="width: 50%">{% trans "スタッフ権限" %}</td>
+        <td style="width: 50%">{% trans "なし" %}</td>
       </tr>
       {% endif %} {% if user.is_superuser %}
       <tr>
-        <td>スーパーユーザー権限</td>
-        <td>{{ user.is_superuser }}</td>
+        <td>{% trans "スーパーユーザー権限" %}</td>
+        <td>{% trans "あり" %}</td>
       </tr>
       {% else %}
       <tr>
-        <td>スーパーユーザー権限</td>
-        <td>なし</td>
+        <td>{% trans "スーパーユーザー権限" %}</td>
+        <td>{% trans "なし" %}</td>
       </tr>
       {% endif %}
     </tbody>
   </table>
   <hr />
-  <div class="col"><h3>フレンド情報</h3></div>
+  <div class="col"><h3>{% trans "フレンド情報" %}</h3></div>
   <div class="row">
     {% for friend in friends %}
       <div class="col-md-3 mb-4">
@@ -115,7 +116,7 @@
       </div>
     {% empty %}
       <div class="col">
-        <p>フレンドはいません。</p>
+        <p>{% trans "フレンドはいません" %}</p>
       </div>
     {% endfor %}
   </div>

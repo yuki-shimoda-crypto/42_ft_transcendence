@@ -1,20 +1,21 @@
+{% load i18n %}
 <li class="nav-item mb-1">
   <a class="nav-link" aria-current="page" href="{% url 'accounts:top' %}">
     <i class="bi bi-house-door"></i>
-    <span class="ml-2">Home</span>
+    <span class="ml-2">{% trans "ホーム" %}</span>
   </a>
 </li>
 
 <li class="nav-item mb-1">
   <a class="nav-link" href="{% url 'chat-home' %}">
     <i class="bi bi-chat-dots"></i>
-    <span class="ml-2">Chat</span>
+    <span class="ml-2">{% trans "チャット" %}</span>
   </a>
 </li>
 
 <li class="nav-item mb-1">
   <a class="nav-link" href="{% url 'pingpong:index' %}">
     <i class="bi bi-controller"></i>
-    <span class="ml-2">Game</span>
+    <span class="ml-2">{% trans "ゲーム" %}</span>
   </a>
 </li>

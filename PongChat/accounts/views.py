@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView,
@@ -7,6 +8,7 @@ from django.contrib.auth.views import (
 )
 from django.shortcuts import redirect, render, resolve_url
 from django.urls import reverse_lazy
+from django.utils import translation
 from django.views import View, generic
 
 from .forms import (
@@ -29,6 +31,12 @@ class TopView(generic.TemplateView):
     """
 
     template_name = "accounts/top.html"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = CustomUser.objects.get(pk=request.user.pk)
+            translation.activate(user.default_language)
+        return super().get(request, *args, **kwargs)
 
 
 class Login(LoginView):
@@ -279,3 +287,21 @@ class PasswordChangeDone(PasswordChangeDoneView):
     """
 
     template_name = "accounts/password_change_done.html"
+
+
+def switch_language(request, language):
+    translation.activate(language)
+    request.session[settings.LANGUAGE_SESSION_KEY] = language
+
+    if request.user.is_authenticated:
+        user = CustomUser.objects.get(pk=request.user.pk)
+        user.default_language = language
+        user.save()
+
+    referer = request.META.get("HTTP_REFERER")
+
+    if referer:
+        if language == "ja":
+            return redirect("accounts:top")
+        return redirect(f"/{language}")
+    return redirect("accounts:top")

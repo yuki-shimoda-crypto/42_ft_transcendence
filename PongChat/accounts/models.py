@@ -17,6 +17,8 @@ class CustomUser(AbstractUser):
         profile_image (ImageField): The user's profile image.
     """
 
+    default_language: models.CharField = models.CharField(max_length=2, default="ja")
+
     profile_image = models.ImageField(
         upload_to="profile_images/", null=True, blank=True
     )
