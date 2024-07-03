@@ -1,0 +1,56 @@
+{% extends "common/base.html" %} {% block content %}
+<div class="container">
+  <h1>Tournament Registration</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="participants">Select number of participants:</label>
+      <select id="participants" name="participants" class="form-control">
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+      </select>
+    </div>
+    <div id="names"></div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+<script>
+
+  function addParticipantsForms(){
+    document.querySelector("#names").innerHTML = "";
+    participants = document.querySelector("#participants").value;
+    for (let i = 0; i < participants; i++) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = `name${i}`;
+      input.placeholder = `Participant ${i + 1}`;
+      input.className = "form-control";
+      document.querySelector("#names").appendChild(input);
+    }
+  }
+
+  function fillBlankNames() {
+    participants = document.querySelector("#participants").value;
+    for (let i = 0; i < participants; i++) {
+      const input = document.querySelector(`input[name="name${i}"]`);
+      if (input.value === "") {
+        input.value = `Participant ${i + 1}`;
+      }
+    }
+  }
+
+  document.querySelector("form").addEventListener("submit", function() {
+    fillBlankNames();
+  })
+
+  window.addEventListener("load", function () {
+    addParticipantsForms();
+  });
+  document.querySelector("#participants").addEventListener("change", function () {
+    addParticipantsForms();
+  });
+
+</script>
+{% endblock %}

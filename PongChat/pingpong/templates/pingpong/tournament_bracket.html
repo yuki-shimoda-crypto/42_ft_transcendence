@@ -1,0 +1,39 @@
+{% extends "common/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Tournament Bracket</h1>
+    <div id="bracket"></div>
+</div>
+<script>
+    function createBracket(participants, names) {
+        const bracket = document.querySelector("#bracket");
+        bracket.innerHTML = "";
+
+        // Calculate number of rounds
+        let numRound = Math.ceil(Math.log2(participants));
+        let roundMatches = participants / 2;
+
+        for (let round = 0; round < numRound; round++) {
+            const roundDiv = document.createElement("div");
+            roundDiv.className = "tournament-round";
+            roundDiv.innerHTML = `<h2>Round ${round + 1}</h2>`;
+            for (let match = 0; match < roundMatches; match++) {
+                const matchIndex = round * roundMatches + match;
+                if (matchIndex < participants) {
+                    const matchDiv = document.createElement("div");
+                    matchDiv.className = "tournament-match";
+                    matchDiv.innerHTML = `<p>Match ${match + 1}: ${names[matchIndex]} vs ${names[matchIndex + 1]}</p>`;
+                    roundDiv.appendChild(matchDiv);
+                }
+            }
+            bracket.appendChild(roundDiv);
+            roundMatches /= 2;
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const participants = {{ participants }};
+        const participant_names = {{ participant_names|safe }};
+        createBracket(participants, participant_names);
+    });
+</script>
+{% endblock %}

@@ -4,11 +4,6 @@ from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-# from .models import Game
-
-# Create your views here.
-
-
 # @login_required
 # def index(request):
 #     return render(request, "pingpong/index.html")
@@ -20,16 +15,6 @@ User = get_user_model()
 # @login_required
 def index(request):
     return render(request, "pingpong/home.html")
-
-
-# @login_required
-# def create_game(request):
-#     if request.method == "POST":
-#         player2_id = request.POST.get("player2")
-#         player2 = User.objects.get(id=player2_id)
-#         game = Game.objects.create(player1=request.user, player2=player2)
-#         return redirect("pingpong:game", game_id=game.id)
-#     return render(request, "pingpong/create_game.html")
 
 
 @login_required
@@ -84,11 +69,25 @@ def single_play_start(request):
     )
 
 
-@login_required
+# @login_required
 def tournament_bracket(request):
-    return render(request, "pingpong/tournament_bracket.html")
+    participants = request.session.get("participants")
+    participant_names = request.session.get("participant_names")
+    return render(
+        request,
+        "pingpong/tournament_bracket.html",
+        {"participants": participants, "participant_names": participant_names},
+    )
 
 
 # @login_required
 def tournament_registration(request):
+    if request.method == "POST":
+        participants = int(request.POST.get("participants"))
+        participant_names = [request.POST.get(f"name{i}") for i in range(participants)]
+
+        request.session["participants"] = participants
+        request.session["participant_names"] = participant_names
+
+        return redirect("pingpong:tournament_bracket")
     return render(request, "pingpong/tournament_registration.html")
