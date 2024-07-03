@@ -1,14 +1,28 @@
-# Djangoアプリケーションのモニタリングセットアップ
+# Django Application Monitoring Setup
 
-## django-prometheusのセットアップ
+[日本語版はこちら](./MONITOR_README_ja.md)
 
-[django-prometheus](https://github.com/korfuri/django-prometheus)というPythonライブラリを使用して、Djangoの監視メトリクスをPrometheusにエクスポートすることができます。以下のコマンドを実行して簡単にインストールできます。
+This document explains how to set up monitoring for the Django application in the ft_transcendence project.
+
+## Table of Contents
+
+1. [Setting up django-prometheus](#setting-up-django-prometheus)
+2. [Setting up Prometheus and Grafana with Docker Compose](#setting-up-prometheus-and-grafana-with-docker-compose)
+3. [Adding Grafana Dashboards](#adding-grafana-dashboards)
+
+## Setting up django-prometheus
+
+[django-prometheus](https://github.com/korfuri/django-prometheus) is a Python library that exports monitoring metrics from Django applications to Prometheus.
+
+### Installation
 
 ```bash
 pip install django-prometheus
 ```
 
-次に、`settings.py`ファイルに以下の設定を追加します。
+### Configuration
+
+1. Add the following to `settings.py`:
 
 ```python
 INSTALLED_APPS = [
@@ -23,7 +37,7 @@ MIDDLEWARE = (
 )
 ```
 
-また、`urls.py`ファイルに以下の設定を追加して、django-prometheusがエクスポートするメトリクスにアクセスできるようにします。
+2. Add the following to `urls.py`:
 
 ```python
 urlpatterns = [
@@ -32,13 +46,15 @@ urlpatterns = [
 ]
 ```
 
-これで、`/prometheus/metrics`エンドポイントにアクセスすることでメトリクスにアクセスできるようになります。
+This will make metrics available at the `/prometheus/metrics` endpoint.
 
-## PrometheusとGrafanaのDocker Composeによるセットアップ
+## Setting up Prometheus and Grafana with Docker Compose
 
-以下は、PrometheusとGrafanaをセットアップするためのDocker Composeファイルです。`docker-compose.monitoring.yml`という名前で保存してください。
+### Docker Compose Configuration
 
-```yml
+Create a `docker-compose.monitoring.yml` file with the following content:
+
+```yaml
 version: "3.8"
 
 networks:
@@ -80,9 +96,11 @@ services:
       - monitoring
 ```
 
-また、Prometheusの設定ファイルである`prometheus.yml`を作成し、以下のように設定します。
+### Prometheus Configuration
 
-```yml
+Create a `prometheus.yml` file with the following content:
+
+```yaml
 global:
   scrape_interval: 15s
 scrape_configs:
@@ -92,37 +110,49 @@ scrape_configs:
       - targets: ["host.docker.internal:8080"]
 ```
 
-上記の設定では、Prometheusがホストマシンの`localhost:8080/prometheus/metrics`からメトリクスを取得します。
+Note: Adjust the `targets` value to match the actual host and port of your Django application.
 
-以上の設定を行った後、以下のコマンドを実行してDocker Composeを起動し、イメージをビルドします。
+### Starting Docker Compose
 
 ```bash
 docker-compose -f docker-compose.monitoring.yml up --build
 ```
 
-これで、Grafanaには`localhost:3000`、Prometheusには`localhost:9090`でアクセスできるようになります。
+This will make the following services available:
 
-## Grafanaダッシュボードの追加
+- Grafana: `http://localhost:3000`
+- Prometheus: `http://localhost:9090`
 
-このセクションでは、アプリケーションのメトリクスを監視するためのダッシュボードを追加する方法を探ります。Grafanaがコミュニティ主導であることを覚えていますか？つまり、コミュニティによって作成されたダッシュボードを追加できます！django-prometheusとよく連携する素晴らしいダッシュボードをandreynovikovが作成しています（https://grafana.com/grafana/dashboards/17658-django/）。それでは、このダッシュボードをGrafanaに追加する方法を探ってみましょう！
+## Adding Grafana Dashboards
 
-### データソースの追加
+### Adding a Data Source
 
-データソースはPrometheusから取得していることを覚えておいてください。追加しましょう！
+1. Log in to Grafana (default credentials: admin/admin)
+2. Go to "Configuration" → "Data sources" in the left menu
+3. Click "Add data source"
+4. Select Prometheus
+5. Set the following:
+   - Name: Prometheus
+   - URL: `http://prometheus:9090`
+6. Click "Save & Test"
 
-- データソースに移動します
-- データソースを追加するをクリックします
-- Prometheusを選択し、これで最初のデータソースが作成されます。😁
-- 接続にスクロールし、PrometheusサーバーのURLを `http://prometheus:9090` と入力します。これは、GrafanaのDockerコンテナからアクセスされるときのPrometheus Dockerコンテナのドメインです。
-- 一番下までスクロールして、Save & Testをクリックします。緑のチェックマークが表示されれば（おそらく表示されるでしょう）、準備完了です！
+### Importing a Dashboard
 
-### ダッシュボードの追加
+1. Go to "Create" → "Import" in the left menu
+2. Enter [Django Prometheus](https://grafana.com/grafana/dashboards/17658-django/) dashboard URL in "Import via grafana.com".
+3. Click "Load"
+4. Select Prometheus as the data source
+5. Click "Import"
 
-さて、andreynovikovが作成したダッシュボードをGrafanaに追加します。さっそく始めましょう！
+You should now have a dashboard displaying metrics from your Django application.
 
-- ダッシュボードに移動します
-- Create Dashboardをクリックします
-- Import dashboardをクリックし、"Find and import dashboards"入力フィールドに希望のダッシュボードのURLを入力し、Loadをクリックします
-- 作成したばかりのPrometheusデータソースをデータソースとして選択し、Importをクリックします。
+## Troubleshooting
 
-これで、インポートしたダッシュボードが表示されます！
+- If metrics are not showing up, ensure that your Django application is running correctly and that the Prometheus configuration is correct.
+- If Grafana fails to connect to the data source, check your network settings and ensure that the Prometheus container is reachable from the Grafana container.
+
+## References
+
+- [django-prometheus GitHub](https://github.com/korfuri/django-prometheus)
+- [Prometheus Documentation](https://prometheus.io/docs/introduction/overview/)
+- [Grafana Documentation](https://grafana.com/docs/)
