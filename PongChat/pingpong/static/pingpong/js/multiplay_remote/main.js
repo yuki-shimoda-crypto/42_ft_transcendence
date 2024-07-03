@@ -104,7 +104,7 @@ function draw() {
         upPressedRight,
         downPressedRight,
         canvas,
-        window.gameSocket
+        window.gameSocket,
       );
     }
   }
@@ -123,7 +123,7 @@ function onResize() {
 
 export function initializeGame(gameId) {
   window.gameSocket = new WebSocket(
-    `ws://${window.location.host}/ws/game/${gameId}/`
+    `ws://${window.location.host}/ws/game/${gameId}/`,
   );
   console.log(`WebSocket URL: ws://${window.location.host}/ws/game/${gameId}/`);
 
@@ -170,15 +170,15 @@ export function initializeGame(gameId) {
     }
   };
 
-  window.gameSocket.onopen = function (event) {
+  window.gameSocket.onopen = function () {
     console.log("Connected to websocket");
   };
 
-  window.gameSocket.onclose = function (event) {
+  window.gameSocket.onclose = function () {
     console.error("Disconnected from websocket");
   };
 
-  window.gameSocket.onerror = function (event) {
+  window.gameSocket.onerror = function () {
     console.error("Error in websocket");
   };
 

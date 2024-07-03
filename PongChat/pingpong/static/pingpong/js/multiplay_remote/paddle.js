@@ -12,7 +12,7 @@ function drawRoundedRect(ctx, ballX, ballY, width, height, radius) {
     ballX + width,
     ballY + height,
     ballX + width - radius,
-    ballY + height
+    ballY + height,
   );
   ctx.lineTo(ballX + radius, ballY + height);
   ctx.quadraticCurveTo(ballX, ballY + height, ballX, ballY + height - radius);
@@ -29,7 +29,7 @@ export function drawLeftPaddle(ctx) {
     leftPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2
+    radius / 2,
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
@@ -43,7 +43,7 @@ export function drawRightPaddle(ctx, canvas) {
     rightPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2
+    radius / 2,
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
@@ -53,7 +53,7 @@ export function moveRightPaddle(
   upPressedRight,
   downPressedRight,
   canvas,
-  gameSocket
+  gameSocket,
 ) {
   let moved = false;
   if (upPressedRight && rightPaddleY > 0) {
@@ -74,7 +74,7 @@ export function moveLeftPaddle(
   upPressedLeft,
   downPressedLeft,
   canvas,
-  gameSocket
+  gameSocket,
 ) {
   let moved = false;
   if (upPressedLeft && leftPaddleY > 0) {
@@ -98,7 +98,7 @@ function sendPaddlePosition(gameSocket, paddleY, rightLeft) {
       type: "update_paddle",
       player_position: rightLeft,
       paddle_position_ratio: paddlePositionRatioY,
-    })
+    }),
   );
 }
 

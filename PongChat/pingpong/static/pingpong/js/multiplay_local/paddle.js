@@ -12,7 +12,7 @@ function drawRoundedRect(ctx, ballX, ballY, width, height, radius) {
     ballX + width,
     ballY + height,
     ballX + width - radius,
-    ballY + height
+    ballY + height,
   );
   ctx.lineTo(ballX + radius, ballY + height);
   ctx.quadraticCurveTo(ballX, ballY + height, ballX, ballY + height - radius);
@@ -29,7 +29,7 @@ export function drawLeftPaddle(ctx) {
     leftPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2
+    radius / 2,
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();
@@ -43,7 +43,7 @@ export function drawRightPaddle(ctx, canvas) {
     rightPaddleY,
     paddleWidth,
     paddleHeight,
-    radius / 2
+    radius / 2,
   );
   ctx.fillStyle = "#0095DD";
   ctx.fill();

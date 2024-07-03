@@ -4,15 +4,7 @@ import {
   previousCanvasHeight,
   previousCanvasWidth,
 } from "./main.js";
-import {
-  cpuScore,
-  playerScore,
-  winningScore,
-  incrementRightScore,
-  incrementLeftScore,
-} from "./score.js";
-
-import { gameOver, resetGame } from "./game_control.js";
+import { incrementRightScore, incrementLeftScore } from "./score.js";
 
 import {
   paddleWidth,
@@ -43,19 +35,12 @@ function initializeBallPosition() {
   ballY = canvas.height / 2;
 }
 
-function getRandomDirection() {
-  return Math.random() < 0.5 ? 1 : -1;
-}
-
 function initializeBallSpeed() {
-  // const angle = Math.random() * 2 * Math.PI;
   ballDx = canvas.width * 0.01;
   ballDy = canvas.width * 0.0005;
-  // ballDx = canvas.width * 0.01 * getRandomDirection();
-  // ballDy = canvas.height * 0.01 * Math.sin(angle);
 }
 
-export function moveBall(gameSocket, player_position) {
+export function moveBall(gameSocket) {
   if (ballX + ballDx < paddleWidth * 2) {
     if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
       ballDx = -ballDx;
@@ -66,11 +51,6 @@ export function moveBall(gameSocket, player_position) {
     } else {
       // Game Over
       incrementRightScore(gameSocket);
-      // if (cpuScore >= winningScore) {
-      //   gameOver("Congratulations! Right win!");
-      // } else {
-      //   resetGame();
-      // }
     }
   } else if (ballX + ballDx > canvas.width - paddleWidth * 2) {
     if (ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
@@ -82,11 +62,6 @@ export function moveBall(gameSocket, player_position) {
     } else {
       // Game Over
       incrementLeftScore(gameSocket);
-      // if (playerScore >= winningScore) {
-      //   gameOver("Congratulations! Left win!");
-      // } else {
-      //   resetGame();
-      // }
     }
   }
 
@@ -114,7 +89,7 @@ function sendBallPosition(gameSocket) {
       ball_position_ratio_y: ballY / canvas.height,
       ball_position_ratio_dx: ballDx / canvas.width,
       ball_position_ratio_dy: ballDy / canvas.height,
-    })
+    }),
   );
 }
 

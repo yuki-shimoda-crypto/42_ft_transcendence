@@ -6,7 +6,7 @@ export function gameOver(message, gameSocket) {
   gameSocket.send(
     JSON.stringify({
       type: "end_game",
-    })
+    }),
   );
   showRestartButton(message);
 }

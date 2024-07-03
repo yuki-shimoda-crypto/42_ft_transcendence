@@ -17,7 +17,7 @@ export function incrementRightScore(gameSocket) {
       type: "update_score",
       score1: playerScore,
       score2: sendCpuScore,
-    })
+    }),
   );
 }
 
@@ -29,7 +29,7 @@ export function incrementLeftScore(gameSocket) {
       type: "update_score",
       score1: sendPlayerScore,
       score2: cpuScore,
-    })
+    }),
   );
 }
 
