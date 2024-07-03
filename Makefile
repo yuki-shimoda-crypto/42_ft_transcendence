@@ -20,13 +20,13 @@ down-v:
 exec-db:
 	docker compose exec -it db bash
 
-.PHONY: exec-web_dev
-exec-web_dev:
-	docker compose exec -it web_dev zsh
+.PHONY: exec-web-dev
+exec-web-dev:
+	docker compose exec -it web-dev zsh
 
-.PHONY: exec-web_prod
-exec-web_prod:
-	docker compose exec -it web_prod bash
+.PHONY: exec-web-prod
+exec-web-prod:
+	docker compose exec -it web-prod bash
 
 .PHONY: logs
 logs:
@@ -66,21 +66,21 @@ django-shell:
 	python3 PongChat/manage.py shell
 
 # Django management commands inside Docker container
-.PHONY: django-web_dev-runserver
-django-web_dev-runserver:
-	docker compose exec -it web_dev python3 PongChat/manage.py runserver 0.0.0.0:8000
+.PHONY: django-web-dev-runserver
+django-web-dev-runserver:
+	docker compose exec -it web-dev python3 PongChat/manage.py runserver 0.0.0.0:8000
 
-.PHONY: django-web_dev-migrate
-django-web_dev-migrate:
-	docker compose exec -it web_dev python3 PongChat/manage.py migrate
+.PHONY: django-web-dev-migrate
+django-web-dev-migrate:
+	docker compose exec -it web-dev python3 PongChat/manage.py migrate
 
-.PHONY: django-web_dev-createsuperuser
-django-web_dev-createsuperuser:
-	docker compose exec -it web_dev python3 PongChat/manage.py createsuperuser
+.PHONY: django-web-dev-createsuperuser
+django-web-dev-createsuperuser:
+	docker compose exec -it web-dev python3 PongChat/manage.py createsuperuser
 
-.PHONY: django-web_dev-shell
-django-web_dev-shell:
-	docker compose exec -it web_dev python3 PongChat/manage.py shell
+.PHONY: django-web-dev-shell
+django-web-dev-shell:
+	docker compose exec -it web-dev python3 PongChat/manage.py shell
 
 # format
 .PHONY: format
@@ -111,32 +111,32 @@ format-Python:
 	-isort .
 
 # Format commands inside Docker container
-.PHONY: format-web_dev
-format-web_dev: format-web_dev-CSS format-web_dev-HTML format-web_dev-JavaScript format-web_dev-MD format-web_dev-Python
+.PHONY: format-web-dev
+format-web-dev: format-web-dev-CSS format-web-dev-HTML format-web-dev-JavaScript format-web-dev-MD format-web-dev-Python
 
-.PHONY: format-web_dev-CSS
-format-web_dev-CSS:
-	docker compose exec -it web_dev npx prettier "**/*.css" --write
-	docker compose exec -it web_dev npx stylelint "**/*.{css,html,js}" --fix
+.PHONY: format-web-dev-CSS
+format-web-dev-CSS:
+	docker compose exec -it web-dev npx prettier "**/*.css" --write
+	docker compose exec -it web-dev npx stylelint "**/*.{css,html,js}" --fix
 
-.PHONY: format-web_dev-HTML
-format-web_dev-HTML:
-	docker compose exec -it web_dev npx prettier "**/*.html" --write
-	docker compose exec -it web_dev npx stylelint "**/*.html" --fix
+.PHONY: format-web-dev-HTML
+format-web-dev-HTML:
+	docker compose exec -it web-dev npx prettier "**/*.html" --write
+	docker compose exec -it web-dev npx stylelint "**/*.html" --fix
 
-.PHONY: format-web_dev-JavaScript
-format-web_dev-JavaScript:
-	docker compose exec -it web_dev npx prettier "**/*.js" --write
-	docker compose exec -it web_dev npx stylelint "**/*.js" --fix
+.PHONY: format-web-dev-JavaScript
+format-web-dev-JavaScript:
+	docker compose exec -it web-dev npx prettier "**/*.js" --write
+	docker compose exec -it web-dev npx stylelint "**/*.js" --fix
 
-.PHONY: format-web_dev-MD
-format-web_dev-MD:
-	docker compose exec -it web_dev npx prettier "**/*.md" --write
+.PHONY: format-web-dev-MD
+format-web-dev-MD:
+	docker compose exec -it web-dev npx prettier "**/*.md" --write
 
-.PHONY: format-web_dev-Python
-format-web_dev-Python:
-	docker compose exec -it web_dev black .
-	docker compose exec -it web_dev isort .
+.PHONY: format-web-dev-Python
+format-web-dev-Python:
+	docker compose exec -it web-dev black .
+	docker compose exec -it web-dev isort .
 
 # lint
 .PHONY: lint
@@ -178,43 +178,43 @@ lint-YAML:
 	yamllint .
 
 # Lint commands inside Docker container
-.PHONY: lint-web_dev
-lint-web_dev: lint-web_dev-CSS lint-web_dev-HTML lint-web_dev-Dockerfile lint-web_dev-JavaScript lint-web_dev-MD lint-web_dev-Python lint-web_dev-YAML
+.PHONY: lint-web-dev
+lint-web-dev: lint-web-dev-CSS lint-web-dev-HTML lint-web-dev-Dockerfile lint-web-dev-JavaScript lint-web-dev-MD lint-web-dev-Python lint-web-dev-YAML
 
-.PHONY: lint-web_dev-CSS
-lint-web_dev-CSS:
-	docker compose exec -it web_dev npx prettier "**/*.css" --check
-	docker compose exec -it web_dev npx stylelint "**/*.{css,html,js}"
+.PHONY: lint-web-dev-CSS
+lint-web-dev-CSS:
+	docker compose exec -it web-dev npx prettier "**/*.css" --check
+	docker compose exec -it web-dev npx stylelint "**/*.{css,html,js}"
 
-.PHONY: lint-web_dev-HTML
-lint-web_dev-HTML:
-	docker compose exec -it web_dev npx htmlhint "**/*.html"
-	docker compose exec -it web_dev npx stylelint "**/*.html"
+.PHONY: lint-web-dev-HTML
+lint-web-dev-HTML:
+	docker compose exec -it web-dev npx htmlhint "**/*.html"
+	docker compose exec -it web-dev npx stylelint "**/*.html"
 
-.PHONY: lint-web_dev-Dockerfile
-lint-web_dev-Dockerfile:
-	docker compose exec -it web_dev hadolint Dockerfile Dockerfile.dev
+.PHONY: lint-web-dev-Dockerfile
+lint-web-dev-Dockerfile:
+	docker compose exec -it web-dev hadolint Dockerfile Dockerfile.dev
 
-.PHONY: lint-web_dev-JavaScript
-lint-web_dev-JavaScript:
-	docker compose exec -it web_dev npx eslint .
-	docker compose exec -it web_dev npx prettier "**/*.js" --check
-	docker compose exec -it web_dev npx stylelint "**/*.js"
+.PHONY: lint-web-dev-JavaScript
+lint-web-dev-JavaScript:
+	docker compose exec -it web-dev npx eslint .
+	docker compose exec -it web-dev npx prettier "**/*.js" --check
+	docker compose exec -it web-dev npx stylelint "**/*.js"
 
-.PHONY: lint-web_dev-MD
-lint-web_dev-MD:
-	docker compose exec -it web_dev npx prettier "**/*.md" --check
+.PHONY: lint-web-dev-MD
+lint-web-dev-MD:
+	docker compose exec -it web-dev npx prettier "**/*.md" --check
 
-.PHONY: lint-web_dev-Python
-lint-web_dev-Python:
-	docker compose exec -it web_dev black --check .
-	docker compose exec -it web_dev flake8 .
-	docker compose exec -it web_dev isort --check-only .
-	docker compose exec -it web_dev mypy .
+.PHONY: lint-web-dev-Python
+lint-web-dev-Python:
+	docker compose exec -it web-dev black --check .
+	docker compose exec -it web-dev flake8 .
+	docker compose exec -it web-dev isort --check-only .
+	docker compose exec -it web-dev mypy .
 
-.PHONY: lint-web_dev-YAML
-lint-web_dev-YAML:
-	docker compose exec -it web_dev yamllint .
+.PHONY: lint-web-dev-YAML
+lint-web-dev-YAML:
+	docker compose exec -it web-dev yamllint .
 
 # test
 .PHONY: test
