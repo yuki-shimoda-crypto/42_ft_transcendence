@@ -1,6 +1,6 @@
 # ft_transcendence
 
-[English version](./README.md)
+[English version](../README.md)
 
 ## 概要
 
