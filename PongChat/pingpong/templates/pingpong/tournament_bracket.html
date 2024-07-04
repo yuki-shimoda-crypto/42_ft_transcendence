@@ -1,39 +1,52 @@
 {% extends "common/base.html" %}
 {% block content %}
-<div class="container">
-    <h1>Tournament Bracket</h1>
-    <div id="bracket"></div>
+<div class="container mt-5">
+    <h1 class="mb-4">Tournament Bracket</h1>
+    <canvas id="tournamentCanvas" width="800" height="600" style="border:1px solid #ccc;"></canvas>
 </div>
 <script>
-    function createBracket(participants, names) {
-        const bracket = document.querySelector("#bracket");
-        bracket.innerHTML = "";
+document.addEventListener('DOMContentLoaded', function () {
+    const canvas = document.getElementById('tournamentCanvas');
+    const ctx = canvas.getContext('2d');
 
-        // Calculate number of rounds
-        let numRound = Math.ceil(Math.log2(participants));
-        let roundMatches = participants / 2;
+    const participants = {{ participants }};
+    const names = {{ participant_names|safe }};
 
-        for (let round = 0; round < numRound; round++) {
-            const roundDiv = document.createElement("div");
-            roundDiv.className = "tournament-round";
-            roundDiv.innerHTML = `<h2>Round ${round + 1}</h2>`;
-            for (let match = 0; match < roundMatches; match++) {
-                const matchIndex = round * roundMatches + match;
-                if (matchIndex < participants) {
-                    const matchDiv = document.createElement("div");
-                    matchDiv.className = "tournament-match";
-                    matchDiv.innerHTML = `<p>Match ${match + 1}: ${names[matchIndex]} vs ${names[matchIndex + 1]}</p>`;
-                    roundDiv.appendChild(matchDiv);
-                }
+    drawBracket(ctx, participants, names);
+});
+
+function drawBracket(ctx, participants, names) {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    const matchHeight = 50;
+    const matchMargin = 20;
+    const roundWidth = width / (Math.ceil(Math.log2(participants)) + 1);
+    const totalRounds = Math.ceil(Math.log2(participants)) + 1;
+
+    for (let round = 0; round < totalRounds; round++) {
+        const numMatches = Math.pow(2, round);
+        const yOffset = (height - (numMatches * (matchHeight + matchMargin) - matchMargin)) / 2;
+        console.log(yOffset)
+
+        for (let match = 0; match < numMatches; match++) {
+            // X座標を逆方向に設定
+            const x = width - (round + 1) * roundWidth;
+            const y = yOffset + match * (matchHeight + matchMargin);
+
+            // Draw match box
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(x, y, roundWidth - 20, matchHeight);
+            ctx.strokeRect(x, y, roundWidth - 20, matchHeight);
+
+            // Set text for the match
+            ctx.fillStyle = '#000';
+            ctx.font = '16px Arial';
+            if (names.length > match) {
+                ctx.fillText(names[match], x + 10, y + 30);
             }
-            bracket.appendChild(roundDiv);
-            roundMatches /= 2;
         }
     }
-    document.addEventListener("DOMContentLoaded", function () {
-        const participants = {{ participants }};
-        const participant_names = {{ participant_names|safe }};
-        createBracket(participants, participant_names);
-    });
+}
 </script>
+
 {% endblock %}
