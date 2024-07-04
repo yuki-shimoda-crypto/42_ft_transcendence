@@ -69,10 +69,16 @@ def single_play_start(request):
     )
 
 
+def tournament_play(request):
+    return render(request, "pingpong/tournament_play.html")
+
+
 # @login_required
 def tournament_bracket(request):
     participants = request.session.get("participants")
     participant_names = request.session.get("participant_names")
+    if request.method == "POST":
+        return redirect("pingpong:tournament_play")
     return render(
         request,
         "pingpong/tournament_bracket.html",

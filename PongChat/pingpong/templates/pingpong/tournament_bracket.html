@@ -2,20 +2,24 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">Tournament Bracket</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Game Start</button>
+    </form>
     <canvas id="tournamentCanvas" width="800" height="600" style="border:1px solid #ccc;"></canvas>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const canvas = document.getElementById('tournamentCanvas');
-    const ctx = canvas.getContext('2d');
+    document.addEventListener('DOMContentLoaded', function () {
+        const canvas = document.getElementById('tournamentCanvas');
+        const ctx = canvas.getContext('2d');
 
-    const participants = {{ participants }};
-    const names = {{ participant_names|safe }};
+        const participants = {{ participants }};
+        const names = {{ participant_names|safe }};
 
-    drawBracket(ctx, participants, names);
-});
+        drawBracket(ctx, participants, names);
+    });
 
-function drawBracket(ctx, participants, names) {
+    function drawBracket(ctx, participants, names) {
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
     const matchHeight = 50;
@@ -26,7 +30,6 @@ function drawBracket(ctx, participants, names) {
     for (let round = 0; round < totalRounds; round++) {
         const numMatches = Math.pow(2, round);
         const yOffset = (height - (numMatches * (matchHeight + matchMargin) - matchMargin)) / 2;
-        console.log(yOffset)
 
         for (let match = 0; match < numMatches; match++) {
             // X座標を逆方向に設定
