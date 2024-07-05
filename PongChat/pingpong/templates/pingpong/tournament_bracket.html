@@ -9,6 +9,10 @@
     <canvas id="tournamentCanvas" width="800" height="600" style="border:1px solid #ccc;"></canvas>
 </div>
 <script>
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const gameSocket = new WebSocket(
+      `${protocol}//${window.location.host}/ws/tournament/`,
+    );
     document.addEventListener('DOMContentLoaded', function () {
         const canvas = document.getElementById('tournamentCanvas');
         const ctx = canvas.getContext('2d');

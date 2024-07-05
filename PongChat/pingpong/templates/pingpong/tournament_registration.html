@@ -6,7 +6,7 @@
     <div class="form-group">
       <label for="participants">Select number of participants:</label>
       <select id="participants" name="participants" class="form-control">
-        <option value="2">2</option>
+        <option value="2" selected>2</option>
         <option value="4">4</option>
         <option value="8">8</option>
         <!-- <option value="16">16</option> -->
@@ -17,7 +17,7 @@
   </form>
 </div>
 <script>
-
+  "use strict";
   function addParticipantsForms(){
     document.querySelector("#names").innerHTML = "";
     participants = document.querySelector("#participants").value;
@@ -34,7 +34,7 @@
   function fillBlankNames() {
     participants = document.querySelector("#participants").value;
     for (let i = 0; i < participants; i++) {
-      const input = document.querySelector(`input[name="name${i}"]`);
+      const input = document.querySelector(`input[name=name${i}]`);
       if (input.value === "") {
         input.value = `Participant ${i + 1}`;
       }

@@ -1,8 +1,12 @@
+import math
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 # from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+
+from .models import GuestUser, Tournament, TournamentMatch
 
 # @login_required
 # def index(request):
@@ -90,7 +94,24 @@ def tournament_bracket(request):
 def tournament_registration(request):
     if request.method == "POST":
         participants = int(request.POST.get("participants"))
+        if any(request.POST.get(f"name{i}") == "" for i in range(participants)):
+            return render(request, "pingpong/tournament_registration.html")
         participant_names = [request.POST.get(f"name{i}") for i in range(participants)]
+
+        guest_users = []
+        for name in participant_names:
+            guest_users.append(GuestUser.objects.create(username=name))
+
+        tournament = Tournament.objects.create(participants_amount=participants)
+
+        round = math.ceil(math.log2(participants))
+        for i in range(participants // 2):
+            TournamentMatch.objects.create(
+                tournament=tournament,
+                round=round,
+                user1=guest_users[2 * i],
+                user2=guest_users[2 * i + 1],
+            ).save()
 
         request.session["participants"] = participants
         request.session["participant_names"] = participant_names
