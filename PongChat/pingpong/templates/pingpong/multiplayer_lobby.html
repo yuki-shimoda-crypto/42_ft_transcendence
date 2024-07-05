@@ -18,8 +18,9 @@
     statusMessage.textContent = "Finding match...";
     button.disabled = true;
 
+    const protocol = window.location.protocol === "https:" ? "wss:": "ws:";
     const host = window.location.host;
-    const socket = new WebSocket("ws://{{ request.get_host }}/ws/game/");
+    const socket = new WebSocket(`${protocol}//{{ request.get_host }}/ws/game/`);
 
     socket.onopen = function (event) {
       socket.send(

@@ -49,22 +49,57 @@ export function drawRightPaddle(ctx, canvas) {
   ctx.fill();
 }
 
-export function moveRightPaddle(upPressedRight, downPressedRight, canvas) {
+export function moveRightPaddle(
+  upPressedRight,
+  downPressedRight,
+  canvas,
+  gameSocket,
+) {
+  let moved = false;
   if (upPressedRight && rightPaddleY > 0) {
     rightPaddleY -= paddleDy;
+    moved = true;
   } else if (downPressedRight && rightPaddleY < canvas.height - paddleHeight) {
     rightPaddleY += paddleDy;
+    moved = true;
+  }
+
+  if (moved) {
+    sendPaddlePosition(gameSocket, rightPaddleY, "right");
   }
   return rightPaddleY;
 }
 
-export function moveLeftPaddle(upPressedLeft, downPressedLeft, canvas) {
+export function moveLeftPaddle(
+  upPressedLeft,
+  downPressedLeft,
+  canvas,
+  gameSocket,
+) {
+  let moved = false;
   if (upPressedLeft && leftPaddleY > 0) {
     leftPaddleY -= paddleDy;
+    moved = true;
   } else if (downPressedLeft && leftPaddleY < canvas.height - paddleHeight) {
     leftPaddleY += paddleDy;
+    moved = true;
+  }
+
+  if (moved) {
+    sendPaddlePosition(gameSocket, leftPaddleY, "left");
   }
   return leftPaddleY;
+}
+
+function sendPaddlePosition(gameSocket, paddleY, rightLeft) {
+  const paddlePositionRatioY = paddleY / canvas.height;
+  gameSocket.send(
+    JSON.stringify({
+      type: "update_paddle",
+      player_position: rightLeft,
+      paddle_position_ratio: paddlePositionRatioY,
+    }),
+  );
 }
 
 export function updatePaddleElement() {
@@ -95,4 +130,12 @@ export function updatePaddleSize(canvas) {
 
 export function updatePaddleSpeed(canvas) {
   paddleDy = canvas.height * 0.015;
+}
+
+export function updateLeftPaddlePositionFromRatio(paddlePositionRatioY) {
+  leftPaddleY = canvas.height * paddlePositionRatioY;
+}
+
+export function updateRightPaddlePositionFromRatio(paddlePositionRatioY) {
+  rightPaddleY = canvas.height * paddlePositionRatioY;
 }

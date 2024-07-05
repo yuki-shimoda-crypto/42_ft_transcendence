@@ -4,15 +4,7 @@ import {
   previousCanvasHeight,
   previousCanvasWidth,
 } from "./main.js";
-import {
-  cpuScore,
-  playerScore,
-  winningScore,
-  incrementCpuScore,
-  incrementPlayerScore,
-} from "./score.js";
-
-import { gameOver, resetGame } from "./game_control.js";
+import { incrementRightScore, incrementLeftScore } from "./score.js";
 
 import {
   paddleWidth,
@@ -43,31 +35,22 @@ function initializeBallPosition() {
   ballY = canvas.height / 2;
 }
 
-function getRandomDirection() {
-  return Math.random() < 0.5 ? 1 : -1;
-}
-
 function initializeBallSpeed() {
-  const angle = Math.random() * 2 * Math.PI;
-  ballDx = canvas.width * 0.01 * getRandomDirection();
-  ballDy = canvas.height * 0.01 * Math.sin(angle);
+  ballDx = canvas.width * 0.01;
+  ballDy = canvas.width * 0.0005;
 }
 
-export function moveBall() {
+export function moveBall(gameSocket) {
   if (ballX + ballDx < paddleWidth * 2) {
     if (ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
       ballDx = -ballDx;
       const hitPosition =
         (ballY - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
+      sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementCpuScore();
-      if (cpuScore >= winningScore) {
-        gameOver("Congratulations! Right win!");
-      } else {
-        resetGame();
-      }
+      incrementRightScore(gameSocket);
     }
   } else if (ballX + ballDx > canvas.width - paddleWidth * 2) {
     if (ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
@@ -75,14 +58,10 @@ export function moveBall() {
       const hitPosition =
         (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
+      sendBallPosition(gameSocket);
     } else {
       // Game Over
-      incrementPlayerScore();
-      if (playerScore >= winningScore) {
-        gameOver("Congratulations! Left win!");
-      } else {
-        resetGame();
-      }
+      incrementLeftScore(gameSocket);
     }
   }
 
@@ -91,10 +70,27 @@ export function moveBall() {
     ballY + ballDy < ballRadius
   ) {
     ballDy = -ballDy;
+    sendBallPosition(gameSocket);
   }
 
   ballX += ballDx;
   ballY += ballDy;
+
+  if (Math.random() < 0.05) {
+    sendBallPosition(gameSocket);
+  }
+}
+
+function sendBallPosition(gameSocket) {
+  gameSocket.send(
+    JSON.stringify({
+      type: "update_ball",
+      ball_position_ratio_x: ballX / canvas.width,
+      ball_position_ratio_y: ballY / canvas.height,
+      ball_position_ratio_dx: ballDx / canvas.width,
+      ball_position_ratio_dy: ballDy / canvas.height,
+    }),
+  );
 }
 
 export function updateBallElement() {
@@ -122,4 +118,11 @@ function updateBallSize() {
 function updateBallSpeed() {
   ballDx = (ballDx * canvas.width) / previousCanvasWidth;
   ballDy = (ballDy * canvas.height) / previousCanvasHeight;
+}
+
+export function updateBallFromRemote(data) {
+  ballX = data.ball_position_ratio_x * canvas.width;
+  ballY = data.ball_position_ratio_y * canvas.height;
+  ballDx = data.ball_position_ratio_dx * canvas.width;
+  ballDy = data.ball_position_ratio_dy * canvas.height;
 }
