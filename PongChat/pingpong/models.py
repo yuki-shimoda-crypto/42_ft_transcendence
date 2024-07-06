@@ -109,4 +109,5 @@ class TournamentMatch(models.Model):
     )
 
     def __str__(self):
-        return f"tournament{self.tournament.id}: {self.user1} vs {self.user2} in round {self.round}"
+        return f"tournament{self.tournament.id}:\
+            {self.user1} vs {self.user2} in round {self.round}"

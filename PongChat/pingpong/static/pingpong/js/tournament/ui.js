@@ -1,5 +1,5 @@
-import { resetScores, playerScore, cpuScore } from "./score.js";
-import { canvas, ctx, initialize } from "./main.js";
+import { playerScore, cpuScore } from "./score.js";
+import { canvas, ctx } from "./main.js";
 
 // Countdown
 let countdown = 3;
@@ -53,7 +53,7 @@ export function drawScores() {
 }
 
 export function drawName() {
-  const fontSize = canvas.width * 0.1;
+  const fontSize = canvas.width * 0.08;
   ctx.font = `${fontSize}px Arial`;
   ctx.fillStyle = "rgba(0, 149, 221, 0.5)";
 
@@ -68,18 +68,18 @@ export function drawName() {
 export function showRestartButton(message) {
   const gameOverMessage = document.querySelector("#game-over-message");
   const gameOverText = document.querySelector("#gameOverText");
-  const restartButton = document.querySelector("#restartButton");
+  // const restartButton = document.querySelector("#restartButton");
 
   gameOverText.textContent = message;
   gameOverMessage.classList.remove("d-none");
 
-  restartButton.onclick = () => {
-    resetScores();
-    gameOverMessage.classList.add("d-none");
-    initialize();
-    startCountdown();
-    resumeGame();
-  };
+  // restartButton.onclick = () => {
+  //   resetScores();
+  //   gameOverMessage.classList.add("d-none");
+  //   initialize();
+  //   startCountdown();
+  //   resumeGame();
+  // };
 }
 
 export function startCountdown() {

@@ -1,7 +1,7 @@
 // Score
 export let playerScore = 0;
 export let cpuScore = 0;
-export const winningScore = 11;
+export const winningScore = 1;
 
 export function incrementCpuScore() {
   cpuScore++;

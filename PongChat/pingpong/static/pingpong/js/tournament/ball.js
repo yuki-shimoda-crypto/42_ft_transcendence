@@ -65,7 +65,7 @@ export function moveBall() {
       incrementCpuScore();
       if (cpuScore >= winningScore) {
         // eslint-disable-next-line no-undef
-        gameOver("Congratulations! Right win!", user2_id);
+        gameOver(`Congratulations! ${user2_name} win!`, user2_id);
       } else {
         resetGame();
       }
@@ -81,7 +81,7 @@ export function moveBall() {
       incrementPlayerScore();
       if (playerScore >= winningScore) {
         // eslint-disable-next-line no-undef
-        gameOver("Congratulations! Left win!", user1_id);
+        gameOver(`Congratulations! ${user1_name} win!`, user1_id);
       } else {
         resetGame();
       }

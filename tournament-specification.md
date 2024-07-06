@@ -1,7 +1,7 @@
 ## 必要なこと
 
 1. redisでチャンネルを作る
-    - ユーザネームを保存する
+   - ユーザネームを保存する
 1. 試合の組み合わせを作る
 1. Gameを開始する
 1. Gameの結果を保存する
@@ -63,12 +63,13 @@ Match: List(queue)
 ]
 ```
 
-
 guest_user
+
 - id
 - username
 
 tournament_results
+
 - id
 - tournament_id(tournament.id)
 - round
@@ -77,6 +78,7 @@ tournament_results
 - winner(guest_user_id)
 
 tournament
+
 - id
 - partipants_amount
 - timestamp
