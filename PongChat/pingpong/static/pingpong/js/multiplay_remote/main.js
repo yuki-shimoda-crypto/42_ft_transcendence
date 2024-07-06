@@ -122,8 +122,9 @@ function onResize() {
 }
 
 export function initializeGame(gameId) {
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
   window.gameSocket = new WebSocket(
-    `ws://${window.location.host}/ws/game/${gameId}/`,
+    `${protocol}//${window.location.host}/ws/game/${gameId}/`,
   );
   console.log(`WebSocket URL: ws://${window.location.host}/ws/game/${gameId}/`);
 
