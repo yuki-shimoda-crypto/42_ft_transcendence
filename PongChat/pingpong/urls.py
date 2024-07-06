@@ -30,4 +30,5 @@ urlpatterns = [
         views.tournament_registration,
         name="tournament_registration",
     ),
+    path("tournament_finish", views.tournament_finish, name="tournament_finish"),
 ]

@@ -14,25 +14,25 @@ sequenceDiagram
     participant ブラウザ
     participant Django
     participant Postgres
-    participant redis
     ユーザー->>ブラウザ:人数、ユーザネーム入力
     ブラウザ->>Django:ユーザーネームの送信
-    Django->>Postgres:User:UUIDにユーザーネームを保存
-    Django->>redis:redisにMatch queueを追加
+    Django->>Postgres:GuestUser:にユーザーネームを保存
+    Django->>Postgres:Tournament(DB)作成
+    Django->>Postgres:TournamentMATCH(DB)作成
     Django-->>ブラウザ:画面遷移:register->bracket
-    
 
-    loop queueがある限り
-        loop Roundが変わるまで
+    loop Roundが0になるまで
+        loop 現在のRoundの試合がすべて終わるまで
             ブラウザ->>Django:game開始
-            Django->>redis:Match取得
-            redis-->>Django:response
+            Django->>Postgres:Match取得
+            Postgres-->>Django:response
             Django-->>ブラウザ:画面遷移:bracket->gameplay && match送る
             ブラウザ->>Django:game終了:勝者を送る
             Django->>Postgres:勝者を書き込む
             Django-->>ブラウザ:画面遷移:gameplay->bracket
         end
-        Django->>redis:redisにMatch queueを追加
+        Django->>Django:Round--
+        Django->>Postgres:TournamentMATCH(DB)作成
     end
 
 ```

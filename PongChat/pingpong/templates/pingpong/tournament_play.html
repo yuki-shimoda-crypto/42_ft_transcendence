@@ -30,6 +30,16 @@
     >
   </div>
 </div>
+<script>
+  const user1_id = "{{ request.session.user1_id }}";
+  const user2_id = "{{ request.session.user2_id }}";
+  const user1_name = "{{ request.session.user1_name }}";
+  const user2_name = "{{ request.session.user2_name }}";
+  console.log(user1_id);
+  console.log(user2_id);
+  console.log(user1_name);
+  console.log(user2_name);
+</script>
 <script
   type="module"
   src="{% static 'pingpong/js/tournament/main.js' %}"

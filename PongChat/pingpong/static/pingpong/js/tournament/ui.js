@@ -52,6 +52,19 @@ export function drawScores() {
   ctx.fillText(cpuScore, (canvas.width / 4) * 3, canvas.height / 2);
 }
 
+export function drawName() {
+  const fontSize = canvas.width * 0.1;
+  ctx.font = `${fontSize}px Arial`;
+  ctx.fillStyle = "rgba(0, 149, 221, 0.5)";
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  // eslint-disable-next-line no-undef
+  ctx.fillText(user1_name, canvas.width / 4, canvas.height / 4);
+  // eslint-disable-next-line no-undef
+  ctx.fillText(user2_name, (canvas.width / 4) * 3, canvas.height / 4);
+}
+
 export function showRestartButton(message) {
   const gameOverMessage = document.querySelector("#game-over-message");
   const gameOverText = document.querySelector("#gameOverText");

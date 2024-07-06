@@ -30,6 +30,7 @@ import {
   drawCenterLine,
   drawCountdown,
   drawScores,
+  drawName,
   countdownActive,
   gamePaused,
 } from "./ui.js";
@@ -86,6 +87,7 @@ function draw() {
     drawLeftPaddle(ctx);
     drawRightPaddle(ctx, canvas);
     drawScores();
+    drawName();
 
     // move objects
     if (!gamePaused) {

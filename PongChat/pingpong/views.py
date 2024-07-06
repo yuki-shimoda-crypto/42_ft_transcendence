@@ -1,3 +1,4 @@
+import json
 import math
 
 from django.contrib.auth import get_user_model
@@ -73,16 +74,78 @@ def single_play_start(request):
     )
 
 
+def tournament_finish(request):
+    tournament_id = request.session.get("tournament_id")
+    tournament = Tournament.objects.get(id=tournament_id)
+    match = TournamentMatch.objects.get(tournament_id=tournament_id, round=1)
+    winner = match.winner
+    tournament.winner = winner
+    tournament.save()
+    return render(
+        request, "pingpong/tournament_finish.html", {"winner_name": winner.username}
+    )
+
+
 def tournament_play(request):
-    return render(request, "pingpong/tournament_play.html")
+    if request.method == "POST":
+        data = json.loads(request.body)
+        match_id = request.session.get("match_id")
+        winner_id = data.get("winner_id")
+        match = TournamentMatch.objects.get(id=match_id)
+        winner = GuestUser.objects.get(id=winner_id)
+        match.winner = winner
+        match.save()
+        return redirect("pingpong:tournament_bracket")
+    return render(
+        request,
+        "pingpong/tournament_play.html",
+    )
 
 
 # @login_required
 def tournament_bracket(request):
     participants = request.session.get("participants")
     participant_names = request.session.get("participant_names")
+    round = request.session.get("round")
     if request.method == "POST":
-        return redirect("pingpong:tournament_play")
+        tournament_id = request.session.get("tournament_id")
+        matches = TournamentMatch.objects.filter(
+            tournament_id=tournament_id, winner=None
+        )
+        if matches:
+            match = matches.first()
+            request.session["match_id"] = match.id
+            request.session["user1_id"] = match.user1.id
+            request.session["user2_id"] = match.user2.id
+            request.session["user1_name"] = match.user1.username
+            request.session["user2_name"] = match.user2.username
+            return redirect("pingpong:tournament_play")
+        else:
+            matches = TournamentMatch.objects.filter(
+                tournament_id=tournament_id, round=round
+            )
+            round -= 1
+            request.session["round"] = round
+            if round <= 0:
+                return redirect("pingpong:tournament_finish")
+            for i in range(2**round // 2):
+                TournamentMatch.objects.create(
+                    tournament=Tournament.objects.get(id=tournament_id),
+                    round=round,
+                    user1=matches[2 * i].winner,
+                    user2=matches[2 * i + 1].winner,
+                ).save()
+            matches = TournamentMatch.objects.filter(
+                tournament_id=tournament_id, winner=None
+            )
+            match = matches.first()
+            request.session["match_id"] = match.id
+            request.session["user1_id"] = match.user1.id
+            request.session["user2_id"] = match.user2.id
+            request.session["user1_name"] = match.user1.username
+            request.session["user2_name"] = match.user2.username
+            return redirect("pingpong:tournament_play")
+
     return render(
         request,
         "pingpong/tournament_bracket.html",
@@ -115,6 +178,9 @@ def tournament_registration(request):
 
         request.session["participants"] = participants
         request.session["participant_names"] = participant_names
+        request.session["tournament_id"] = tournament.id
+        request.session["round"] = round
 
         return redirect("pingpong:tournament_bracket")
+
     return render(request, "pingpong/tournament_registration.html")
