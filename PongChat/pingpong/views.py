@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 # from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from .models import GuestUser, Tournament, TournamentMatch
@@ -184,3 +185,29 @@ def tournament_registration(request):
         return redirect("pingpong:tournament_bracket")
 
     return render(request, "pingpong/tournament_registration.html")
+
+
+def tournament_winner_name_response(request, round):
+    tournament_id = request.session.get("tournament_id")
+    matches = TournamentMatch.objects.filter(
+        tournament_id=tournament_id, round=round + 1, winner__isnull=False
+    ).order_by("id")
+    if matches:
+        winner = []
+        for match in matches:
+            winner.append(match.winner.username)
+        data = {
+            "winner": winner,
+        }
+    else:
+        matches = TournamentMatch.objects.filter(
+            tournament_id=tournament_id, round=round
+        ).order_by("id")
+        participants = []
+        for match in matches:
+            participants.append(match.user1.username)
+            participants.append(match.user2.username)
+        data = {
+            "winner": participants,
+        }
+    return JsonResponse(data)

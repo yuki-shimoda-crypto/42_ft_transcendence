@@ -23,6 +23,30 @@
         drawBracket(ctx, participants, names);
     });
 
+    async function fetchJson(url) {
+        try {
+            // URL にアクセスしてレスポンスを取得
+            const response = await fetch(url);
+
+            // ステータスコードが 200 番台以外の場合はエラーをスロー
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // レスポンスを JSON に変換
+            const data = await response.json();
+
+            // JSON データをコンソールに出力（必要に応じて他の処理を行う）
+            // console.log(data);
+
+            // 取得した JSON データを返す
+            return data;
+        } catch (error) {
+            // エラーハンドリング
+            console.error('Error fetching JSON:', error);
+        }
+    }
+
     function drawBracket(ctx, participants, names) {
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
@@ -31,7 +55,7 @@
     const roundWidth = width / (Math.ceil(Math.log2(participants)) + 1);
     const totalRounds = Math.ceil(Math.log2(participants)) + 1;
 
-    for (let round = 0; round < totalRounds; round++) {
+    for (let round = 0 ; round < totalRounds; round++) {
         const numMatches = Math.pow(2, round);
         const yOffset = (height - (numMatches * (matchHeight + matchMargin) - matchMargin)) / 2;
 
@@ -48,9 +72,14 @@
             // Set text for the match
             ctx.fillStyle = '#000';
             ctx.font = '16px Arial';
-            if (names.length > match) {
-                ctx.fillText(names[match], x + 10, y + 30);
-            }
+            data = fetchJson('/pingpong/tournament_winner_name_response/' + round);
+            data.then(data => {
+                if (names.length > match) {
+                    if (data["winner"][match].length > 0) {
+                        ctx.fillText(data["winner"][match], x + 10, y + 20);
+                    } 
+                }
+            });
         }
     }
 }
