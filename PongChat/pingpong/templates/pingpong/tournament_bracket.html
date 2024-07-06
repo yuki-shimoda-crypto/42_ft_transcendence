@@ -1,88 +1,92 @@
 {% extends "common/base.html" %}
 {% block content %}
 <div class="container mt-5">
-    <h1 class="mb-4">Tournament Bracket</h1>
-    <form method="post">
+    <h1 class="mb-4 text-center">Tournament Bracket</h1>
+    <form method="post" class="text-center mb-4">
         {% csrf_token %}
-        <button type="submit">Next Match Start</button>
+        <button type="submit" class="btn btn-primary rounded-pill">Next Match Start</button>
     </form>
-    <canvas id="tournamentCanvas" width="800" height="600" style="border:1px solid #ccc;"></canvas>
+    <div class="d-flex justify-content-center">
+        <canvas id="tournamentCanvas" width="800" height="600" style="border-radius: 15px; border:1px solid #ccc;"></canvas>
+    </div>
 </div>
 <script>
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const gameSocket = new WebSocket(
-      `${protocol}//${window.location.host}/ws/tournament/`,
-    );
-    document.addEventListener('DOMContentLoaded', function () {
-        const canvas = document.getElementById('tournamentCanvas');
-        const ctx = canvas.getContext('2d');
+document.addEventListener('DOMContentLoaded', function () {
+    const canvas = document.getElementById('tournamentCanvas');
+    const ctx = canvas.getContext('2d');
 
-        const participants = {{ participants }};
-        const names = {{ participant_names|safe }};
+    const participants = {{ participants }};
+    const names = {{ participant_names|safe }};
 
-        drawBracket(ctx, participants, names);
-    });
+    drawBracket(ctx, participants, names);
+});
 
-    async function fetchJson(url) {
-        try {
-            // URL にアクセスしてレスポンスを取得
-            const response = await fetch(url);
-
-            // ステータスコードが 200 番台以外の場合はエラーをスロー
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            // レスポンスを JSON に変換
-            const data = await response.json();
-
-            // JSON データをコンソールに出力（必要に応じて他の処理を行う）
-            // console.log(data);
-
-            // 取得した JSON データを返す
-            return data;
-        } catch (error) {
-            // エラーハンドリング
-            console.error('Error fetching JSON:', error);
+async function fetchJson(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching JSON:', error);
     }
+}
 
-    function drawBracket(ctx, participants, names) {
+function drawBracket(ctx, participants, names) {
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
     const matchHeight = 50;
     const matchMargin = 20;
     const roundWidth = width / (Math.ceil(Math.log2(participants)) + 1);
     const totalRounds = Math.ceil(Math.log2(participants)) + 1;
+    const cornerRadius = 10; // 角の丸みの半径を設定
 
     for (let round = 0 ; round < totalRounds; round++) {
         const numMatches = Math.pow(2, round);
         const yOffset = (height - (numMatches * (matchHeight + matchMargin) - matchMargin)) / 2;
 
         for (let match = 0; match < numMatches; match++) {
-            // X座標を逆方向に設定
             const x = width - (round + 1) * roundWidth;
             const y = yOffset + match * (matchHeight + matchMargin);
 
-            // Draw match box
-            ctx.fillStyle = '#f8f9fa';
-            ctx.fillRect(x, y, roundWidth - 20, matchHeight);
-            ctx.strokeRect(x, y, roundWidth - 20, matchHeight);
-
+            // 角の丸い矩形を描画
+            drawRoundedRect(ctx, x, y, roundWidth - 20, matchHeight, cornerRadius);
+            
             // Set text for the match
-            ctx.fillStyle = '#000';
-            ctx.font = '16px Arial';
-            data = fetchJson('/pingpong/tournament_winner_name_response/' + round);
-            data.then(data => {
+            ctx.fillStyle = '#ffffff'; // 文字色は白色に
+            ctx.font = '24px Arial';
+            fetchJson('/pingpong/tournament_winner_name_response/' + round).then(data => {
                 if (names.length > match) {
                     if (data["winner"][match].length > 0) {
-                        ctx.fillText(data["winner"][match], x + 10, y + 20);
+                        ctx.fillText(data["winner"][match], x + 10, y + 30);
                     } 
                 }
             });
         }
     }
 }
-</script>
 
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+
+    ctx.fillStyle = 'rgb(0, 149, 221)'; // 内部の色を塗る
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';  // 枠線の色
+    ctx.stroke();
+}
+
+
+
+</script>
 {% endblock %}
