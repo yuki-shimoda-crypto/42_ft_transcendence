@@ -1,0 +1,51 @@
+{% extends 'common/base.html' %}
+{% block title %}Multiplayer Lobby{% endblock%}
+{% block content %}
+<div class="container">
+  <h1>Multiplayer lobby</h1>
+  <p>Click the button below to find a match:</p>
+  <button id="matchButton" class="btn btn-success">Find Match</button>
+  <p id="statusMessage"></p>
+  <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-warning"
+    >Exit</a
+  >
+</div>
+<script>
+  const button = document.querySelector("#matchButton");
+  const statusMessage = document.querySelector("#statusMessage");
+
+  button.addEventListener("click", function () {
+    statusMessage.textContent = "Finding match...";
+    button.disabled = true;
+
+    const protocol = window.location.protocol === "https:" ? "wss:": "ws:";
+    const host = window.location.host;
+    const socket = new WebSocket(`${protocol}//{{ request.get_host }}/ws/game/`);
+
+    socket.onopen = function (event) {
+      socket.send(
+        JSON.stringify({
+          action: "start_match",
+        }),
+      );
+    };
+
+    socket.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      if (data.message === "match_found") {
+        window.location.href = data.url;
+      }
+    };
+
+    socket.onclose = function (event) {
+      statusMessage.textContent = "";
+      button.disabled = false;
+    };
+
+    socket.onerror = function (event) {
+      statusMessage.textContent = "An error occurred. Please try again.";
+      button.disabled = false;
+    };
+  });
+</script>
+{% endblock %}

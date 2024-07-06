@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+{% block title %}Multiplayer Options{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Multiplayer Options</h1>
+  <div class="game-options">
+    <a href="{% url 'pingpong:multiplayer_lobby' %}" class="btn btn-primary"
+      >Remote Play</a
+    >
+    <a
+      href="{% url 'pingpong:multiplayer_play_local' %}"
+      class="btn btn-secondary"
+      >Local Play</a
+    >
+  </div>
+</div>
+{% endblock %}

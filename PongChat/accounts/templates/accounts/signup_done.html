@@ -1,6 +1,7 @@
 {% extends "common/base.html" %}
 {% block title%} Signup Done {% endblock %}
 {% block content %}
+{% load i18n %}
 <div class="container">
   <div class="col-md-6 offset-md-3">
     <div class="card mt-3 mb-3 bg-light">
@@ -10,10 +11,10 @@
       </div>
       <!-- カードボディー -->
       <div class="card-body">
-        <p>サインアップが完了しました</p>
+        <p>{% trans "サインアップが完了しました" %}</p>
         <hr />
         <p>
-          <a href="{% url 'accounts:login' %}" class="async-link">ログイン</a>
+          <a href="{% url 'accounts:login' %}" class="async-link">{% trans "ログイン" %}</a>
         </p>
       </div>
     </div>

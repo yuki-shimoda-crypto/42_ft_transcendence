@@ -64,7 +64,7 @@ export function moveBall() {
       // Game Over
       incrementCpuScore();
       if (cpuScore >= winningScore) {
-        gameOver("CPU wins! Better luck next time.");
+        gameOver("Congratulations! Right win!");
       } else {
         resetGame();
       }
@@ -79,7 +79,7 @@ export function moveBall() {
       // Game Over
       incrementPlayerScore();
       if (playerScore >= winningScore) {
-        gameOver("Congratulations! You win!");
+        gameOver("Congratulations! Left win!");
       } else {
         resetGame();
       }
@@ -120,6 +120,6 @@ function updateBallSize() {
 }
 
 function updateBallSpeed() {
-  ballDx = canvas.width * 0.01;
-  ballDy = canvas.height * 0.01;
+  ballDx = (ballDx * canvas.width) / previousCanvasWidth;
+  ballDy = (ballDy * canvas.height) / previousCanvasHeight;
 }
