@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  loadContent(window.location.href);
+  // loadContent(window.location.href);
 
   document.body.addEventListener("click", handleClick);
 
@@ -13,7 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleClick(event) {
-  if (event.target.tagName === "A") {
+  if (
+    event.target.tagName === "A" &&
+    !event.target.classList.contains("async-link")
+  ) {
     event.preventDefault();
     const url = event.target.href;
     loadContent(url);
