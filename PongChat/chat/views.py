@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from pingpong.models import Game
 
 from .forms import ChatmessageCreateForm
 from .models import ChatGroup
@@ -21,11 +23,25 @@ def profile_view(request, username=None):
             is_friend = False
         except get_user_model().DoesNotExist:
             return redirect("account_login")
-    return render(
-        request,
-        "chat/profile.html",
-        {"profile": profile, "is_blocked": is_blocked, "is_friend": is_friend},
+    # ゲームの戦績情報を取得
+    games = Game.objects.filter(Q(player1=profile) | Q(player2=profile)).order_by(
+        "-date_start"
     )
+    total_games = games.count()
+    wins = games.filter(winner=profile).count()
+    losses = total_games - wins
+
+    context = {
+        "profile": profile,
+        "is_blocked": is_blocked,
+        "is_friend": is_friend,
+        "total_games": total_games,
+        "wins": wins,
+        "losses": losses,
+        "game_history": games[:10],  # 最新の10試合を表示
+    }
+
+    return render(request, "chat/profile.html", context)
 
 
 @login_required
