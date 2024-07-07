@@ -133,6 +133,7 @@ For other dependencies, please refer to [requirements.txt](./requirements.txt).
 If you have any issues or suggestions, please create an Issue.
 
 ## Contributers
+
 <a href="https://github.com/yuki-shimoda-crypto/42_ft_transcendence/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=yuki-shimoda-crypto/42_ft_transcendence" />
 </a>

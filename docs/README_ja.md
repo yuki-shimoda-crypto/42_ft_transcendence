@@ -133,6 +133,7 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 問題や提案がある場合は、Issueを作成してください。
 
 ## コントリビューター
+
 <a href="https://github.com/yuki-shimoda-crypto/42_ft_transcendence/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=yuki-shimoda-crypto/42_ft_transcendence" />
 </a>
