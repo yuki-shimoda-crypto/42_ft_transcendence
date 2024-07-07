@@ -6,5 +6,7 @@ if [ ! -f /app/key.pem ] || [ ! -f /app/cert.pem ]; then
     chown ${MY_USER}:${MY_USER} /app/key.pem /app/cert.pem
 fi
 
+PongChat/manage.py migrate
+
 # Dockerコンテナで指定されたコマンドを実行（通常はDjangoアプリケーションの起動など）
 exec "$@"
