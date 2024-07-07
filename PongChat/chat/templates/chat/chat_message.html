@@ -1,0 +1,50 @@
+<style>
+  .message-body {
+    word-wrap: break-word; /* 長い単語やURLを適切な位置で改行 */
+    overflow-wrap: break-word; /* Firefox向けのプロパティ */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+</style>
+{% if message.author == user %}
+<li class="d-flex justify-content-end mb-4">
+  <div class="bg-success bg-opacity-25 rounded-start rounded-top-end p-3" style="max-width: 75%;">
+    {% if message.body == ":invite" %}
+    <a href="{% url 'pingpong:multiplayer_lobby' %}" class="text-decoration-none">Invite game</a>
+    {% else %}
+    <span class="message-body text-secondary">{{ message.body }}</span>
+    {% endif %}
+  </div>
+  <div class="d-flex align-items-end">
+    <svg height="13" width="8">
+      <path fill="#198754" fill-opacity="0.25" d="M6.3,10.4C1.5,8.7,0.9,5.5,0,0.2L0,13l5.2,0C7,13,9.6,11.5,6.3,10.4z" />
+    </svg>
+  </div>
+</li>
+{% else %}
+<li>
+  <div class="d-flex justify-content-start">
+    <div class="d-flex align-items-end me-2">
+      <a href="{% url 'profile' message.author.username %}">
+        <img class="rounded-circle object-fit-cover" src="{{ message.author.avatar }}" width="32" height="32">
+      </a>
+    </div>
+    <div class="d-flex align-items-end">
+      <svg height="13" width="8">
+        <path fill="white" d="M2.8,13L8,13L8,0.2C7.1,5.5,6.5,8.7,1.7,10.4C-1.6,11.5,1,13,2.8,13z"></path>
+      </svg>
+    </div>
+    <div class="bg-white p-3 rounded-end rounded-top-start" style="max-width: 75%;">
+      {% if message.body == ":invite" %}
+      <a href="{% url 'pingpong:multiplayer_lobby' %}" class="text-decoration-none">Invite game</a>
+      {% else %}
+      <span class="message-body">{{ message.body }}</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="small fw-light py-1 ms-5">
+    <span class="text-white">{{ message.author.profile.name}}</span>
+    <span class="text-secondary">@{{ message.author.username}}</span>
+  </div>
+</li>
+{% endif %}

@@ -2,6 +2,7 @@
 {% block title %}{{ process_name }} {% endblock %}
 {% load static %}
 {% block content %}
+{% load i18n %}
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
@@ -47,14 +48,14 @@
               {% if process_name == 'Sign Up'%}
               <a
                 href="{% url 'accounts:top' %}"
-                class="btn btn-outline-secondary btn-lg mt-4 async-link"
-                >キャンセル</a
+                class="btn btn-outline-secondary btn-lg mt-4"
+                >{% trans "キャンセル" %}</a
               >
               {% else %}
               <a
                 href="{% url 'accounts:my_page' user.pk %}"
-                class="btn btn-outline-secondary btn-lg mt-4 async-link"
-                >キャンセル</a
+                class="btn btn-outline-secondary btn-lg mt-4"
+                >{% trans "キャンセル" %}</a
               >
               {% endif %}
               <button type="submit" class="btn btn-success btn-lg mt-4">

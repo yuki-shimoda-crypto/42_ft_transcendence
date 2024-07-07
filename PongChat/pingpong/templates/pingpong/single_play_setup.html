@@ -1,18 +1,18 @@
 {% extends 'common/base.html' %}
 {% block content %}
 <div class="container">
-  <h1>Single Play Setup</h1>
-  <form action="{% url 'pingpong:start_single_play' %}" method="post">
+  <h1>single play setup</h1>
+  <form action="{% url 'pingpong:single_play_start' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
-      <label for="difficulty">Select Difficulty:</label>
+      <label for="difficulty">select difficulty:</label>
       <select id="difficulty" name="difficulty" class="form-control">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
+        <option value="easy">easy</option>
+        <option value="medium">medium</option>
+        <option value="hard">hard</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Start Game</button>
+    <button type="submit" class="btn btn-primary">start game</button>
   </form>
 </div>
 {% endblock %}

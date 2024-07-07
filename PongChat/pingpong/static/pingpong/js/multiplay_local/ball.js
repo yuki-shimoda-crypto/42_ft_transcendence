@@ -120,6 +120,6 @@ function updateBallSize() {
 }
 
 function updateBallSpeed() {
-  ballDx = canvas.width * 0.01;
-  ballDy = canvas.height * 0.01;
+  ballDx = (ballDx * canvas.width) / previousCanvasWidth;
+  ballDy = (ballDy * canvas.height) / previousCanvasHeight;
 }

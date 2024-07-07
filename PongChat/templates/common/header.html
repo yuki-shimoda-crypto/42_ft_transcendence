@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <nav class="navbar navbar-light bg-light p-3 fixed-top shadow-sm">
   <button
     class="navbar-toggler d-md-none collapsed"
@@ -11,52 +12,73 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand async-link" href="{% url 'accounts:top' %}"> Pong Chat </a>
-  <div class="dropdown">
-    <button
-      class="btn dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-      data-bs-auto-close="outside"
-    >
-      {% if not user.is_authenticated %}
-      <i class="bi bi-person-circle"></i>
-      ゲスト {% else %}
-      <img
-        src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/profile_sample.png' %}{% endif %}"
-        alt="Profile Picture"
-        class="profile-pic"
-      />
-      {% endif %}
-    </button>
-    <ul
-      class="dropdown-menu dropdown-menu-end"
-      aria-labelledby="dropdownMenuButton"
-    >
-      {% if not user.is_authenticated %}
-      <li>
-        <a class="dropdown-item async-link" href="{% url 'accounts:login' %}">ログイン</a>
-      </li>
-      <li>
-        <a class="dropdown-item async-link" href="{% url 'accounts:signup' %}"
-          >サインアップ</a
-        >
-      </li>
-      {% else %}
-      <p class="dropdown-item-text">{{ user.username }}</p>
-      <li><hr class="dropdown-divider" /></li>
-      <li>
-        <a class="dropdown-item async-link" href="{% url 'accounts:my_page' user.pk %}"
-          >マイページ</a
-        >
-      </li>
-      <form action="{% url 'accounts:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="dropdown-item">ログアウト</button>
-      </form>
-      {% endif %}
-    </ul>
+  <a class="navbar-brand" href="{% url 'accounts:top' %}"> Pong Chat </a>
+  <div class="d-flex">
+    <!-- 言語切り替えドロップダウン -->
+    <div class="dropdown me-2">
+      <button
+        class="btn btn-outline-secondary dropdown-toggle"
+        type="button"
+        id="languageDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+          <i class="bi bi-type"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'ja' %}">日本語</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'en' %}">English</a></li>
+        <li><a class="dropdown-item" href="{% url 'accounts:switch_language' 'fr' %}">Français</a></li>
+      </ul>
+    </div>
+    <!-- ユーザードロップダウン -->
+    <div class="dropdown">
+      <button
+        class="btn dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        data-bs-auto-close="outside"
+      >
+        {% if not user.is_authenticated %}
+        <i class="bi bi-person-circle"></i>
+        {% trans "ゲスト" %}
+        {% else %}
+        <img
+          src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/profile_sample.png' %}{% endif %}"
+          alt="Profile Picture"
+          class="profile-pic"
+        />
+        {% endif %}
+      </button>
+      <ul
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="dropdownMenuButton"
+      >
+        {% if not user.is_authenticated %}
+        <li>
+          <a class="dropdown-item" href="{% url 'accounts:login' %}">{% trans "ログイン" %}</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'accounts:signup' %}"
+          >{% trans "サインアップ" %}</a
+          >
+        </li>
+        {% else %}
+        <p class="dropdown-item-text">{{ user.username }}</p>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item" href="{% url 'accounts:my_page' user.pk %}"
+          >{% trans "マイページ" %}</a
+          >
+        </li>
+        <form action="{% url 'accounts:logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="dropdown-item">{% trans "ログアウト" %}</button>
+        </form>
+        {% endif %}
+      </ul>
+    </div>
   </div>
 </nav>
