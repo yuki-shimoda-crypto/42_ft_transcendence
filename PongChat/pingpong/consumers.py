@@ -110,11 +110,6 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
-        # if self.user == self.game.player1:
-        #     player_position = "left"
-        # elif self.user == self.game.player2:
-        #     player_position = "right"
-
         # Access the player details asynchronously
         player1 = await sync_to_async(getattr)(self.game, "player1")
         player2 = await sync_to_async(getattr)(self.game, "player2")
@@ -213,26 +208,8 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
     async def score_update_error(self, event):
         await self.send(json.dumps(event))
 
-    # @database_sync_to_async
-    # def create_or_update_game(self, game_id, player):
-    #     game, created = Game.objects.get_or_create(
-    #         id=game_id, defaults={"player1": player}
-    #     )
-    #     if not created and game.player1 is None:
-    #         game.player1 = player
-    #         game.save()
-    #     elif not created and game.player2 is None:
-    #         game.player2 = player
-    #         game.save()
-    #     return game
-
     @database_sync_to_async
     def get_game(self, game_id):
-        # if not Game.objects.filter(id=game_id).exists():
-        #     game = Game.objects.create(
-        #         id=game_id,
-        #     )
-        #     return game
         return Game.objects.get(id=game_id)
 
     @database_sync_to_async
@@ -289,3 +266,75 @@ class GameSessionConsumer(AsyncWebsocketConsumer):
                 "winner": self.game.winner.username,
             },
         )
+
+
+class TournamentConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        # user_info = json.dumps(
+        #     {
+        #         "channel_name": self.channel_name,
+        #         "user_id": self.scope["user"].id,
+        #     }
+        # )
+
+    async def disconnect(self, close_code):
+        # user_info = json.dumps(
+        #     {
+        #         "channel_name": self.channel_name,
+        #         "user_id": self.scope["user"].id,
+        #     }
+        # )
+        # redis_client.srem("waiting_room", user_info)
+        pass
+
+    async def receive(self, text_data):
+        pass
+        # data = json.loads(text_data)
+        # action = data.get("action")
+        # if action == "start_match":
+        #     players = list(redis_client.smembers("waiting_room"))
+        #     if len(players) >= 2:
+        #         chosen_players = random.sample(players, 2)
+        #         await self.start_game_session(chosen_players)
+
+    # async def start_game_session(self, players):
+    #     game_id = f"game_{random.randint(1000, 9999)}"
+    #     game_url = "multiplayer_play_remote/" + game_id
+    #     player_ids = [json.loads(player).get("user_id") for player in players]
+    #     await self.create_game_coloum(game_id, player_ids[0], player_ids[1])
+
+    #     for user_info in players:
+    #         # redis_client.sadd(game_id, player)
+    #         channel_name = json.loads(user_info).get("channel_name")
+    #         redis_client.srem("waiting_room", user_info)
+
+    #         await self.channel_layer.send(
+    #             channel_name,
+    #             {
+    #                 "type": "game_start",
+    #                 "game_id": game_id,
+    #                 "message": "match_found",
+    #                 "url": game_url,
+    #             },
+    #         )
+
+    # @database_sync_to_async
+    # def create_game_coloum(self, game_id, player_id_1, player_id_2):
+    #     player1 = User.objects.get(id=player_id_1)
+    #     player2 = User.objects.get(id=player_id_2)
+    #     game_id_num = int("".join(filter(str.isdigit, game_id)))
+    #     game = Game.objects.create(id=game_id_num, player1=player1, player2=player2)
+    #     game.save()
+    #     # return game
+
+    # async def game_start(self, event):
+    #     await self.send(
+    #         text_data=json.dumps(
+    #             {
+    #                 "game_id": event["game_id"],
+    #                 "message": event["message"],
+    #                 "url": event["url"],
+    #             }
+    #         )
+    #     )
