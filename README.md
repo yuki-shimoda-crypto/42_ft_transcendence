@@ -35,19 +35,19 @@ Additionally, Grafana and Prometheus are integrated using Docker, allowing for s
 
 1. Clone the repository:
 
-   ```
-   git clone [repository URL]
+   ```sh
+   git clone https://github.com/yuki-shimoda-crypto/42_ft_transcendence.git
    cd ft_transcendence
    ```
 
 2. Copy the environment variable file:
 
-   ```
+   ```sh
    cp .env.example .env
    ```
 
 3. Start the Docker containers:
-   ```
+   ```sh
    sudo make up-d
    ```
 
@@ -73,19 +73,21 @@ To run the project in a development environment:
 
 1. Enter the development container:
 
-   ```
+   ```sh
    sudo make exec web-dev
    ```
 
 2. Generate an SSL certificate:
 
-   ```
+   ```sh
+   CERT_PATH="./cert.pem"
+   KEY_PATH="./key.pem"
    openssl req -x509 -newkey rsa:4096 -keyout "$KEY_PATH" -out "$CERT_PATH" -days 365 -nodes -subj "/CN=localhost"
    ```
 
 3. Start the development server:
 
-   ```
+   ```sh
    daphne --settings=PongChat.settings PongChat.asgi:application
    ```
 
@@ -95,7 +97,7 @@ Note: If you make changes to files, please restart the server to reflect the cha
 
 ## Directory Structure
 
-```
+```txt
 .
 ├── PongChat
 │   ├── PongChat
