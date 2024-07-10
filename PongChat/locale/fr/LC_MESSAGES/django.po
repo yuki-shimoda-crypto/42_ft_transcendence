@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-01 16:12+0900\n"
+"POT-Creation-Date: 2024-07-07 12:58+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,29 +181,53 @@ msgstr "Annuler"
 msgid "通知チャット"
 msgstr "Chat de notification"
 
-#: chat/templates/chat/profile.html:20
+#: chat/templates/chat/profile.html:21
 msgid "チャットする"
 msgstr "Chat"
 
-#: chat/templates/chat/profile.html:22
+#: chat/templates/chat/profile.html:23
 msgid "ブロック解除"
 msgstr "Débloquer"
 
-#: chat/templates/chat/profile.html:24
+#: chat/templates/chat/profile.html:25
 msgid "ブロック"
 msgstr "Bloquer"
 
-#: chat/templates/chat/profile.html:27
+#: chat/templates/chat/profile.html:28
 msgid "フレンド解除"
 msgstr "Informations sur les amis"
 
-#: chat/templates/chat/profile.html:29
+#: chat/templates/chat/profile.html:30
 msgid "フレンド登録"
 msgstr "Informations sur les amis"
 
-#: chat/templates/chat/profile.html:32
+#: chat/templates/chat/profile.html:33
 msgid "通知を確認する"
 msgstr "Vérifier les notifications"
+
+#: chat/templates/chat/profile.html:40
+msgid "ゲーム戦績"
+msgstr "Historique des jeux"
+
+#: chat/templates/chat/profile.html:46
+msgid "総試合数"
+msgstr "Nombre total de parties"
+
+#: chat/templates/chat/profile.html:50 chat/templates/chat/profile.html:81
+msgid "勝利"
+msgstr "Victoires"
+
+#: chat/templates/chat/profile.html:54 chat/templates/chat/profile.html:83
+msgid "敗北"
+msgstr "Défaites"
+
+#: chat/templates/chat/profile.html:62
+msgid "最近のゲーム履歴"
+msgstr "Historique des parties récentes"
+
+#: chat/templates/chat/profile.html:90
+msgid "まだゲーム履歴がありません。"
+msgstr "Pas encore d'historique de jeu"
 
 #: chat/templates/chat/user_list.html:5
 msgid "ユーザー一覧"
