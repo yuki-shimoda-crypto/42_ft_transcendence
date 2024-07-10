@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # OpenSSL install
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    openssl && \
+    openssl \
+    gettext && \
     rm -rf /var/lib/apt/lists/*
 
 # entrypoint.sh
