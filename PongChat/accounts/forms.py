@@ -4,6 +4,7 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
     UserCreationForm,
 )
+from django.utils.translation import gettext_lazy
 
 from .models import CustomUser
 from .widgets import CustomClearableFileInput
@@ -73,7 +74,7 @@ class CustomUserCreationForm(UserCreationForm):
             field = self.fields[field_name]
             field.widget.attrs["class"] = "form-control"
             if field_name == "profile_image":
-                field.label = "プロフィール画像"
+                field.label = gettext_lazy("プロフィール画像")
 
 
 class UsernameUpdateForm(forms.ModelForm):
