@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // loadContent(window.location.href);
-
   document.body.addEventListener("click", handleClick);
 
   // ブラウザの戻る/進むボタンの対応
@@ -13,12 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleClick(event) {
-  if (
-    event.target.tagName === "A" &&
-    !event.target.classList.contains("async-link")
-  ) {
+  // aタグが見つかるまで親のノードを探索する
+  const anchor = event.target.closest("a");
+  if (anchor && !anchor.classList.contains("async-link")) {
     event.preventDefault();
-    const url = event.target.href;
+    const url = anchor.href;
     loadContent(url);
   }
 }
