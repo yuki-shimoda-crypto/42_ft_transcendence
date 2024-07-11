@@ -21,6 +21,7 @@ function handleClick(event) {
 }
 
 function loadContent(url, pushState = true) {
+  console.log("loadContent");
   fetch(url)
     .then((response) => {
       if (!response.ok) {

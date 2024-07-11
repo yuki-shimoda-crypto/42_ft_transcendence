@@ -35,19 +35,19 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 
 1. リポジトリをクローンします：
 
-   ```
-   git clone [リポジトリURL]
+   ```sh
+   git clone https://github.com/yuki-shimoda-crypto/42_ft_transcendence.git
    cd ft_transcendence
    ```
 
 2. 環境変数ファイルをコピーします：
 
-   ```
+   ```sh
    cp .env.example .env
    ```
 
 3. Dockerコンテナを起動します：
-   ```
+   ```sh
    sudo make up-d
    ```
 
@@ -73,20 +73,22 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 
 1. 開発用コンテナに入ります：
 
-   ```
+   ```sh
    sudo make exec web-dev
    ```
 
 2. SSL証明書を生成します：
 
-   ```
+   ```sh
+   CERT_PATH="./cert.pem"
+   KEY_PATH="./key.pem"
    openssl req -x509 -newkey rsa:4096 -keyout "$KEY_PATH" -out "$CERT_PATH" -days 365 -nodes -subj "/CN=localhost"
    ```
 
 3. 開発サーバーを起動します：
 
-   ```
-   daphne --settings=PongChat.settings PongChat.asgi:application
+   ```sh
+   daphne -e ssl:8000:privateKey=key.pem:certKey=cert.pem PongChat.asgi:application
    ```
 
 4. `https://localhost:8001`にアクセスして開発を行います。
@@ -95,7 +97,7 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 
 ## ディレクトリ構造
 
-```
+```txt
 .
 ├── PongChat
 │   ├── PongChat
@@ -126,15 +128,21 @@ ft_transcendenceは、42の最終課題として開発されたウェブアプ�
 - Containerization: Docker
 - Monitoring: Grafana, Prometheus
 
-その他の依存関係については[requirements.txt](./requirements.txt)を参照してください。
+その他の依存関係については[requirements.txt](../requirements.txt)を参照してください。
 
 ## コントリビューション
 
 問題や提案がある場合は、Issueを作成してください。
 
+## コントリビューター
+
+<a href="https://github.com/yuki-shimoda-crypto/42_ft_transcendence/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=yuki-shimoda-crypto/42_ft_transcendence" />
+</a>
+
 ## ライセンス
 
-このプロジェクトは[MIT License](LICENSE)の下で公開されています。
+このプロジェクトは[MIT License](../LICENSE)の下で公開されています。
 
 ## 連絡先
 

@@ -4,33 +4,97 @@
 {% block content %}
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="text-center">
-              <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
-              {% if profile.username != user.username %}
-                <h1>{{ profile.username }}</h1>
-                <div class="text-muted mb-3">@{{ profile.username }}</div>
-              {% else %}
-                <h1>{% trans "通知チャット" %}</h1>
-              {% endif %}
-              {% if profile.info %}
-                <div class="mt-4">{{ profile.info|linebreaksbr }}</div>
-              {% endif %}
-              {% if profile.username != user.username %}
-                <a class="btn btn-primary async-link" href="{% url 'start-chat'  profile.username %}">{% trans "チャットする" %}</a>
-                {% if is_blocked %}
-                  <a class="btn btn btn-success" href="{% url 'block'  profile.username %}">{% trans "ブロック解除" %}</a>
+        <div class="col-md-8">
+            <div class="text-center mb-5">
+                <img class="rounded-circle mb-4" src="{{ profile.avatar }}" style="width: 144px; height: 144px;">
+                {% if profile.username != user.username %}
+                    <h1>{{ profile.username }}</h1>
+                    <div class="text-muted mb-3">@{{ profile.username }}</div>
                 {% else %}
-                  <a class="btn btn btn-danger" href="{% url 'block'  profile.username %}">{% trans "ブロック" %}</a>
+                    <h1>{% trans "通知チャット" %}</h1>
                 {% endif %}
-                {% if is_friend %}
-                  <a class="btn btn-danger" href="{% url 'friend'  profile.username %}">{% trans "フレンド解除" %}</a>
-                {% else %}
-                  <a class="btn btn-primary" href="{% url 'friend'  profile.username %}">{% trans "フレンド登録" %}</a>
+                {% if profile.info %}
+                    <div class="mt-4">{{ profile.info|linebreaksbr }}</div>
                 {% endif %}
-              {% else %}
-                <a class="btn btn-success" href="{% url 'start-chat'  profile.username %}">{% trans "通知を確認する" %}</a>
-              {% endif %}
+                <div class="mt-4">
+                    {% if profile.username != user.username %}
+                        <a class="btn btn-primary" href="{% url 'start-chat' profile.username %}">{% trans "チャットする" %}</a>
+                        {% if is_blocked %}
+                            <a class="btn btn-success" href="{% url 'block' profile.username %}">{% trans "ブロック解除" %}</a>
+                        {% else %}
+                            <a class="btn btn-danger" href="{% url 'block' profile.username %}">{% trans "ブロック" %}</a>
+                        {% endif %}
+                        {% if is_friend %}
+                            <a class="btn btn-danger" href="{% url 'friend' profile.username %}">{% trans "フレンド解除" %}</a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'friend' profile.username %}">{% trans "フレンド登録" %}</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-success" href="{% url 'start-chat' profile.username %}">{% trans "通知を確認する" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h2 class="mb-0">{% trans "ゲーム戦績" %}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <h3>{{ total_games }}</h3>
+                            <p>{% trans "総試合数" %}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>{{ wins }}</h3>
+                            <p>{% trans "勝利" %}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>{{ losses }}</h3>
+                            <p>{% trans "敗北" %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">{% trans "最近のゲーム履歴" %}</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for game in game_history %}
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {% if game.player1 == profile %}
+                                            vs {{ game.player2.username }}
+                                        {% else %}
+                                            vs {{ game.player1.username }}
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if game.player1 == profile %}
+                                          {{ game.score1 }} - {{ game.score2 }}
+                                        {% else %}
+                                          {{ game.score2 }} - {{ game.score1 }}
+                                        {% endif %}
+                                    </span>
+                                    <span>
+                                        {% if game.winner == profile %}
+                                            <span class="badge bg-success">{% trans "勝利" %}</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{% trans "敗北" %}</span>
+                                        {% endif %}
+                                    </span>
+                                    <small class="text-muted">{{ game.date_start|date:"Y/m/d" }}</small>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">{% trans "まだゲーム履歴がありません。" %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

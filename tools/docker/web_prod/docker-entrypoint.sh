@@ -7,6 +7,7 @@ if [ ! -f /app/key.pem ] || [ ! -f /app/cert.pem ]; then
 fi
 
 PongChat/manage.py migrate
+PongChat/manage.py compilemessages
 
 # Dockerコンテナで指定されたコマンドを実行（通常はDjangoアプリケーションの起動など）
 exec "$@"
