@@ -18,7 +18,7 @@
                 {% endif %}
                 <div class="mt-4">
                     {% if profile.username != user.username %}
-                        <a class="btn btn-primary" href="{% url 'start-chat' profile.username %}">{% trans "チャットする" %}</a>
+                        <a class="btn btn-primary async-link" href="{% url 'start-chat' profile.username %}">{% trans "チャットする" %}</a>
                         {% if is_blocked %}
                             <a class="btn btn-success" href="{% url 'block' profile.username %}">{% trans "ブロック解除" %}</a>
                         {% else %}
