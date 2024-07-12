@@ -26,6 +26,11 @@ services:
       POSTGRES_USER: ${DATABASE_USER:-user}
     networks:
       - monitoring
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-user} -d ${DATABASE_NAME:-db} -p ${DATABASE_PORT:-5432}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:alpine
