@@ -1,5 +1,6 @@
 import { resetScores, playerScore, cpuScore } from "./score.js";
 import { canvas, ctx, initialize } from "./main.js";
+import { doubleBallSpeed, resetBallSpeed, speedMultiplier } from "./ball.js";
 
 // Countdown
 let countdown = 3;
@@ -86,4 +87,17 @@ export function pauseGame() {
 
 export function resumeGame() {
   gamePaused = false;
+}
+
+export function setupSpeedToggleButton() {
+  const speedToggleButton = document.getElementById("speedToggle");
+  speedToggleButton.addEventListener("click", function () {
+    if (speedMultiplier === 1) {
+      doubleBallSpeed();
+      this.textContent = "Speed x2";
+    } else {
+      resetBallSpeed();
+      this.textContent = "Normal Speed";
+    }
+  });
 }

@@ -93,8 +93,8 @@ export function moveBall() {
     ballDy = -ballDy;
   }
 
-  ballX += ballDx;
-  ballY += ballDy;
+  ballX += ballDx * speedMultiplier;
+  ballY += ballDy * speedMultiplier;
 }
 
 export function updateBallElement() {
@@ -122,4 +122,14 @@ function updateBallSize() {
 function updateBallSpeed() {
   ballDx = (ballDx * canvas.width) / previousCanvasWidth;
   ballDy = (ballDy * canvas.height) / previousCanvasHeight;
+}
+
+export let speedMultiplier = 1;
+
+export function doubleBallSpeed() {
+  speedMultiplier = 2;
+}
+
+export function resetBallSpeed() {
+  speedMultiplier = 1;
 }
