@@ -1,20 +1,26 @@
 {% extends "common/base.html" %}
 {% block content %}
-<div class="container">
-  <h1>Welcome to Ping Pong Game!</h1>
-  <p>Choose your game mode:</p>
-  <div class="game-options">
-    <a href="{% url 'pingpong:single_play_setup' %}" class="btn btn-primary"
-      >Single Play</a
-    >
-    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-success"
-      >Multiplayer</a
-    >
-    <a
-      href="{% url 'pingpong:tournament_registration' %}"
-      class="btn btn-warning"
-      >Tournament</a
-    >
+<div class="container mt-5">
+  <h1 class="display-4 text-center mb-4">Welcome to the Ping Pong Game!</h1>
+  <p class="lead text-center mb-5">Choose your game mode:</p>
+  <div class="d-flex justify-content-center align-items-center mb-5">
+    <a href="{% url 'pingpong:single_play_setup' %}" class="btn btn-lg btn-primary mx-2">
+      Single Play
+    </a>
+    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-lg btn-success mx-2">
+      Multiplayer
+    </a>
+    <a href="{% url 'pingpong:tournament_registration' %}" class="btn btn-lg btn-warning mx-2">
+      Tournament
+    </a>
+  </div>
+  <div class="text-center mb-4">
+    <h2 class="h5 mb-3">Learn How to Play</h2>
+    <p class="mb-4">Get familiar with the rules and controls of the game to enhance your playing experience.</p>
+    <a href="{% url 'pingpong:how_to_play' %}" class="btn btn-lg btn-info">
+      How to Play
+    </a>
   </div>
 </div>
 {% endblock %}
+

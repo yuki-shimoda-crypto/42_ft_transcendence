@@ -34,6 +34,11 @@ def home(request):
 
 
 # @login_required
+def how_to_play(request):
+    return render(request, "pingpong/how_to_play.html")
+
+
+# @login_required
 def multiplayer_play_local(request):
     return render(request, "pingpong/multiplayer_play_local.html")
 
