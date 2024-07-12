@@ -87,3 +87,18 @@ export function pauseGame() {
 export function resumeGame() {
   gamePaused = false;
 }
+
+import { doubleBallSpeed, resetBallSpeed, speedMultiplier } from "./ball.js";
+
+export function setupSpeedToggleButton() {
+  const speedToggleButton = document.getElementById("speedToggle");
+  speedToggleButton.addEventListener("click", function () {
+    if (speedMultiplier === 1) {
+      doubleBallSpeed();
+      this.textContent = "Speed x2";
+    } else {
+      resetBallSpeed();
+      this.textContent = "Normal Speed";
+    }
+  });
+}
