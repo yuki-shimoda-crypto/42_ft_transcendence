@@ -91,10 +91,17 @@ export function moveRightPaddle(upPressedRight, downPressedRight, canvas) {
   return rightPaddleY;
 }
 
-export function moveRightMiddlePaddle(upPressedRightMiddle, downPressedRightMiddle, canvas) {
+export function moveRightMiddlePaddle(
+  upPressedRightMiddle,
+  downPressedRightMiddle,
+  canvas,
+) {
   if (upPressedRightMiddle && rightMiddlePaddleY > 0) {
     rightMiddlePaddleY -= paddleDy;
-  } else if (downPressedRightMiddle && rightMiddlePaddleY < canvas.height - paddleHeight) {
+  } else if (
+    downPressedRightMiddle &&
+    rightMiddlePaddleY < canvas.height - paddleHeight
+  ) {
     rightMiddlePaddleY += paddleDy;
   }
   return rightMiddlePaddleY;

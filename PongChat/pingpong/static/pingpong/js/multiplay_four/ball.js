@@ -85,9 +85,13 @@ export function moveBall() {
       const hitPosition =
         (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
-    } else if (ballY > rightMiddlePaddleY && ballY < rightMiddlePaddleY + paddleHeight) {
+    } else if (
+      ballY > rightMiddlePaddleY &&
+      ballY < rightMiddlePaddleY + paddleHeight
+    ) {
       ballDx = -ballDx;
-      const hitPosition = (ballY - (rightMiddlePaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      const hitPosition =
+        (ballY - (rightMiddlePaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
     } else {
       // Game Over

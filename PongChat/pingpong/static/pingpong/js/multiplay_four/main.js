@@ -107,7 +107,11 @@ function draw() {
       moveLeftPaddle(upPressedLeft, downPressedLeft, canvas);
       moveLeftMiddlePaddle(upPressedLeftMiddle, downPressedLeftMiddle, canvas);
       moveRightPaddle(upPressedRight, downPressedRight, canvas);
-      moveRightMiddlePaddle(upPressedRightMiddle, downPressedRightMiddle, canvas);
+      moveRightMiddlePaddle(
+        upPressedRightMiddle,
+        downPressedRightMiddle,
+        canvas,
+      );
     }
   }
 
