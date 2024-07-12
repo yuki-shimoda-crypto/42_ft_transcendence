@@ -32,6 +32,7 @@ import {
   drawScores,
   countdownActive,
   gamePaused,
+  setupSpeedToggleButton,
 } from "./ui.js";
 
 // デュース機能を追加する
@@ -53,6 +54,7 @@ export function initialize() {
   updateCanvasSize();
   initializeBallElement();
   updatePaddleElement();
+  setupSpeedToggleButton();
 }
 
 function updateCanvasSize() {
