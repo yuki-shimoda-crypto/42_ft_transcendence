@@ -1,5 +1,9 @@
 import { canvas, previousCanvasHeight } from "./main.js";
-export let paddleWidth, paddleHeight, leftPaddleY, rightPaddleY;
+export let paddleWidth,
+  paddleHeight,
+  leftPaddleY,
+  rightPaddleY,
+  leftMiddlePaddleY;
 let paddleDy;
 
 function drawRoundedRect(ctx, ballX, ballY, width, height, radius) {
@@ -35,6 +39,20 @@ export function drawLeftPaddle(ctx) {
   ctx.fill();
 }
 
+export function drawLeftMiddlePaddle(ctx) {
+  const radius = paddleWidth;
+  drawRoundedRect(
+    ctx,
+    paddleWidth,
+    leftMiddlePaddleY,
+    paddleWidth,
+    paddleHeight,
+    radius / 2,
+  );
+  ctx.fillStyle = "#FF4500";
+  ctx.fill();
+}
+
 export function drawRightPaddle(ctx, canvas) {
   const radius = paddleWidth;
   drawRoundedRect(
@@ -67,9 +85,26 @@ export function moveLeftPaddle(upPressedLeft, downPressedLeft, canvas) {
   return leftPaddleY;
 }
 
+export function moveLeftMiddlePaddle(
+  upPressedLeftMiddle,
+  downPressedLeftMiddle,
+  canvas,
+) {
+  if (upPressedLeftMiddle && leftMiddlePaddleY > 0) {
+    leftMiddlePaddleY -= paddleDy;
+  } else if (
+    downPressedLeftMiddle &&
+    leftMiddlePaddleY < canvas.height - paddleHeight
+  ) {
+    leftMiddlePaddleY += paddleDy;
+  }
+  return leftMiddlePaddleY;
+}
+
 export function updatePaddleElement() {
   updatePaddleSize(canvas);
   updateLeftPaddlePosition(previousCanvasHeight, canvas);
+  updateLeftMiddlePaddlePosition(previousCanvasHeight, canvas);
   updateRightPaddlePosition(previousCanvasHeight, canvas);
   updatePaddleSpeed(canvas);
 }
@@ -79,6 +114,13 @@ export function updateLeftPaddlePosition(previousCanvasHeight, canvas) {
     ? 0.5
     : leftPaddleY / previousCanvasHeight;
   leftPaddleY = canvas.height * paddlePositionRatioY;
+}
+
+export function updateLeftMiddlePaddlePosition(previousCanvasHeight, canvas) {
+  const paddlePositionRatioY = isNaN(leftMiddlePaddleY / previousCanvasHeight)
+    ? 0.5
+    : leftMiddlePaddleY / previousCanvasHeight;
+  leftMiddlePaddleY = canvas.height * paddlePositionRatioY;
 }
 
 export function updateRightPaddlePosition(previousCanvasHeight, canvas) {
