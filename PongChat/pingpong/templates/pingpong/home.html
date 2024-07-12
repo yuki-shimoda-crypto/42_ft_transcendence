@@ -1,20 +1,27 @@
 {% extends "common/base.html" %}
+{% load i18n %}
 {% block content %}
-<div class="container">
-  <h1>Welcome to Ping Pong Game!</h1>
-  <p>Choose your game mode:</p>
-  <div class="game-options">
-    <a href="{% url 'pingpong:single_play_setup' %}" class="btn btn-primary"
-      >Single Play</a
-    >
-    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-success"
-      >Multiplayer</a
-    >
-    <a
-      href="{% url 'pingpong:tournament_registration' %}"
-      class="btn btn-warning"
-      >Tournament</a
-    >
+<div class="container mt-5">
+  <h1 class="display-4 text-center mb-4">{% trans "ようこそPing Pong Gameへ!" %}</h1>
+  <p class="lead text-center mb-5">{% trans "ゲームモードを選んでね:" %}</p>
+  <div class="d-flex justify-content-center align-items-center mb-5">
+    <a href="{% url 'pingpong:single_play_setup' %}" class="btn btn-lg btn-primary mx-2">
+      {% trans "一人で遊ぶ" %}
+    </a>
+    <a href="{% url 'pingpong:multiplayer_options' %}" class="btn btn-lg btn-success mx-2">
+      {% trans "複数人と遊ぶ" %}
+    </a>
+    <a href="{% url 'pingpong:tournament_registration' %}" class="btn btn-lg btn-warning mx-2">
+      {% trans "トーナメント" %}
+    </a>
+  </div>
+  <div class="text-center mb-4">
+    <h2 class="h5 mb-3">{% trans "遊び方を見る" %}</h2>
+    <p class="mb-4">{% trans "ゲームのルールと操作方法に慣れて、プレイ体験を向上させましょう。" %}</p>
+    <a href="{% url 'pingpong:how_to_play' %}" class="btn btn-lg btn-info">
+      {% trans "遊び方" %}
+    </a>
   </div>
 </div>
 {% endblock %}
+

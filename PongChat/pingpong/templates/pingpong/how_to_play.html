@@ -1,0 +1,42 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="display-4 text-center mb-4 ">{% trans "ピンポンゲームの遊び方" %}</h1>
+  
+  <div class="card mb-4 border-primary">
+    <div class="card-header bg-primary text-white">
+      <h2 class="card-title h5">{% trans "ゲームのルール" %}</h2>
+    </div>
+    <div class="card-body bg-light">
+      <p class="card-text">{% trans "このゲームは11点先取で行われます。先に11点に到達したプレイヤーが試合に勝利します。" %}</p>
+    </div>
+  </div>
+
+  <div class="card mb-4 border-success">
+    <div class="card-header bg-success text-white">
+      <h2 class="card-title h5">{% trans "ゲームモード" %}</h2>
+    </div>
+    <div class="card-body bg-light">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{% trans "シングルプレイ：コンピュータと対戦します。" %}</li>
+        <li class="list-group-item">{% trans "マルチプレイリモート：インターネット越しに他のプレイヤーと対戦します。" %}</li>
+        <li class="list-group-item">{% trans "マルチプレイローカル：同じデバイスで他のプレイヤーと対戦します。" %}</li>
+        <li class="list-group-item">{% trans "トーナメント：複数のプレイヤーとトーナメント形式で対戦します。" %}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card border-warning">
+    <div class="card-header bg-warning">
+      <h2 class="card-title h5 text-dark">{% trans "操作方法" %}</h2>
+    </div>
+    <div class="card-body bg-light">
+      <p class="card-text">{% trans "シングルプレイモードでは、矢印キーを使ってパドルを動かします。" %}</p>
+      <p class="card-text">{% trans "二人対戦の場合、一方のプレイヤーは「W」と「S」キーでパドルを上下に動かし、もう一方のプレイヤーは矢印キーを使用します。" %}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
