@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-07 12:58+0900\n"
+"POT-Creation-Date: 2024-07-11 07:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,10 @@ msgstr "Japonais"
 #: PongChat/settings.py:155
 msgid "French"
 msgstr "Français"
+
+#: accounts/forms.py:77 accounts/templates/accounts/my_page.html:38
+msgid "プロフィール画像"
+msgstr "Image de profil"
 
 #: accounts/templates/accounts/login.html:31
 #: accounts/templates/accounts/signup_done.html:17
@@ -59,10 +63,6 @@ msgstr "Informations d'inscription"
 #: accounts/templates/accounts/my_page.html:28
 msgid "ユーザー名"
 msgstr "Nom d'utilisateur"
-
-#: accounts/templates/accounts/my_page.html:38
-msgid "プロフィール画像"
-msgstr "Image de profil"
 
 #: accounts/templates/accounts/my_page.html:51
 msgid "プロフィール画像がありません"
@@ -135,12 +135,12 @@ msgid "PingPongゲームとチャットができます!"
 msgstr "Vous pouvez jouer au ping-pong et discuter !"
 
 #: accounts/templates/accounts/top.html:13
-#: accounts/templates/accounts/top.html:56
+#: accounts/templates/accounts/top.html:60
 msgid "ログイン済み"
 msgstr "Connecté"
 
 #: accounts/templates/accounts/top.html:15
-#: accounts/templates/accounts/top.html:58
+#: accounts/templates/accounts/top.html:62
 msgid "ログイン/サインアップ"
 msgstr "Se connecter/S'inscrire"
 
@@ -152,23 +152,23 @@ msgstr ""
 msgid "サービス内容"
 msgstr "Contenu du service"
 
-#: accounts/templates/accounts/top.html:38
+#: accounts/templates/accounts/top.html:39
 msgid "リアルタイムチャット"
 msgstr "Chat en temps réel"
 
-#: accounts/templates/accounts/top.html:39
+#: accounts/templates/accounts/top.html:40
 msgid "リアルタイムでのチャット機能があります!"
 msgstr "Il y a une fonction de chat en temps réel !"
 
-#: accounts/templates/accounts/top.html:45
+#: accounts/templates/accounts/top.html:48
 msgid "ピンポンゲーム"
 msgstr "Jeu de ping-pong"
 
-#: accounts/templates/accounts/top.html:46
+#: accounts/templates/accounts/top.html:49
 msgid "ピンポンゲームができます。"
 msgstr "Vous pouvez jouer au ping-pong"
 
-#: accounts/templates/accounts/top.html:54
+#: accounts/templates/accounts/top.html:58
 msgid "ログインしてみる👀"
 msgstr "Essayez de vous connecter 👀"
 
@@ -213,11 +213,11 @@ msgstr "Historique des jeux"
 msgid "総試合数"
 msgstr "Nombre total de parties"
 
-#: chat/templates/chat/profile.html:50 chat/templates/chat/profile.html:81
+#: chat/templates/chat/profile.html:50 chat/templates/chat/profile.html:85
 msgid "勝利"
 msgstr "Victoires"
 
-#: chat/templates/chat/profile.html:54 chat/templates/chat/profile.html:83
+#: chat/templates/chat/profile.html:54 chat/templates/chat/profile.html:87
 msgid "敗北"
 msgstr "Défaites"
 
@@ -225,7 +225,7 @@ msgstr "Défaites"
 msgid "最近のゲーム履歴"
 msgstr "Historique des parties récentes"
 
-#: chat/templates/chat/profile.html:90
+#: chat/templates/chat/profile.html:94
 msgid "まだゲーム履歴がありません。"
 msgstr "Pas encore d'historique de jeu"
 

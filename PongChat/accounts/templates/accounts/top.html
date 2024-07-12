@@ -33,18 +33,22 @@
         </div>
         <div class="row mt-5 justify-content-center align-items-center">
           <div class="col-md-4 mb-4">
-            <div class="p-4 bg-white shadow-sm rounded">
-              <i class="bi bi-chat-dots fs-1 text-primary"></i>
-              <h5 class="mt-3 mb-0 fw-bold">{% trans "リアルタイムチャット" %}</h5>
-              <p class="mt-3 mb-0 text-muted">{% trans "リアルタイムでのチャット機能があります!" %}</p>
-            </div>
+            <a class="nav-link" href="{% url 'chat-home' %}">
+              <div class="p-4 bg-white shadow-sm rounded">
+                <i class="bi bi-chat-dots fs-1 text-primary"></i>
+                <h5 class="mt-3 mb-0 fw-bold">{% trans "リアルタイムチャット" %}</h5>
+                <p class="mt-3 mb-0 text-muted">{% trans "リアルタイムでのチャット機能があります!" %}</p>
+              </div>
+            </a>
           </div>
           <div class="col-md-4 mb-4">
-            <div class="p-4 bg-white shadow-sm rounded">
-              <i class="bi bi-controller fs-1 text-primary"></i>
-              <h5 class="mt-3 mb-0 fw-bold">{% trans "ピンポンゲーム" %}</h5>
-              <p class="mt-3 mb-0 text-muted">{% trans "ピンポンゲームができます。" %}</p>
-            </div>
+            <a class="nav-link" href="{% url 'pingpong:index' %}">
+              <div class="p-4 bg-white shadow-sm rounded">
+                <i class="bi bi-controller fs-1 text-primary"></i>
+                <h5 class="mt-3 mb-0 fw-bold">{% trans "ピンポンゲーム" %}</h5>
+                <p class="mt-3 mb-0 text-muted">{% trans "ピンポンゲームができます。" %}</p>
+              </div>
+            </a>
           </div>
         </div>
       </div>
