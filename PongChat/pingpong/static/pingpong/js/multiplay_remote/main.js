@@ -126,19 +126,18 @@ export function initializeGame(gameId) {
   window.gameSocket = new WebSocket(
     `${protocol}//${window.location.host}/ws/game/${gameId}/`,
   );
-  console.log(`WebSocket URL: ws://${window.location.host}/ws/game/${gameId}/`);
 
   window.gameSocket.onmessage = function (event) {
     const data = JSON.parse(event.data);
 
     if (data.type === "player_position") {
       if (data.position === "left") {
-        console.log("left");
+        //        console.log("left");
         player_position = "left";
         document.addEventListener("keydown", keyDownHandlerLeft, false);
         document.addEventListener("keyup", keyUpHandlerLeft, false);
       } else {
-        console.log("right");
+        //        console.log("right");
         player_position = "right";
         document.addEventListener("keydown", keyDownHandlerRight, false);
         document.addEventListener("keyup", keyUpHandlerRight, false);
@@ -161,27 +160,20 @@ export function initializeGame(gameId) {
 
     if (data.type === "score_update") {
       updateScoreFromRemote(data);
-      console.log("Score updated");
       drawScores();
       judgeGameFinish(window.gameSocket);
     }
 
     if (data.type === "score_update_error") {
-      console.log(data.error);
+      //      console.log(data.error);
     }
   };
 
-  window.gameSocket.onopen = function () {
-    console.log("Connected to websocket");
-  };
+  window.gameSocket.onopen = function () {};
 
-  window.gameSocket.onclose = function () {
-    console.error("Disconnected from websocket");
-  };
+  window.gameSocket.onclose = function () {};
 
-  window.gameSocket.onerror = function () {
-    console.error("Error in websocket");
-  };
+  window.gameSocket.onerror = function () {};
 
   initialize();
   startCountdown();
