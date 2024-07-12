@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const processNameElement = document.querySelector("#process-name");
   const processName = processNameElement.textContent;
-  if (processName.includes("Update Profile Image") === false) {
+  if (
+    !processName.includes("Update Profile Image") &&
+    !processName.includes("Sign Up")
+  ) {
     return;
   }
   // Update Profile Imageの場合のみ以下の処理を実行
