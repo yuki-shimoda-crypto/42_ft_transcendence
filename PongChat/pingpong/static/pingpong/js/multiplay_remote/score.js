@@ -10,7 +10,7 @@ export function updateScoreFromRemote(data) {
 }
 
 export function incrementRightScore(gameSocket) {
-  console.log("incrementCpuScore");
+  //  console.log("incrementCpuScore");
   const sendCpuScore = cpuScore + 1;
   gameSocket.send(
     JSON.stringify({
@@ -22,7 +22,7 @@ export function incrementRightScore(gameSocket) {
 }
 
 export function incrementLeftScore(gameSocket) {
-  console.log("incrementPlayerScore");
+  //  console.log("incrementPlayerScore");
   const sendPlayerScore = playerScore + 1;
   gameSocket.send(
     JSON.stringify({
