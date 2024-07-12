@@ -9,7 +9,6 @@
   class="container fullscreen d-flex justify-content-center align-items-center"
 >
   <canvas id="myCanvas"></canvas>
-  <button id="speedToggle" class="btn btn-info btn-lg rounded-pill shadow-sm mt-3 position-absolute">Normal Speed</button>
   <div
     id="game-over-message"
     class="text-center d-none position-absolute top-50 start-50 translate-middle"
@@ -17,7 +16,7 @@
     <div class="alert alert-info rounded-pill shadow-lg p-4 fs-1" role="alert">
       <span id="gameOverText"></span>
     </div>
-    <!-- <button
+    <button
       id="restartButton"
       class="btn btn-primary btn-lg rounded-pill shadow-sm mt-3"
     >
@@ -28,17 +27,11 @@
       href="{% url 'pingpong:home' %}"
       class="btn btn-secondary btn-lg rounded-pill shadow-sm mt-3"
       >Home</a
-    > -->
+    >
   </div>
 </div>
-<script>
-  const user1_id = "{{ request.session.user1_id }}";
-  const user2_id = "{{ request.session.user2_id }}";
-  const user1_name = "{{ request.session.user1_name }}";
-  const user2_name = "{{ request.session.user2_name }}";
-</script>
 <script
   type="module"
-  src="{% static 'pingpong/js/tournament/main.js' %}"
+  src="{% static 'pingpong/js/multiplay_four/main.js' %}"
 ></script>
 {% endblock %}
