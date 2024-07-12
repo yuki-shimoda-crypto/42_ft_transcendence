@@ -62,21 +62,21 @@ services:
     networks:
       - monitoring
 
-  web-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - .:/app
-      - node_volume:/app/node_modules
-    restart: always
-    ports:
-      - "8001:8000"
-    depends_on:
-      - db
-      - redis
-    networks:
-      - monitoring
+      #  web-dev:
+      #    build:
+      #      context: .
+      #      dockerfile: Dockerfile.dev
+      #    volumes:
+      #      - .:/app
+      #      - node_volume:/app/node_modules
+      #    restart: always
+      #    ports:
+      #      - "8001:8000"
+      #    depends_on:
+      #      - db
+      #      - redis
+      #    networks:
+      #      - monitoring
 
   prometheus:
     image: prom/prometheus:latest
