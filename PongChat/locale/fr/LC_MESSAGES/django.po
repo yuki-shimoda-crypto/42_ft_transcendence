@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-11 07:34+0900\n"
+"POT-Creation-Date: 2024-07-12 15:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,6 +232,88 @@ msgstr "Pas encore d'historique de jeu"
 #: chat/templates/chat/user_list.html:5
 msgid "ユーザー一覧"
 msgstr "Liste des utilisateurs"
+
+#: pingpong/templates/pingpong/home.html:5
+msgid "ようこそPing Pong Gameへ!"
+msgstr "Bienvenue dans le jeu de Ping Pong!"
+
+#: pingpong/templates/pingpong/home.html:6
+msgid "ゲームモードを選んでね:"
+msgstr "Choisissez un mode de jeu:"
+
+#: pingpong/templates/pingpong/home.html:9
+msgid "一人で遊ぶ"
+msgstr "Jouer seul"
+
+#: pingpong/templates/pingpong/home.html:12
+msgid "複数人と遊ぶ"
+msgstr "Jouer avec plusieurs personnes"
+
+#: pingpong/templates/pingpong/home.html:15
+msgid "トーナメント"
+msgstr "Tournoi"
+
+#: pingpong/templates/pingpong/home.html:19
+msgid "遊び方を見る"
+msgstr "Voir comment jouer"
+
+#: pingpong/templates/pingpong/home.html:20
+msgid "ゲームのルールと操作方法に慣れて、プレイ体験を向上させましょう。"
+msgstr "Familiarisez-vous avec les règles et les commandes du jeu pour améliorer votre expérience de jeu."
+
+#: pingpong/templates/pingpong/home.html:22
+msgid "遊び方"
+msgstr "Comment jouer"
+
+#: pingpong/templates/pingpong/how_to_play.html:6
+msgid "ピンポンゲームの遊び方"
+msgstr "Jeu de ping-pong"
+
+#: pingpong/templates/pingpong/how_to_play.html:10
+msgid "ゲームのルール"
+msgstr "Règles du jeu"
+
+#: pingpong/templates/pingpong/how_to_play.html:13
+msgid ""
+"このゲームは11点先取で行われます。先に11点に到達したプレイヤーが試合に勝利し"
+"ます。"
+msgstr ""
+"Ce jeu se joue en marquant 11 points en premier. Le joueur qui atteint d'abord 11 points remporte la partie."
+
+#: pingpong/templates/pingpong/how_to_play.html:19
+msgid "ゲームモード"
+msgstr "Modes de jeu"
+
+#: pingpong/templates/pingpong/how_to_play.html:23
+msgid "シングルプレイ：コンピュータと対戦します。"
+msgstr "Solo: Jouez contre l'ordinateur."
+
+#: pingpong/templates/pingpong/how_to_play.html:24
+msgid "マルチプレイリモート：インターネット越しに他のプレイヤーと対戦します。"
+msgstr "Multijoueur en ligne: Jouez contre d'autres joueurs via Internet."
+
+#: pingpong/templates/pingpong/how_to_play.html:25
+msgid "マルチプレイローカル：同じデバイスで他のプレイヤーと対戦します。"
+msgstr "Multijoueur local: Jouez contre d'autres joueurs sur le même appareil."
+
+#: pingpong/templates/pingpong/how_to_play.html:26
+msgid "トーナメント：複数のプレイヤーとトーナメント形式で対戦します。"
+msgstr "Tournoi: Affrontez plusieurs joueurs dans un format de tournoi."
+
+#: pingpong/templates/pingpong/how_to_play.html:33
+msgid "操作方法"
+msgstr "Instructions de contrôle"
+
+#: pingpong/templates/pingpong/how_to_play.html:36
+msgid "シングルプレイモードでは、矢印キーを使ってパドルを動かします。"
+msgstr "En mode solo, utilisez les touches fléchées pour déplacer la raquette."
+
+#: pingpong/templates/pingpong/how_to_play.html:37
+msgid ""
+"二人対戦の場合、一方のプレイヤーは「W」と「S」キーでパドルを上下に動かし、も"
+"う一方のプレイヤーは矢印キーを使用します。"
+msgstr ""
+"En cas de match à deux joueurs, l'un des joueurs déplacera sa raquette vers le haut et le bas avec les touches \"W\" et \"S\", tandis que l'autre joueur utilisera les touches fléchées."
 
 #: templates/common/header.html:46
 msgid "ゲスト"
