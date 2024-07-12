@@ -1,5 +1,7 @@
 export let upPressedRight = false;
 export let downPressedRight = false;
+export let upPressedRightMiddle = false;
+export let downPressedRightMiddle = false;
 export let upPressedLeft = false;
 export let downPressedLeft = false;
 export let upPressedLeftMiddle = false;
@@ -19,6 +21,23 @@ export function keyUpHandlerRight(e) {
     upPressedRight = false;
   } else if (e.key === "Down" || e.key === "ArrowDown") {
     downPressedRight = false;
+  }
+}
+
+// RightMiddle Paddle
+export function keyDownHandlerRightMiddle(e) {
+  if (e.key === "o" || e.key === "O") {
+    upPressedRightMiddle = true;
+  } else if (e.key === "l" || e.key === "L") {
+    downPressedRightMiddle = true;
+  }
+}
+
+export function keyUpHandlerRightMiddle(e) {
+  if (e.key === "o" || e.key === "O") {
+    upPressedRightMiddle = false;
+  } else if (e.key === "l" || e.key === "L") {
+    downPressedRightMiddle = false;
   }
 }
 

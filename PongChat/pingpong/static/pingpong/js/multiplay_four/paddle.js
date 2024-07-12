@@ -1,9 +1,10 @@
 import { canvas, previousCanvasHeight } from "./main.js";
-export let paddleWidth,
-  paddleHeight,
+export let leftMiddlePaddleY,
   leftPaddleY,
-  rightPaddleY,
-  leftMiddlePaddleY;
+  paddleHeight,
+  paddleWidth,
+  rightMiddlePaddleY,
+  rightPaddleY;
 let paddleDy;
 
 function drawRoundedRect(ctx, ballX, ballY, width, height, radius) {
@@ -67,6 +68,20 @@ export function drawRightPaddle(ctx, canvas) {
   ctx.fill();
 }
 
+export function drawRightMiddlePaddle(ctx, canvas) {
+  const radius = paddleWidth;
+  drawRoundedRect(
+    ctx,
+    canvas.width - paddleWidth * 2,
+    rightMiddlePaddleY,
+    paddleWidth,
+    paddleHeight,
+    radius / 2,
+  );
+  ctx.fillStyle = "#FF4500";
+  ctx.fill();
+}
+
 export function moveRightPaddle(upPressedRight, downPressedRight, canvas) {
   if (upPressedRight && rightPaddleY > 0) {
     rightPaddleY -= paddleDy;
@@ -74,6 +89,15 @@ export function moveRightPaddle(upPressedRight, downPressedRight, canvas) {
     rightPaddleY += paddleDy;
   }
   return rightPaddleY;
+}
+
+export function moveRightMiddlePaddle(upPressedRightMiddle, downPressedRightMiddle, canvas) {
+  if (upPressedRightMiddle && rightMiddlePaddleY > 0) {
+    rightMiddlePaddleY -= paddleDy;
+  } else if (downPressedRightMiddle && rightMiddlePaddleY < canvas.height - paddleHeight) {
+    rightMiddlePaddleY += paddleDy;
+  }
+  return rightMiddlePaddleY;
 }
 
 export function moveLeftPaddle(upPressedLeft, downPressedLeft, canvas) {
@@ -106,6 +130,7 @@ export function updatePaddleElement() {
   updateLeftPaddlePosition(previousCanvasHeight, canvas);
   updateLeftMiddlePaddlePosition(previousCanvasHeight, canvas);
   updateRightPaddlePosition(previousCanvasHeight, canvas);
+  updateRightMiddlePaddlePosition(previousCanvasHeight, canvas);
   updatePaddleSpeed(canvas);
 }
 
@@ -128,6 +153,13 @@ export function updateRightPaddlePosition(previousCanvasHeight, canvas) {
     ? 0.5
     : rightPaddleY / previousCanvasHeight;
   rightPaddleY = canvas.height * paddlePositionRatioY;
+}
+
+export function updateRightMiddlePaddlePosition(previousCanvasHeight, canvas) {
+  const paddlePositionRatioY = isNaN(rightMiddlePaddleY / previousCanvasHeight)
+    ? 0.5
+    : rightMiddlePaddleY / previousCanvasHeight;
+  rightMiddlePaddleY = canvas.height * paddlePositionRatioY;
 }
 
 export function updatePaddleSize(canvas) {

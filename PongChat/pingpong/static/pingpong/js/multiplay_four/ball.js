@@ -20,6 +20,7 @@ import {
   leftPaddleY,
   leftMiddlePaddleY,
   rightPaddleY,
+  rightMiddlePaddleY,
 } from "./paddle.js";
 
 export let ballY;
@@ -83,6 +84,10 @@ export function moveBall() {
       ballDx = -ballDx;
       const hitPosition =
         (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+      ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
+    } else if (ballY > rightMiddlePaddleY && ballY < rightMiddlePaddleY + paddleHeight) {
+      ballDx = -ballDx;
+      const hitPosition = (ballY - (rightMiddlePaddleY + paddleHeight / 2)) / (paddleHeight / 2);
       ballDy = hitPosition * (canvas.height * 0.02); // 中央からの距離に応じてballDyを変更
     } else {
       // Game Over

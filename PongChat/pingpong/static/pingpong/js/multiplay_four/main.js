@@ -2,24 +2,30 @@ import {
   downPressedLeft,
   downPressedLeftMiddle,
   downPressedRight,
+  downPressedRightMiddle,
   keyDownHandlerLeft,
   keyDownHandlerLeftMiddle,
   keyDownHandlerRight,
+  keyDownHandlerRightMiddle,
   keyUpHandlerLeft,
   keyUpHandlerLeftMiddle,
   keyUpHandlerRight,
+  keyUpHandlerRightMiddle,
   upPressedLeft,
   upPressedLeftMiddle,
   upPressedRight,
+  upPressedRightMiddle,
 } from "./key_handle.js";
 
 import {
   drawLeftMiddlePaddle,
   drawLeftPaddle,
   drawRightPaddle,
+  drawRightMiddlePaddle,
   moveLeftMiddlePaddle,
   moveLeftPaddle,
   moveRightPaddle,
+  moveRightMiddlePaddle,
   updatePaddleElement,
 } from "./paddle.js";
 
@@ -92,6 +98,7 @@ function draw() {
     drawLeftPaddle(ctx);
     drawLeftMiddlePaddle(ctx);
     drawRightPaddle(ctx, canvas);
+    drawRightMiddlePaddle(ctx, canvas);
     drawScores();
 
     // move objects
@@ -100,6 +107,7 @@ function draw() {
       moveLeftPaddle(upPressedLeft, downPressedLeft, canvas);
       moveLeftMiddlePaddle(upPressedLeftMiddle, downPressedLeftMiddle, canvas);
       moveRightPaddle(upPressedRight, downPressedRight, canvas);
+      moveRightMiddlePaddle(upPressedRightMiddle, downPressedRightMiddle, canvas);
     }
   }
 
@@ -122,6 +130,8 @@ startCountdown();
 window.addEventListener("resize", onResize, false);
 document.addEventListener("keydown", keyDownHandlerRight, false);
 document.addEventListener("keyup", keyUpHandlerRight, false);
+document.addEventListener("keydown", keyDownHandlerRightMiddle, false);
+document.addEventListener("keyup", keyUpHandlerRightMiddle, false);
 document.addEventListener("keydown", keyDownHandlerLeft, false);
 document.addEventListener("keyup", keyUpHandlerLeft, false);
 document.addEventListener("keydown", keyDownHandlerLeftMiddle, false);
