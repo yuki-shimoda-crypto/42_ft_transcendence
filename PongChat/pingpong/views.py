@@ -43,6 +43,11 @@ def multiplayer_play_local(request):
     return render(request, "pingpong/multiplayer_play_local.html")
 
 
+# @login_required
+def multiplayer_play_four(request):
+    return render(request, "pingpong/multiplayer_play_four.html")
+
+
 @login_required
 def multiplayer_lobby(request):
     online_players = User.objects.filter(is_remote_multiplayer_active=True).exclude(
