@@ -37,7 +37,7 @@
     <div class="col">
       <div class="d-flex align-items-center">
         <h3 class="mr-2">{% trans "プロフィール画像" %}</h3>
-        <a href="{% url 'accounts:profile_image_update' user.pk %}"
+        <a href="{% url 'accounts:profile_image_update' user.pk %}" class="async-link"
           ><i class="bi bi-pencil-square"></i
         ></a>
       </div>

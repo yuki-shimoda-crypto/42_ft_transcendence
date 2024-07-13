@@ -12,23 +12,29 @@
         </div>
         <div class="card-body">
           <form action="" method="POST" enctype="multipart/form-data">
-            {{ form.non_field_errors }} {% csrf_token %} {% for field in form %}
-            <div class="form-group p-2">
-              <label for="{{ field.id_for_label }}"
-                >{{ field.label_tag }}{% if field.field.required %}<span
-                  class="text-danger"
-                  >*</span
-                >{% endif %}</label
-              >
-              {{ field }} {% if field.errors %}
-              <div class="alert alert-danger mt-2" role="alert">
-                {% for error in field.errors %}
-                <div>{{ error }}</div>
-                {% endfor %}
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group p-2">
+                <label for="{{ field.id_for_label }}"
+                  >{{ field.label_tag }}{% if field.field.required %}<span
+                    class="text-danger"
+                    >*</span
+                  >{% endif %}</label
+                >
+                {{ field }} {% if field.errors %}
+                <div class="alert alert-danger mt-2" role="alert">
+                  {% for error in field.errors %}
+                  <div>{{ error }}</div>
+                  {% endfor %}
+                </div>
+                {% endif %}
               </div>
-              {% endif %}
-            </div>
             {% endfor %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
             <div class="form-group text-center">
               <img
                 id="image-preview"
