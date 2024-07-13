@@ -26,12 +26,12 @@ RUN apt-get update && \
 COPY tools/docker/web_prod/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# ユーザーを作成して切り替える
-RUN useradd -m ${MY_USER}
-USER ${MY_USER}
-
-# プロジェクトのコードをコピー
-COPY --chown=user:user . .
+# # ユーザーを作成して切り替える
+# RUN useradd -m ${MY_USER}
+# USER ${MY_USER}
+# 
+# # プロジェクトのコードをコピー
+# COPY --chown=user:user . .
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
